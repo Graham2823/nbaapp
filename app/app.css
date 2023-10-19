@@ -1,0 +1,20 @@
+.game{
+    border: 1px solid black;
+    width: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+}
+
+.todaysGames{
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+.yesterdaysGames{
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
