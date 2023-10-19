@@ -36,7 +36,7 @@ export default function Home() {
                           game.visitor_team_score
                       )}
                   </h3>
-                  <h3>{game.status}</h3>
+                  <h3 className="gameStatus">{game.status}</h3>
                   {game.home_team_score> 0 && game.visitor_team_score > 0 &&(
                     <h3><button>View Box Score</button></h3>
                   )}
@@ -60,7 +60,7 @@ export default function Home() {
                           game.visitor_team_score
                       )}
                   </h3>
-                  <h3>{game.status}</h3>
+                  <h3 className="gameStatus">{game.status}</h3>
                   {game.home_team_score> 0 && game.visitor_team_score > 0 &&(
                     <h3><button>View Box Score</button></h3>
                   )}
