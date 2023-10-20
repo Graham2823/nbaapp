@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react"
 import axios from "axios"
 import "../app/app.css"
+import TopNav from "@/components/TopNav"
 
 export default function Home() {
   const [todaysGames, setTodaysGames] = useState([])
@@ -20,6 +21,7 @@ export default function Home() {
   console.log(yesterdaysGames)
     return (
       <div>
+        <TopNav/>
           <h2>Todays Games:</h2>
         <div className="todaysGames">
           {todaysGames &&(

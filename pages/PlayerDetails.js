@@ -1,8 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useRouter } from 'next/router';
 import '../app/app.css';
+import TopNav from '@/components/TopNav';
 
 const PlayerDetails = () => {
+	const router = useRouter();
+	const { first, last } = router.query;
+	console.log(first);
+	console.log(last);
 	const [playerDetails, setPlayerDetails] = useState([]);
 	const [firstName, setFirstName] = useState('');
 	const [lastName, setLastName] = useState('');
@@ -25,10 +31,23 @@ const PlayerDetails = () => {
 			// This code will only run on the client-side
 			setPlayerDetails([]);
 		}
-	}, []);
+		if (first && last) {
+			axios
+				.get(
+					`http://localhost:3000/api/getPlayer?firstName=${first}&lastName=${last}`
+				)
+				.then((response) => {
+					setPlayerDetails(response.data);
+				})
+				.catch((error) => {
+					console.error('Error fetching data:', error);
+				});
+		}
+	}, [first, last]);
 	console.log(playerDetails);
 	return (
 		<div>
+            <TopNav/>
 			{playerDetails.length === 0 ? (
 				<div>
 					<h3>Search Player Stats:</h3>
@@ -82,15 +101,15 @@ const PlayerDetails = () => {
 							<tbody>
 								{playerDetails.stats.length === 0 ? (
 									<tr>
-										<td class='season'>0</td>
-										<td class='gamesPlayed'>0</td>
-										<td class='minutesPerGame'>0</td>
-										<td class='pointsPerGame'>0</td>
-										<td class='reboundsPerGame'>0</td>
-										<td class='assistsPerGame'>0</td>
-										<td class='stealsPerGame'>0</td>
-										<td class='blocksPerGame'>0</td>
-										<td class='turnoversPerGame'>0</td>
+										<td>0</td>
+										<td>0</td>
+										<td>0</td>
+										<td>0</td>
+										<td>0</td>
+										<td>0</td>
+										<td>0</td>
+										<td>0</td>
+										<td>0</td>
 									</tr>
 								) : (
 									<tr>
@@ -98,24 +117,21 @@ const PlayerDetails = () => {
 										<td class='gamesPlayed'>
 											{playerDetails.stats.games_played}
 										</td>
-										<td class='minutesPerGame'>{playerDetails.stats.min}</td>
-										<td class='pointsPerGame'>{playerDetails.stats.pts}</td>
-										<td class='reboundsPerGame'>{playerDetails.stats.reb}</td>
-										<td class='assistsPerGame'>{playerDetails.stats.ast}</td>
-										<td class='stealsPerGame'>{playerDetails.stats.stl}</td>
-										<td class='blocksPerGame'>{playerDetails.stats.blk}</td>
-										<td class='turnoversPerGame'>
-											{playerDetails.stats.turnover}
-										</td>
+										<td>{playerDetails.stats.min}</td>
+										<td>{playerDetails.stats.pts}</td>
+										<td>{playerDetails.stats.reb}</td>
+										<td>{playerDetails.stats.ast}</td>
+										<td>{playerDetails.stats.stl}</td>
+										<td>{playerDetails.stats.blk}</td>
+										<td>{playerDetails.stats.turnover}</td>
 									</tr>
 								)}
 							</tbody>
 						</table>
 					</div>
-                    <div className='description'>
-                        <p>{playerDetails.details.player[0].strDescriptionEN}</p>
-
-                    </div>
+					<div className='description'>
+						<p>{playerDetails.details.player[0].strDescriptionEN}</p>
+					</div>
 				</div>
 			)}
 		</div>

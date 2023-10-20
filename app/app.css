@@ -48,3 +48,33 @@
     align-items: center;
     width: 400px;
 }
+
+.teamDetails{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.custom-navbar {
+    background-color: #282c34; 
+    opacity: .8;
+    color: white;
+    height: 50px;
+    text-align: left;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .custom-navbar .nav-link {
+  padding: 10px;
+  justify-content: space-evenly;
+    color: white; 
+    text-decoration: none;
+  }
+  
+  .custom-navbar .nav-link:hover {
+    color: #9acd32; /* Link text color on hover */
+  }
