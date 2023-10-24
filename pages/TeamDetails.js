@@ -15,7 +15,7 @@ const TeamDetails = () => {
         const team = selectedTeam.split(" ")
         axios
 			.get(
-				`http://localhost:3000/api/getTeam?teamName=${selectedTeam}`
+				`https://nbaapp.vercel.app/api/getTeam?teamName=${selectedTeam}`
 			)
 			.then((response) => {
                 console.log(response.data)

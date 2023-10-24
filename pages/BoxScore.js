@@ -12,7 +12,7 @@ const BoxScore = () => {
 
     useEffect(()=>{
         axios
-    .get(`http://localhost:3000/api/getBoxScore?gameID=${gameID}&homeTeam=${homeTeam}&awayTeam=${awayTeam}&date=${date}`)
+    .get(`https://nbaapp.vercel.app/api/getBoxScore?gameID=${gameID}&homeTeam=${homeTeam}&awayTeam=${awayTeam}&date=${date}`)
     .then((response) => {
     setBoxScore(response.data)
     })

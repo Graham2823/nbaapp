@@ -1,6 +1,16 @@
 import { createRouter } from 'next-connect';
+import cors from 'cors'; // Import the cors middleware
 
 const gamesRouter = createRouter();
+
+// Set up CORS options
+const corsMiddleware = cors({
+  origin: ['http://localhost:3000', 'https://nbaapp.vercel.app'], // Replace with your local development URL
+  methods: ['GET'], // Allow only the HTTP methods you need
+});
+
+// Apply CORS to the gamesRouter
+gamesRouter.use(corsMiddleware);
 
 gamesRouter.get(async (req, res) => {
     let date = new Date();

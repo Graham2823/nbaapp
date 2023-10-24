@@ -9,7 +9,7 @@ export default function Home() {
   const [yesterdaysGames, setYesterdaysGames] = useState([])
   useEffect(()=>{
     axios
-    .get(`http://localhost:3000/api/getGames`)
+    .get(`https://nbaapp.vercel.app/api/getGames`)
     .then((response) => {
     setTodaysGames(response.data.tscores);
     setYesterdaysGames(response.data.yscores);
