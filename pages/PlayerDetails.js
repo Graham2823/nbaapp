@@ -17,7 +17,7 @@ const PlayerDetails = () => {
 	const handleSubmit = () => {
 		axios
 			.get(
-				`http://localhost:3000/api/getPlayer?firstName=${firstName}&lastName=${lastName}`
+				`https://nbaapp.vercel.app/api/getPlayer?firstName=${firstName}&lastName=${lastName}`
 			)
 			.then((response) => {
 				setPlayerDetails(response.data);
