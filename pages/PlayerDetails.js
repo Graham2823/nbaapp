@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import '../app/app.css';
-import TopNav from '@/components/TopNav';
+import { Image } from 'react-bootstrap';
+import {Table} from 'react-bootstrap';
 
 const PlayerDetails = () => {
 	const router = useRouter();
@@ -46,9 +47,8 @@ const PlayerDetails = () => {
 	}, [first, last]);
 	console.log(playerDetails);
 	return (
-		<div>
-            <TopNav/>
-			{playerDetails.length === 0 ? (
+		<div className='playerPage'>
+			{playerDetails.length === 0 || !playerDetails.details.player ? (
 				<div>
 					<h3>Search Player Stats:</h3>
 					<p>
@@ -74,9 +74,10 @@ const PlayerDetails = () => {
 			) : (
 				<div className='playerDetails'>
 					<div className='playerBio'>
-						<img
+						<Image
 							src={playerDetails.details.player[0].strThumb}
 							className='playerPic'
+                            alt='player Picture'
 						/>
 						<div>
 							<h3>{playerDetails.details.player[0].strPlayer}</h3>
@@ -86,7 +87,7 @@ const PlayerDetails = () => {
 						</div>
 					</div>
 					<div className='playerStats'>
-						<table>
+						<Table striped="columns">
 							<thead>
 								<th>Season</th>
 								<th>Games Played</th>
@@ -127,7 +128,7 @@ const PlayerDetails = () => {
 									</tr>
 								)}
 							</tbody>
-						</table>
+						</Table>
 					</div>
 					<div className='description'>
 						<p>{playerDetails.details.player[0].strDescriptionEN}</p>

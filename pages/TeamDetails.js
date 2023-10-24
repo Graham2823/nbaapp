@@ -1,12 +1,16 @@
 import React,{useEffect, useState} from 'react'
 import axios from 'axios'
 import "../app/app.css"
-import TopNav from '@/components/TopNav'
+import { useRouter } from 'next/router';
+import convertTo12HourFormat from '@/utils/convertTime'
 
 
 const TeamDetails = () => {
+    const router = useRouter()
     const [teamDetails, setTeamDetails] = useState([])
     const [selectedTeam, setSelectedTeam] = useState("Atlanta Hawks")
+    const { teamName} = router.query;
+
     const onsubmit = ()=>{
         const team = selectedTeam.split(" ")
         axios
@@ -21,12 +25,32 @@ const TeamDetails = () => {
 				console.error('Error fetching data:', error);
 			});
     }
+
+    useEffect(() => {
+		if (typeof window !== 'undefined') {
+			// This code will only run on the client-side
+			setTeamDetails([]);
+		}
+		if (teamName) {
+            axios
+			.get(
+				`http://localhost:3000/api/getTeam?teamName=${teamName}`
+			)
+			.then((response) => {
+                console.log(response.data)
+				setTeamDetails(response.data);
+			})
+			.catch((error) => {
+				console.error('Error fetching data:', error);
+			});
+		}
+	}, [teamName]);
+    
     console.log(selectedTeam)
   return (
     <div className='teamPage'>
-        <TopNav/>
         {teamDetails.length === 0 ?(
-            <div class="teamSearch">
+            <div className="teamSearch">
             <h3><label>Search Team:</label></h3>
             <select name="teamSelect" onChange={(e)=>setSelectedTeam(e.target.value)}>
                 <option>
@@ -126,6 +150,8 @@ const TeamDetails = () => {
             <div className='teamDetails'>
                 <h2>{teamDetails.teamName}</h2>
                 <h2>Team Schedule:</h2>
+                <div className='teamSchedule'>
+
                 {teamDetails.schedule.map((game, index)=>(
                      <div key={index} className="game">
                      <h3>{game.home_team.abbreviation}
@@ -139,12 +165,13 @@ const TeamDetails = () => {
                              game.visitor_team_score
                          )}
                      </h3>
-                     <h3 className="gameStatus">{game.status}</h3>
+                     <h3 className="gameStatus">{convertTo12HourFormat(game.status, true)}</h3>
                      {game.home_team_score> 0 && game.visitor_team_score > 0 &&(
-                       <h3><button>View Box Score</button></h3>
+                       <p><a href={`/BoxScore?gameID=${game.id}&homeTeam=${game.home_team.full_name}&awayTeam=${game.visitor_team.full_name}&date=${game.date.split("T")[0]}`}><button>View Box Score</button></a></p>
                      )}
                  </div>
                 ))}
+                </div>
             </div>
         )}
         </div>

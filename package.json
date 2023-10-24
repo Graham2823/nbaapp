@@ -15,7 +15,7 @@
     "next": "13.5.4",
     "next-connect": "^1.0.0",
     "react": "^18",
-    "react-bootstrap": "^2.9.0",
+    "react-bootstrap": "^2.9.1",
     "react-dom": "^18"
   },
   "devDependencies": {

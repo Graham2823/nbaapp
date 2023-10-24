@@ -12,25 +12,28 @@ gamesRouter.get(async (req, res) => {
     const yesterdaysDate = `${yesterdayArr[3]}-${yesterdayArr[1]}-${yesterdayArr[2]}`;
 
     try {
-        const tscoresResponse = await fetch(`https://www.balldontlie.io/api/v1/games?seasons[]=2023&start_date=2023-10-25&end_date=2023-10-25`);
-        const yscoresResponse = await fetch(`https://www.balldontlie.io/api/v1/games?seasons[]=2023&start_date=2023-10-24&end_date=2023-10-24`);
-        
-        if (tscoresResponse.status !== 200 || yscoresResponse.status !== 200) {
-            res.status(404).json({ message: "Data is not available" });
-            return;
-        }
-        
+        const tscoresResponse = await fetch(`https://www.balldontlie.io/api/v1/games?seasons[]=2023&start_date=${todaysDate}&end_date=${todaysDate}`);
+        const yscoresResponse = await fetch(`https://www.balldontlie.io/api/v1/games?seasons[]=2023&start_date=${yesterdaysDate}&end_date=${yesterdaysDate}`);
         const tscoresData = await tscoresResponse.json();
         const yscoresData = await yscoresResponse.json();
         
         const tscores = tscoresData.data;
         const yscores = yscoresData.data;
         
-        if (tscores.length === 0 || yscores.length === 0) {
+        if (tscores.length === 0 && yscores.length === 0) {
             res.status(404).json({ message: "Data is not available" });
-        } else {
-            res.json({ tscores, yscores });
+            return;
         }
+        if(yscores.length === 0){
+            res.json({tscores})
+            return
+        }
+        if(tscores.length === 0){
+            res.json({yscores})
+            return
+        }
+            res.json({ tscores, yscores });
+        
     } catch (err) {
         console.log(err);
     }

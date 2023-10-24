@@ -7,7 +7,9 @@
     align-items: center;
     margin: 10px;
    padding: 0px;
+   background-color: rgba(255, 255, 255, 0.544);
 }
+
 .game h3{
     padding: 3px;
     margin: 3px;
@@ -29,7 +31,7 @@
 }
 
 .playerDetails{
-    width: 100vw;
+    width: 100%;
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -56,9 +58,17 @@
     align-items: center;
 }
 
+.teamSchedule{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    background-color: #C8C8C8;
+}
+
 .custom-navbar {
-    background-color: #282c34; 
-    opacity: .8;
+    background-color: #0B267F;
+    opacity: 0.8;
     color: white;
     height: 50px;
     text-align: left;
@@ -66,15 +76,111 @@
     display: flex;
     align-items: center;
     z-index: 1000;
-  }
-  
-  .custom-navbar .nav-link {
-  padding: 10px;
-  justify-content: space-evenly;
-    color: white; 
+    flex-wrap: wrap; /* Allow flex items to wrap on smaller screens */
+    justify-content: space-between; /* Ensure links are not squished together */
+}
+
+.custom-navbar .nav-link {
+    padding: 10px;
+    color: white;
     text-decoration: none;
+}
+
+.custom-navbar .nav-link:hover {
+    color: #E2E2E2; /* Link text color on hover */
+}
+
+  .frontPage, .playerPage, .teamPage{
+    text-align: center;
+    background-color: #C8C8C8;
+    height: 100vh;
+    width: 100%;
   }
-  
-  .custom-navbar .nav-link:hover {
-    color: #9acd32; /* Link text color on hover */
+
+  .frontPage a{
+    text-decoration: none;
+    color: black;
   }
+  .frontPage a:hover{
+    color: #0B267F;
+    text-decoration: underline;
+  }
+
+  .gameStatus{
+    display: block;
+    font-size: .85em;
+  }
+
+ .boxScore{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+ }
+
+ .boxScore a{
+    text-decoration: none;
+    color: black;
+ }
+
+ .boxScore a:hover{
+    color: #0B267F;
+    text-decoration: underline;
+ }
+
+ .boxScoreButton{
+    width: 75%;
+    height: auto;
+ }
+
+ .playerStatsTable{
+    background-color: #C8C8C8;
+ }
+
+
+
+ @media (max-width: 768px) {
+    .custom-navbar .nav-link {
+        padding: 5px; /* Reduce padding for smaller screens */
+        font-size: 0.85em; /* Reduce font size for smaller screens */
+    }
+}
+
+@media (max-width: 575px){
+    .playerDetails{
+        width: 100%;
+        height: auto;
+        background-color: #C8C8C8;
+        overflow: hidden;
+    }
+    .playerStats th{
+        font-size: .6em;
+        padding: 0px;
+        margin: 0px;
+    }
+    .playerBio h3{
+        font-size: 1em;
+    }
+
+}
+@media (max-width: 400px){
+    .playerDetails{
+        width: 100vw;
+        height: auto;
+        background-color: #C8C8C8;
+        overflow: hidden;
+    }
+    .playerStats th{
+        font-size: .4em;
+        padding: 0px;
+        margin: 0px;
+    }
+    .playerBio{
+        display: flex;
+        flex-direction: column;
+    }
+    .playerBio h3{
+        font-size: .8em;
+    }
+
+}
