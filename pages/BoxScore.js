@@ -12,7 +12,7 @@ const BoxScore = () => {
 
     useEffect(()=>{
         axios
-    .get(`https://nbaapp.vercel.app/api/getBoxScore?gameID=${gameID}&homeTeam=${homeTeam}&awayTeam=${awayTeam}&date=${date}`)
+    .get(`https://localhost:3000/api/getBoxScore?gameID=${gameID}&homeTeam=${homeTeam}&awayTeam=${awayTeam}&date=${date}`)
     .then((response) => {
     setBoxScore(response.data)
     })
@@ -29,7 +29,7 @@ const BoxScore = () => {
             </a>
         </h1>
         {boxScore.teamOneArr&&
-        <Table striped bordered className='homeTeam'>
+        <Table striped bordered className='boxScoreTable homeTeam'>
             <thead>
             <th>Player Name</th>
             <th>Minutes Played</th>
@@ -86,7 +86,7 @@ const BoxScore = () => {
             </a>
         </h1>
         {boxScore.teamTwoArr&&
-        <Table striped bordered className='awayTeam'>
+        <Table striped bordered className='boxScoreTable awayTeam'>
             <thead>
             <th>Player Name</th>
             <th>Minutes Played</th>

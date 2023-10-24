@@ -9,7 +9,7 @@ const corsMiddleware = cors({
   methods: ['GET'], // Allow only the HTTP methods you need
 });
 
-// Apply CORS to the gamesRouter
+
 gamesRouter.use(corsMiddleware);
 
 gamesRouter.get(async (req, res) => {

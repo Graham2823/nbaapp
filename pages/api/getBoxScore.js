@@ -1,6 +1,17 @@
 import { createRouter } from 'next-connect';
+import cors from 'cors'; // Import the cors middleware
 
 const boxScoreRouter = createRouter();
+
+// Set up CORS options
+const corsMiddleware = cors({
+  origin: ['http://localhost:3000', 'https://nbaapp.vercel.app'], // Replace with your local development URL
+  methods: ['GET'], // Allow only the HTTP methods you need
+});
+
+
+boxScoreRouter.use(corsMiddleware);
+
 
 boxScoreRouter.get(async (req, res)=>{
         const {gameID, homeTeam, awayTeam, date} = req.query

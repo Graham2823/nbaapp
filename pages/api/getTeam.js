@@ -1,6 +1,17 @@
 import { createRouter } from 'next-connect';
+import cors from 'cors'; // Import the cors middleware
 
 const teamRouter = createRouter();
+
+// Set up CORS options
+const corsMiddleware = cors({
+  origin: ['http://localhost:3000', 'https://nbaapp.vercel.app'], // Replace with your local development URL
+  methods: ['GET'], // Allow only the HTTP methods you need
+});
+
+
+teamRouter.use(corsMiddleware);
+
 
 teamRouter.get(async (req, res) => {
 	const {teamName} = req.query
