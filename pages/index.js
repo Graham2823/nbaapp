@@ -27,13 +27,13 @@ export default function Home() {
           {todaysGames ?(
             todaysGames.map((game, index) => (
               <div key={index} className="game">
-                  <h3><a href={`/TeamDetails?teamName=${game.home_team.full_name}`}>{game.home_team.abbreviation} </a>
+                  <h3><a href={`/TeamDetails?teamName=${game.home_team.full_name}`}>{game.home_team.abbreviation}</a>
                       {typeof game.home_team_score !== 'undefined' && game.home_team_score > 0 && (
                           <span>: {game.home_team_score}</span>
                       )}
                   </h3>
                   <h3>VS</h3>
-                  <h3><a href={`/TeamDetails?teamName=${game.visitor_team.full_name}`}>{game.visitor_team.abbreviation} </a>
+                  <h3><a href={`/TeamDetails?teamName=${game.visitor_team.full_name}`}>{game.visitor_team.abbreviation}</a>
                       {typeof game.visitor_team_score !== 'undefined' && game.visitor_team_score > 0 && (
                           <span>: {game.visitor_team_score}</span>
                       )}
@@ -59,13 +59,13 @@ export default function Home() {
           {yesterdaysGames ?(
             yesterdaysGames.map((game, index) => (
               <div key={index} className="game">
-                  <h3><a href={`/TeamDetails?teamName=${game.home_team.full_name}`}>{game.home_team.abbreviation} </a>
+                  <h3><a href={`/TeamDetails?teamName=${game.home_team.full_name}`}>{game.home_team.abbreviation}</a>
                       {typeof game.home_team_score !== 'undefined' && game.home_team_score > 0 && (
                           <span>: {game.home_team_score}</span>
                       )}
                   </h3>
                   <h3>VS</h3>
-                  <h3><a href={`/TeamDetails?teamName=${game.visitor_team.full_name}`}>{game.visitor_team.abbreviation} </a>
+                  <h3><a href={`/TeamDetails?teamName=${game.visitor_team.full_name}`}>{game.visitor_team.abbreviation}</a>
                       {typeof game.visitor_team_score !== 'undefined' && game.visitor_team_score > 0 && (
                           <span>: {game.visitor_team_score}</span>
                       )}

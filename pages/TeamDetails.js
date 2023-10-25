@@ -160,7 +160,7 @@ const TeamDetails = () => {
                          )}
                      </h3>
                      <h3>VS</h3>
-                     <h3><a href={`/TeamDetails?teamName=${game.visitor_team.full_name}`}>{game.visitor_team.abbreviation}</a>: 
+                     <h3><a href={`/TeamDetails?teamName=${game.visitor_team.full_name}`}>{game.visitor_team.abbreviation}</a> 
                          {typeof game.visitor_team_score !== 'undefined' && game.visitor_team_score > 0 && (
                              <span>: {game.visitor_team_score}</span>
                          )}
