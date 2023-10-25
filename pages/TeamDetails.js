@@ -153,19 +153,24 @@ const TeamDetails = () => {
                 <div className='teamSchedule'>
 
                 {teamDetails.schedule.map((game, index)=>(
-                     <div key={index} className="game">
-                     <h3>{game.home_team.abbreviation}
+                     <div key={index} className="teamGame">
+                     <h3><a href={`/TeamDetails?teamName=${game.home_team.full_name}`}>{game.home_team.abbreviation}</a>: 
                          {typeof game.home_team_score !== 'undefined' && game.home_team_score > 0 && (
                              game.home_team_score
                          )}
                      </h3>
                      <h3>VS</h3>
-                     <h3>{game.visitor_team.abbreviation}
+                     <h3><a href={`/TeamDetails?teamName=${game.visitor_team.full_name}`}>{game.visitor_team.abbreviation}</a>: 
                          {typeof game.visitor_team_score !== 'undefined' && game.visitor_team_score > 0 && (
                              game.visitor_team_score
                          )}
                      </h3>
-                     <h3 className="gameStatus">{convertTo12HourFormat(game.status, true)}</h3>
+                     {game.status === "Final" ?(
+                         <h3 className={game.home_team.full_name === teamDetails.teamName && game.home_team_score > game.visitor_team_score || game.visitor_team.full_name === teamDetails.teamName && game.visitor_team_score > game.home_team_score ? 'won':'lost'}>{game.status}</h3>
+                         
+                         ):(
+                         <h3 className="gameStatus">{convertTo12HourFormat(game.status, true)}</h3>
+                     )}
                      {game.home_team_score> 0 && game.visitor_team_score > 0 &&(
                        <p><a href={`/BoxScore?gameID=${game.id}&homeTeam=${game.home_team.full_name}&awayTeam=${game.visitor_team.full_name}&date=${game.date.split("T")[0]}`}><button>View Box Score</button></a></p>
                      )}

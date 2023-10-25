@@ -48,10 +48,16 @@ playerRouter.get(async (req, res) =>{
                await fetch(`https://www.thesportsdb.com/api/v1/json/3/searchplayers.php?p=${firstName}%20${lastName}`)
                 .then(res => res.json())
                 .then((details)=>{
+                    console.log('details', details)
                     gamelog.sort((a,b)=> Date.parse(a.game.date) - Date.parse(b.game.date) );
                     // console.log(gamelog.length);
                     // res.send(JSON.stringify(gamelog));
-                    res.json( {stats, playerData, gamelog, details});
+                    if(details.player[0].strSport === 'Basketball'){
+                        res.json( {stats, playerData, gamelog, details});
+                    }
+                    if(!stats || !playerData || details){
+                        res.statusCode(404).json({message: 'player not found'})
+                    }
                 })
 }
 })

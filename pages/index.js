@@ -70,9 +70,9 @@ export default function Home() {
                           game.visitor_team_score
                       )}
                   </h3>
-                  <h3 className="gameStatus">{convertTo12HourFormat(game.status, false)}</h3>
+                  <h3 className="gameStatus">{game.status}</h3>
                   {game.home_team_score> 0 && game.visitor_team_score > 0 &&(
-                    <h3><button>View Box Score</button></h3>
+                    <p><a href={`/BoxScore?gameID=${game.id}&homeTeam=${game.home_team.full_name}&awayTeam=${game.visitor_team.full_name}&date=${game.date.split("T")[0]}`}><button>View Box Score</button></a></p>
                   )}
               </div>
           ))
