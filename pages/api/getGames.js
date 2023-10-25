@@ -4,16 +4,22 @@ import cors from 'cors'; // Import the cors middleware
 const gamesRouter = createRouter();
 
 // Set up CORS options
-const corsMiddleware = cors({
-  origin: ['http://localhost:3000', 'https://nbaapp.vercel.app'], // Replace with your local development URL
-  methods: ['GET'], // Allow only the HTTP methods you need
-});
+// const corsMiddleware = cors({
+//   origin: ['http://localhost:3000', 'https://nbaapp.vercel.app'], // Replace with your local development URL
+//   methods: ['GET'], // Allow only the HTTP methods you need
+// });
 
 
-gamesRouter.use(corsMiddleware);
+// gamesRouter.use(corsMiddleware);
+function getCurrentDateInET() {
+    const now = new Date();
+    const etOffset = -5 * 60; // Eastern Time is UTC-5
+    const etTime = new Date(now.getTime() + etOffset * 60 * 1000);
+    return etTime;
+  }
 
 gamesRouter.get(async (req, res) => {
-    let date = new Date();
+    let date = getCurrentDateInET();
     let todaysDate =  date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + (date.getDate());
     const yesterday = new Date(date);
     yesterday.setDate(yesterday.getDate() - 1);

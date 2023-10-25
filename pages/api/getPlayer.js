@@ -4,13 +4,13 @@ import cors from 'cors'; // Import the cors middleware
 const playerRouter = createRouter();
 
 // Set up CORS options
-const corsMiddleware = cors({
-  origin: ['http://localhost:3000', 'https://nbaapp.vercel.app'], // Replace with your local development URL
-  methods: ['GET'], // Allow only the HTTP methods you need
-});
+// const corsMiddleware = cors({
+//   origin: ['http://localhost:3000', 'https://nbaapp.vercel.app'], // Replace with your local development URL
+//   methods: ['GET'], // Allow only the HTTP methods you need
+// });
 
 
-playerRouter.use(corsMiddleware);
+// playerRouter.use(corsMiddleware);
 
 
 playerRouter.get(async (req, res) =>{
