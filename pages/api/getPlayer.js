@@ -55,9 +55,6 @@ playerRouter.get(async (req, res) =>{
                     if(details.player[0].strSport === 'Basketball'){
                         res.json( {stats, playerData, gamelog, details});
                     }
-                    if(!stats || !playerData || details){
-                        res.statusCode(404).json({message: 'player not found'})
-                    }
                 })
 }
 })
