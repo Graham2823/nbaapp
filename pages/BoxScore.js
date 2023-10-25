@@ -29,6 +29,7 @@ const BoxScore = () => {
             </a>
         </h1>
         {boxScore.teamOneArr&&
+        <div className='table-responsive'>
         <Table striped bordered className='boxScoreTable homeTeam'>
             <thead>
             <th>Player Name</th>
@@ -79,6 +80,7 @@ const BoxScore = () => {
                 ))}
             </tbody>
         </Table>
+        </div>
         }
         <h1 className='awayTeamName'>
             <a href={`/TeamDetails?teamName=${awayTeam}`}>
