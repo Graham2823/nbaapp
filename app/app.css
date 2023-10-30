@@ -181,6 +181,15 @@
 	width: 100%;
 	font-size: 1em;
 }
+
+.sortButtons{
+    margin-bottom: 10px;
+}
+
+.sortButtons button{
+    margin: 5px;
+}
+
 @media (max-width: 820px){
     .playerStats th{
         font-size: .8em;

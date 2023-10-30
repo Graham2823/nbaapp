@@ -21,7 +21,7 @@ const PlayerDetails = () => {
 	const handleSubmit = () => {
 		axios
 			.get(
-				`http://localhost:3000/api/getPlayer?firstName=${firstName}&lastName=${lastName}`
+				`https://nbaapp.vercel.app/api/getPlayer?firstName=${firstName}&lastName=${lastName}`
 			)
 			.then((response) => {
 				setPlayerDetails(response.data);
@@ -165,7 +165,7 @@ const PlayerDetails = () => {
 						</div>
 					) : playerDetails.gamelog.length > 0 ? (
 						<div className='gamelog'>
-							<Table className='gamelogTable'>
+							<Table className='gamelogTable' striped>
 								<thead>
 									<tr>
 										<th>Date</th>
@@ -182,7 +182,7 @@ const PlayerDetails = () => {
 									</tr>
 								</thead>
 								<tbody>
-									{playerDetails.gamelog.map((game) => (
+									{playerDetails.gamelog.reverse().map((game) => (
 										<tr key={game.id}>
 											{' '}
 											{/* Add a unique key for each row */}
