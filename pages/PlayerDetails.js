@@ -21,7 +21,7 @@ const PlayerDetails = () => {
 	const handleSubmit = () => {
 		axios
 			.get(
-				`https://nbaapp.vercel.app/api/getPlayer?firstName=${firstName}&lastName=${lastName}`
+				`http://localhost:3000/api/getPlayer?firstName=${firstName}&lastName=${lastName}`
 			)
 			.then((response) => {
 				setPlayerDetails(response.data);
@@ -51,6 +51,12 @@ const PlayerDetails = () => {
 				});
 		}
 	}, [first, last]);
+
+    const shotPercentage = (made, attempted)=>{
+        let percentage = made / attempted * 100
+        return `${percentage.toFixed(2)}%`
+    }
+
 	console.log(playerDetails);
 	return (
 		<div className='playerPage'>
@@ -100,6 +106,9 @@ const PlayerDetails = () => {
 								<th>Season</th>
 								<th>Games Played</th>
 								<th>Minutes Per Game</th>
+								<th>FG%</th>
+								<th>3PT%</th>
+								<th>FT%</th>
 								<th>Points Per Game</th>
 								<th>Rebounds Per Game</th>
 								<th>Assists Per Game</th>
@@ -119,6 +128,9 @@ const PlayerDetails = () => {
 										<td>0</td>
 										<td>0</td>
 										<td>0</td>
+										<td>0</td>
+										<td>0</td>
+										<td>0</td>
 									</tr>
 								) : (
 									<tr>
@@ -127,6 +139,9 @@ const PlayerDetails = () => {
 											{playerDetails.stats[0].games_played}
 										</td>
 										<td>{playerDetails.stats[0].min}</td>
+										<td>{shotPercentage(playerDetails.stats[0].fgm, playerDetails.stats[0].fga)}</td>
+										<td>{shotPercentage(playerDetails.stats[0].fg3m,playerDetails.stats[0].fg3a)}</td>
+										<td>{shotPercentage(playerDetails.stats[0].ftm,playerDetails.stats[0].fta)}</td>
 										<td>{playerDetails.stats[0].pts}</td>
 										<td>{playerDetails.stats[0].reb}</td>
 										<td>{playerDetails.stats[0].ast}</td>
