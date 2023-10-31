@@ -204,9 +204,9 @@ const PlayerDetails = () => {
 											{/* Add a unique key for each row */}
 											<td>{game.game.date.slice(0, 10)}</td>
 											<td>{game.min}</td>
-											<td>{`${game.fgm}/${game.fga}`}</td>
-											<td>{`${game.ftm}/${game.fta}`}</td>
-											<td>{`${game.fg3m}/${game.fg3a}`}</td>
+											<td>{game.fga === 0 || game.fgm === 0? `0%` : `${game.fgm}/${game.fga}`}</td>
+											<td>{game.fta === 0 || game.ftm === 0? `0%` : `${game.ftm}/${game.fta}`}</td>
+											<td>{game.fg3a === 0 || game.fg3m === 0? `0%` : `${game.fg3m}/${game.fg3a}`}</td>
 											<td>{game.pts}</td>
 											<td>{game.reb}</td>
 											<td>{game.ast}</td>
