@@ -150,9 +150,9 @@ const PlayerDetails = () => {
 											{playerDetails.stats[0].games_played}
 										</td>
 										<td>{playerDetails.stats[0].min}</td>
-										<td>{shotPercentage(playerDetails.stats[0].fgm, playerDetails.stats[0].fga)}</td>
-										<td>{shotPercentage(playerDetails.stats[0].fg3m,playerDetails.stats[0].fg3a)}</td>
-										<td>{shotPercentage(playerDetails.stats[0].ftm,playerDetails.stats[0].fta)}</td>
+										<td>{playerDetails.stats[0].fgm === 0 ? `0%`: shotPercentage(playerDetails.stats[0].fgm, playerDetails.stats[0].fga)}</td>
+										<td>{playerDetails.stats[0].fg3m === 0 ? `0%`: shotPercentage(playerDetails.stats[0].fg3m,playerDetails.stats[0].fg3a)}</td>
+										<td>{playerDetails.stats[0].ftm === 0 ? `0%`: shotPercentage(playerDetails.stats[0].ftm,playerDetails.stats[0].fta)}</td>
 										<td>{playerDetails.stats[0].pts}</td>
 										<td>{playerDetails.stats[0].reb}</td>
 										<td>{playerDetails.stats[0].ast}</td>
@@ -204,9 +204,9 @@ const PlayerDetails = () => {
 											{/* Add a unique key for each row */}
 											<td>{game.game.date.slice(0, 10)}</td>
 											<td>{game.min}</td>
-											<td>{game.fga === 0 || game.fgm === 0? `0%` : `${game.fgm}/${game.fga}`}</td>
-											<td>{game.fta === 0 || game.ftm === 0? `0%` : `${game.ftm}/${game.fta}`}</td>
-											<td>{game.fg3a === 0 || game.fg3m === 0? `0%` : `${game.fg3m}/${game.fg3a}`}</td>
+											<td>{`${game.fgm}/${game.fga}`}</td>
+											<td>{`${game.ftm}/${game.fta}`}</td>
+											<td>{`${game.fg3m}/${game.fg3a}`}</td>
 											<td>{game.pts}</td>
 											<td>{game.reb}</td>
 											<td>{game.ast}</td>
