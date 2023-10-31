@@ -52,8 +52,14 @@ playerRouter.get(async (req, res) =>{
                     gamelog.sort((a,b)=> Date.parse(a.game.date) - Date.parse(b.game.date) );
                     // console.log(gamelog.length);
                     // res.send(JSON.stringify(gamelog));
-                    if(details.player[0].strSport === 'Basketball'){
-                        res.json( {stats, playerData, gamelog, details});
+                    if(details.player){
+                        if(details.player[0].strSport === 'Basketball'){
+                            res.json( {stats, playerData, gamelog, details});
+                        }else{
+                            res.json({stats, playerData, gamelog})
+                        }
+                    }else{
+                        res.json({stats, playerData, gamelog})
                     }
                 })
 }

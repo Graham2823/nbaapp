@@ -61,10 +61,10 @@ const PlayerDetails = () => {
 	return (
 		<div className='playerPage'>
             <ToastContainer/>
-			{playerDetails.length === 0 || !playerDetails.details.player ? (
+			{playerDetails.length === 0 ? (
 				<div>
 					<h3>Search Player Stats:</h3>
-                    <p>Note: Some Rookies have not been added yet :(</p>
+                    {/* <p>Note: Some Rookies have not been added yet :(</p> */}
 					<p>
 						<input
 							type='text'
@@ -88,6 +88,8 @@ const PlayerDetails = () => {
 			) : (
 				<div className='playerDetails'>
 					<div className='playerBio'>
+                        {playerDetails.details ?(
+                            <>
 						<Image
 							src={playerDetails.details.player[0].strThumb}
 							className='playerPic'
@@ -99,6 +101,15 @@ const PlayerDetails = () => {
 							<h3>{playerDetails.details.player[0].strHeight}</h3>
 							<h3>{playerDetails.details.player[0].strTeam}</h3>
 						</div>
+                            </>
+
+                        ):(
+                            <>
+                            <h3>{playerDetails.playerData[0].first_name} {playerDetails.playerData[0].last_name}</h3>
+                            <h3>{playerDetails.playerData[0].team.full_name}</h3>
+                            </>
+                            
+                        )}
 					</div>
 					<div className='playerStats'>
 						<Table striped='columns'>
@@ -161,7 +172,12 @@ const PlayerDetails = () => {
 					</div>
 					{!showGamelog ? (
 						<div className='description'>
-							<p>{playerDetails.details.player[0].strDescriptionEN}</p>
+                            {playerDetails.details ?(
+                                <p>{playerDetails.details.player[0].strDescriptionEN}</p>
+
+                            ):(
+                                <h3>No Player Details Available</h3>
+                            )}
 						</div>
 					) : playerDetails.gamelog.length > 0 ? (
 						<div className='gamelog'>
