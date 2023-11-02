@@ -23,11 +23,13 @@ const BoxScore = () => {
     console.log(boxScore)
   return (
     <div className='boxScore'>
+        {boxScore.teamOneArr&&
         <h1 className='homeTeamName'>
-            <a href={`/TeamDetails?teamName=${homeTeam}`}>
-            {homeTeam}
+            <a href={`/TeamDetails?teamName=${boxScore.teamOneArr[0].team.full_name}`}>
+            {boxScore.teamOneArr[0].team.full_name}
             </a>
         </h1>
+        }
         {boxScore.teamOneArr&&
         <div className='table-responsive'>
         <Table striped bordered className='boxScoreTable homeTeam'>
@@ -82,11 +84,13 @@ const BoxScore = () => {
         </Table>
         </div>
         }
+        {boxScore.teamTwoArr &&
         <h1 className='awayTeamName'>
-            <a href={`/TeamDetails?teamName=${awayTeam}`}>
-            {awayTeam}
+            <a href={`/TeamDetails?teamName=${boxScore.teamTwoArr[0].team.full_name}`}>
+            {boxScore.teamTwoArr[0].team.full_name}
             </a>
         </h1>
+        }
         {boxScore.teamTwoArr&&
         <Table striped bordered className='boxScoreTable awayTeam'>
             <thead>
