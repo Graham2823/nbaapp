@@ -200,6 +200,19 @@
     margin:10px auto 0px auto;
 }
 
+.playoffTeam td{
+    background-color: rgba(0, 230, 0, 0.1);
+}
+
+.playinTeam td{
+    background-color: rgba(255, 255, 0, 0.1);
+}
+
+.lotteryTeam td{
+    background-color: rgba(230,0,0,.1);
+}
+
+
 .standingsTable a{
     text-decoration: none;
     color: black;

@@ -28,7 +28,7 @@ const StandingsCard = ({ conference }) => {
 					{conference &&
 						conference.map((team, index) => (
 							<>
-								<tr>
+								<tr className={index <6 ? 'playoffTeam' : index< 10 ? 'playinTeam' : 'lotteryTeam'}>
 									<td>{index + 1}</td>
 									<td>
 										<a
