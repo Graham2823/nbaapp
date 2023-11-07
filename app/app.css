@@ -223,6 +223,15 @@
     text-decoration: underline;
 }
 
+.playerBio a{
+    text-decoration: none;
+    color: black;
+}
+
+.playerBio a:hover{
+    text-decoration: underline;
+    color: #0b267f;
+}
 
 @media (max-width: 820px){
     .playerStats th{
