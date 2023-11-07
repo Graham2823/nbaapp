@@ -233,9 +233,38 @@
     color: #0b267f;
 }
 
+.comparePlayersTable{
+    width: 45%;
+    margin: auto;
+}
+
+.comparePlayersTable a{
+    text-decoration: none;
+    color: black;
+}
+
+.comparePlayersTable a:hover{
+    text-decoration: underline;
+    color: #0b267f;
+}
+
+.comparePlayers{
+    margin-top: 100px;
+}
+
+.searchPlayer{
+    padding-top: 50px;
+}
+
 @media (max-width: 820px){
     .playerStats th{
         font-size: .8em;
+    }
+    .comparePlayersTable th{
+        font-size: 1em;
+    }
+    .comparePlayersTable td{
+        font-size: 1em;
     }
 }
 
@@ -327,6 +356,15 @@
 	}
     .standingsTable td{
         font-size: 1em;
+    }
+    .comparePlayersTable{
+        width: 90vw;
+    }
+    .comparePlayersTable th{
+        font-size: .8em;
+    }
+    .comparePlayersTable td{
+        font-size: .8em;
     }
 }
 
