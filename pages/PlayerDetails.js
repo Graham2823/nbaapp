@@ -99,14 +99,14 @@ const PlayerDetails = () => {
 							<h3>{playerDetails.details.player[0].strPlayer}</h3>
 							<h3>{playerDetails.details.player[0].strPosition}</h3>
 							<h3>{playerDetails.details.player[0].strHeight}</h3>
-							<h3>{playerDetails.details.player[0].strTeam}</h3>
+							<h3><a href={`/TeamDetails?teamName=${playerDetails.playerData[0].team.full_name}`}>{playerDetails.details.player[0].strTeam}</a></h3>
 						</div>
                             </>
 
                         ):(
                             <>
                             <h3>{playerDetails.playerData[0].first_name} {playerDetails.playerData[0].last_name}</h3>
-                            <h3>{playerDetails.playerData[0].team.full_name}</h3>
+                            <h3><a href={`/TeamDetails?teamName=${playerDetails.playerData[0].team.full_name}`}>{playerDetails.playerData[0].team.full_name}</a></h3>
                             </>
                             
                         )}
