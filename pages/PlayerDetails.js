@@ -17,6 +17,15 @@ const PlayerDetails = () => {
 	const [firstName, setFirstName] = useState('');
 	const [lastName, setLastName] = useState('');
 	const [showGamelog, setShowGamelog] = useState(false);
+	const [p1FirstName, setP1FirstName] = useState('')
+	const [p1LastName, setP1LastName] = useState('')
+	const [p2FirstName, setP2FirstName] = useState('')
+	const [p2LastName, setP2LastName] = useState('')
+	const [p1Data, setP1Data] = useState([])
+	const [p2Data, setP2Data] = useState([])
+	const [p1Stats, setP1Stats] = useState([])
+	const [p2Stats, setP2Stats] = useState([])
+
 
 	const handleSubmit = () => {
 		axios
@@ -31,6 +40,25 @@ const PlayerDetails = () => {
                 toast.error('Player Not Found!')
 			});
 	};
+
+	const comparePlayers = () =>{
+		axios.get(`https://nbaapp.vercel.app/api/comparePlayers?p1Name=${p1FirstName}_${p1LastName}&p2Name=${p2FirstName}_${p2LastName}`)
+		.then((response)=>{
+			console.log(response.data)
+			if(response.data === 'Could not find one of the players'){
+				toast.error("Could Not find one of the players. Please check spelling, and try again")
+			}else{
+				setP1Data(response.data.p1Data)
+				setP2Data(response.data.p2Data)
+				setP1Stats(response.data.p1Stats)
+				setP2Stats(response.data.p2Stats)
+			}
+		})
+		.catch((error)=>{
+			console.log(error)
+			toast.error('Players could not be found!')
+		})
+	}
 
 	useEffect(() => {
 		if (typeof window !== 'undefined') {
@@ -57,12 +85,14 @@ const PlayerDetails = () => {
         return `${percentage.toFixed(2)}%`
     }
 
-	console.log(playerDetails);
+console.log(p1Data, p1Stats)
+console.log(p2Data, p2Stats)
 	return (
 		<div className='playerPage'>
             <ToastContainer/>
-			{playerDetails.length === 0 ? (
+			{playerDetails.length === 0 && p1Data.length === 0 ? (
 				<div>
+				<div className='searchPlayer'>
 					<h3>Search Player Stats:</h3>
                     {/* <p>Note: Some Rookies have not been added yet :(</p> */}
 					<p>
@@ -85,7 +115,50 @@ const PlayerDetails = () => {
 						<button onClick={() => handleSubmit()}>Search</button>
 					</p>
 				</div>
-			) : (
+				<div className='comparePlayers'>
+					<h3>Compare Player Stats</h3>
+					<div>
+						<h5>Player One:</h5>
+					<p>
+						<input
+							type='text'
+							name='firstName'
+							placeholder='First Name'
+							onChange={(e) => setP1FirstName(e.target.value)}
+						/>
+					</p>
+					<p>
+						<input
+							type='text'
+							name='lastName'
+							placeholder='Last Name'
+							onChange={(e) => setP1LastName(e.target.value)}
+						/>
+					</p>
+					</div>
+					<div>
+						<h5>Player Two:</h5>
+					<p>
+						<input
+							type='text'
+							name='firstName'
+							placeholder='First Name'
+							onChange={(e) => setP2FirstName(e.target.value)}
+						/>
+					</p>
+					<p>
+						<input
+							type='text'
+							name='lastName'
+							placeholder='Last Name'
+							onChange={(e) => setP2LastName(e.target.value)}
+						/>
+					</p>
+					</div>
+					<button onClick={()=>comparePlayers()}>Compare Players</button>
+				</div>
+				</div>
+			) : p1Data.length === 0 ?(
 				<div className='playerDetails'>
 					<div className='playerBio'>
                         {playerDetails.details ?(
@@ -222,6 +295,93 @@ const PlayerDetails = () => {
 						<h2>No Games Played Yet</h2>
 					)}
 				</div>
+			):(
+				<div>
+					<Table className='comparePlayersTable'>
+						<thead>
+							<tr>
+								<th>{p1Data[0].first_name} {p1Data[0].last_name} vs {p2Data[0].first_name} {p2Data[0].last_name}</th>
+								<th>
+										<p><a href={`/PlayerDetails/?first=${p1Data[0].first_name}&last=${p1Data[0].last_name}`}>{p1Data[0].first_name} {p1Data[0].last_name}</a></p>
+										<p>{p1Data[0].position}</p>
+										{p1Data[0].height_feet && p1Data[0].height_inches ?(
+											<p>{p1Data[0].height_feet}ft {p1Data[0].height_inches}in</p>
+
+										):(
+											<p>Height Not Found</p>
+										)
+										}
+										<p><a href={`/TeamDetails?teamName=${p1Data[0].team.full_name}`}>{p1Data[0].team.full_name}</a></p>
+									
+								</th>
+								<th>
+										<p><a href={`/PlayerDetails/?first=${p2Data[0].first_name}&last=${p2Data[0].last_name}`}>{p2Data[0].first_name} {p2Data[0].last_name}</a></p>
+										<p>{p2Data[0].position}</p>
+										{p2Data[0].height_feet && p2Data[0].height_inches ?(
+											<p>{p2Data[0].height_feet}ft {p2Data[0].height_inches}in</p>
+
+										):(
+											<p>Height Not Found</p>
+										)
+										}
+										<p><a href={`/TeamDetails?teamName=${p2Data[0].team.full_name}`}>{p2Data[0].team.full_name}</a></p>
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>
+									<strong>Games Played</strong>
+								</td>
+								<td style={{backgroundColor:p1Stats[0].games_played > p2Stats[0].games_played ? 'green' : "red"}}>{p1Stats[0].games_played}</td>
+								<td style={{backgroundColor:p2Stats[0].games_played > p1Stats[0].games_played ? 'green' : "red"}}>{p2Stats[0].games_played}</td>
+							</tr>
+							<tr>
+								<td>
+									<strong>Minutes Per Game</strong> 
+								</td>
+								<td style={{backgroundColor:p1Stats[0].min > p2Stats[0].min ? 'green' : "red"}}>{p1Stats[0].min}</td>
+								<td style={{backgroundColor:p2Stats[0].min > p1Stats[0].min ? 'green' : "red"}}>{p2Stats[0].min}</td>
+							</tr>
+							<tr>
+								<td>
+									<strong>Points Per Game</strong> 
+								</td>
+								<td style={{backgroundColor:p1Stats[0].pts > p2Stats[0].pts ? 'green' : "red"}}>{p1Stats[0].pts}</td>
+								<td style={{backgroundColor:p2Stats[0].pts > p1Stats[0].pts ? 'green' : "red"}}>{p2Stats[0].pts}</td>
+							</tr>
+							<tr>
+								<td>
+									<strong>Rebounds Per Game</strong> 
+								</td>
+								<td style={{backgroundColor:p1Stats[0].reb > p2Stats[0].reb ? 'green' : "red"}}>{p1Stats[0].reb}</td>
+								<td style={{backgroundColor:p2Stats[0].reb > p1Stats[0].reb ? 'green' : "red"}}>{p2Stats[0].reb}</td>
+							</tr>
+							<tr>
+								<td>
+									<strong>Assists Per Game</strong> 
+								</td>
+								<td style={{backgroundColor:p1Stats[0].ast > p2Stats[0].ast ? 'green' : "red"}}>{p1Stats[0].ast}</td>
+								<td style={{backgroundColor:p2Stats[0].ast > p1Stats[0].ast ? 'green' : "red"}}>{p2Stats[0].ast}</td>
+							</tr>
+							<tr>
+								<td>
+									<strong>Steals Per Game</strong> 
+								</td>
+								<td style={{backgroundColor:p1Stats[0].stl > p2Stats[0].stl ? 'green' : "red"}}>{p1Stats[0].stl}</td>
+								<td style={{backgroundColor:p2Stats[0].stl > p1Stats[0].stl ? 'green' : "red"}}>{p2Stats[0].stl}</td>
+							</tr>
+							<tr>
+								<td>
+									<strong>Turnovers Per Game</strong> 
+								</td>
+								<td style={{backgroundColor:p1Stats[0].turnover < p2Stats[0].turnover ? 'green' : "red"}}>{p1Stats[0].turnover}</td>
+								<td style={{backgroundColor:p2Stats[0].turnover < p1Stats[0].turnover ? 'green' : "red"}}>{p2Stats[0].turnover}</td>
+							</tr>
+						</tbody>
+					</Table>
+				</div>
+				
 			)}
 		</div>
 	);

@@ -34,27 +34,42 @@ comparePlayersRouter.get(async (req, res) => {
 					p2Data.push(data.data[i]);
 				}
 			});
-		let p1ID = p1Data[0].id;
-		let p2ID = p2Data[0].id;
-		await fetch(
-			`https://www.balldontlie.io/api/v1/season_averages?season=2023&player_ids[]=${p1ID}`
-		)
-			.then((res) => res.json())
-			.then((statsData) => {
-				for (let i = 0; i < statsData.data.length; i++) {
-					p1Stats.push(statsData.data[i]);
-				}
-			});
-		await fetch(
-			`https://www.balldontlie.io/api/v1/season_averages?season=2023&player_ids[]=${p2ID}`
-		)
-			.then((res) => res.json())
-			.then((statsData) => {
-				for (let i = 0; i < statsData.data.length; i++) {
-					p2Stats.push(statsData.data[i]);
-				}
-			});
-		res.json({ p1Data, p2Data, p1Stats, p2Stats });
+            let p1ID
+            let p2ID
+            if(p1Data[0]){
+                p1ID = p1Data[0].id;
+            }
+            if(p2Data[0]){
+                p2ID = p2Data[0].id;
+
+            }
+        if(p1ID){
+            await fetch(
+                `https://www.balldontlie.io/api/v1/season_averages?season=2023&player_ids[]=${p1ID}`
+            )
+                .then((res) => res.json())
+                .then((statsData) => {
+                    for (let i = 0; i < statsData.data.length; i++) {
+                        p1Stats.push(statsData.data[i]);
+                    }
+                });
+        }
+        if(p2ID){
+            await fetch(
+                `https://www.balldontlie.io/api/v1/season_averages?season=2023&player_ids[]=${p2ID}`
+            )
+                .then((res) => res.json())
+                .then((statsData) => {
+                    for (let i = 0; i < statsData.data.length; i++) {
+                        p2Stats.push(statsData.data[i]);
+                    }
+                });
+        }
+            if(p1Data.length > 0 && p2Data.length > 0 && p1Stats.length > 0 && p2Stats.length > 0){
+                res.json({ p1Data, p2Data, p1Stats, p2Stats });
+            }else{
+                res.json('Could not find one of the players')
+            }
 	} catch (err) {
 		console.log(err);
 	}
