@@ -9,8 +9,8 @@ const TopNav = () => {
         <Navbar.Collapse id="navbarNav">
           <Nav>
             <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="/PlayerDetails">Player</Nav.Link>
-            <Nav.Link href="/TeamDetails">Team</Nav.Link>
+            <Nav.Link href="/PlayerSearch">Player</Nav.Link>
+            <Nav.Link href="/TeamSearch">Team</Nav.Link>
             <Nav.Link href="/StandingsPage">Standings</Nav.Link>
           </Nav>
         </Navbar.Collapse>
