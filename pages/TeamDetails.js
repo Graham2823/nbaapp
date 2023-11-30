@@ -219,34 +219,29 @@ const TeamDetails = () => {
 								<td style={{backgroundColor:team2Info[0].calc_rank.conf_rank < team1Info[0].calc_rank.conf_rank ? 'green' : "red"}}>{team2Info[0].calc_rank.conf_rank}</td>
 							</tr>
 							<tr>
-								<td><strong>Wins</strong></td>
-								<td style={{backgroundColor:team1Info[0].wins > team2Info[0].wins ? 'green' : "red"}}>{team1Info[0].wins}</td>
-								<td style={{backgroundColor:team2Info[0].wins > team1Info[0].wins ? 'green' : "red"}}>{team2Info[0].wins}</td>
-							</tr>
-							<tr>
-								<td><strong>Losses</strong></td>
-								<td style={{backgroundColor:team1Info[0].losses < team2Info[0].losses ? 'green' : "red"}}>{team1Info[0].losses}</td>
-								<td style={{backgroundColor:team2Info[0].losses < team1Info[0].losses ? 'green' : "red"}}>{team2Info[0].losses}</td>
+								<td><strong>Record</strong></td>
+								<td style={{backgroundColor:winPercentage(team1Info[0].wins , team1Info[0].losses) < winPercentage(team2Info[0].wins , team2Info[0].losses) ? 'red' : "green"}}>{team1Info[0].wins} - {team1Info[0].losses}</td>
+								<td style={{backgroundColor:winPercentage(team2Info[0].wins , team2Info[0].losses) < winPercentage(team1Info[0].wins , team1Info[0].losses) ? 'red' : "green"}}>{team2Info[0].wins} - {team2Info[0].losses}</td>
 							</tr>
 							<tr>
 								<td><strong>Games Behind</strong></td>
-								<td style={{backgroundColor:team1Info[0].games_behind.conference < team2Info[0].games_behind.conference ? 'green' : "red"}}>{team1Info[0].games_behind.conference}</td>
-								<td style={{backgroundColor:team2Info[0].games_behind.conference < team1Info[0].games_behind.conference ? 'green' : "red"}}>{team2Info[0].games_behind.conference}</td>
+								<td style={{backgroundColor:team1Info[0].games_behind.conference > team2Info[0].games_behind.conference ? 'red' : "green"}}>{team1Info[0].games_behind.conference}</td>
+								<td style={{backgroundColor:team2Info[0].games_behind.conference > team1Info[0].games_behind.conference ? 'red' : "green"}}>{team2Info[0].games_behind.conference}</td>
 							</tr>
 							<tr>
 								<td><strong>Points For</strong></td>
-								<td style={{backgroundColor:team1Info[0].points_for > team2Info[0].points_for ? 'green' : "red"}}>{team1Info[0].points_for}</td>
-								<td style={{backgroundColor:team2Info[0].points_for > team1Info[0].points_for ? 'green' : "red"}}>{team2Info[0].points_for}</td>
+								<td style={{backgroundColor:team1Info[0].points_for < team2Info[0].points_for ? 'red' : "green"}}>{team1Info[0].points_for}</td>
+								<td style={{backgroundColor:team2Info[0].points_for < team1Info[0].points_for ? 'red' : "green"}}>{team2Info[0].points_for}</td>
 							</tr>
 							<tr>
 								<td><strong>Points Against</strong></td>
-								<td style={{backgroundColor:team1Info[0].points_against < team2Info[0].points_against ? 'green' : "red"}}>{team1Info[0].points_against}</td>
-								<td style={{backgroundColor:team2Info[0].points_against < team1Info[0].points_against ? 'green' : "red"}}>{team2Info[0].points_against}</td>
+								<td style={{backgroundColor:team1Info[0].points_against > team2Info[0].points_against ? 'red' : "green"}}>{team1Info[0].points_against}</td>
+								<td style={{backgroundColor:team2Info[0].points_against > team1Info[0].points_against ? 'red' : "green"}}>{team2Info[0].points_against}</td>
 							</tr>
 							<tr>
 								<td><strong>Points Differential</strong></td>
-								<td style={{backgroundColor:team1Info[0].point_diff > team2Info[0].point_diff ? 'green' : "red"}}>{team1Info[0].point_diff}</td>
-								<td style={{backgroundColor:team2Info[0].point_diff > team1Info[0].point_diff ? 'green' : "red"}}>{team2Info[0].point_diff}</td>
+								<td style={{backgroundColor:team1Info[0].point_diff < team2Info[0].point_diff ? 'red' : "green"}}>{team1Info[0].point_diff}</td>
+								<td style={{backgroundColor:team2Info[0].point_diff < team1Info[0].point_diff ? 'red' : "green"}}>{team2Info[0].point_diff}</td>
 							</tr>
 							<tr>
 								<td><strong>Streak</strong></td>
@@ -265,48 +260,48 @@ const TeamDetails = () => {
 							</tr>
 							<tr>
 								<td><strong>Conference Record</strong></td>
-								<td style={{backgroundColor:winPercentage(team1Info[0].records[3].wins , team1Info[0].records[3].losses) > winPercentage(team2Info[0].records[3].wins , team2Info[0].records[3].losses) ? 'green' : "red"}}>{team1Info[0].records[3].wins} - {team1Info[0].records[3].losses}</td>
-								<td style={{backgroundColor:winPercentage(team2Info[0].records[3].wins , team2Info[0].records[3].losses) > winPercentage(team1Info[0].records[3].wins , team1Info[0].records[3].losses) ? 'green' : "red"}}>{team2Info[0].records[3].wins} - {team2Info[0].records[3].losses}</td>
+								<td style={{backgroundColor:winPercentage(team1Info[0].records[3].wins , team1Info[0].records[3].losses) < winPercentage(team2Info[0].records[3].wins , team2Info[0].records[3].losses) ? 'red' : "green"}}>{team1Info[0].records[3].wins} - {team1Info[0].records[3].losses}</td>
+								<td style={{backgroundColor:winPercentage(team2Info[0].records[3].wins , team2Info[0].records[3].losses) < winPercentage(team1Info[0].records[3].wins , team1Info[0].records[3].losses) ? 'red' : "green"}}>{team2Info[0].records[3].wins} - {team2Info[0].records[3].losses}</td>
 							</tr>
 							<tr>
 								<td><strong>Division Record</strong></td>
-								<td style={{backgroundColor:winPercentage(team1Info[0].records[4].wins , team1Info[0].records[4].losses) > winPercentage(team2Info[0].records[4].wins , team2Info[0].records[4].losses) ? 'green' : "red"}}>{team1Info[0].records[4].wins} - {team1Info[0].records[4].losses}</td>
-								<td style={{backgroundColor:winPercentage(team2Info[0].records[4].wins , team2Info[0].records[4].losses) > winPercentage(team1Info[0].records[4].wins , team1Info[0].records[4].losses) ? 'green' : "red"}}>{team2Info[0].records[4].wins} - {team2Info[0].records[4].losses}</td>
+								<td style={{backgroundColor:winPercentage(team1Info[0].records[4].wins , team1Info[0].records[4].losses) < winPercentage(team2Info[0].records[4].wins , team2Info[0].records[4].losses) ? 'red' : "green"}}>{team1Info[0].records[4].wins} - {team1Info[0].records[4].losses}</td>
+								<td style={{backgroundColor:winPercentage(team2Info[0].records[4].wins , team2Info[0].records[4].losses) < winPercentage(team1Info[0].records[4].wins , team1Info[0].records[4].losses) ? 'red' : "green"}}>{team2Info[0].records[4].wins} - {team2Info[0].records[4].losses}</td>
 							</tr>
 							<tr>
 								<td><strong>Home Record</strong></td>
-								<td style={{backgroundColor:winPercentage(team1Info[0].records[8].wins , team1Info[0].records[8].losses) > winPercentage(team2Info[0].records[8].wins , team2Info[0].records[8].losses) ? 'green' : "red"}}>{team1Info[0].records[8].wins} - {team1Info[0].records[8].losses}</td>
-								<td style={{backgroundColor:winPercentage(team2Info[0].records[8].wins , team2Info[0].records[8].losses) > winPercentage(team1Info[0].records[8].wins , team1Info[0].records[8].losses) ? 'green' : "red"}}>{team2Info[0].records[8].wins} - {team2Info[0].records[8].losses}</td>
+								<td style={{backgroundColor:winPercentage(team1Info[0].records[8].wins , team1Info[0].records[8].losses) < winPercentage(team2Info[0].records[8].wins , team2Info[0].records[8].losses) ? 'red' : "green"}}>{team1Info[0].records[8].wins} - {team1Info[0].records[8].losses}</td>
+								<td style={{backgroundColor:winPercentage(team2Info[0].records[8].wins , team2Info[0].records[8].losses) < winPercentage(team1Info[0].records[8].wins , team1Info[0].records[8].losses) ? 'red' : "green"}}>{team2Info[0].records[8].wins} - {team2Info[0].records[8].losses}</td>
 							</tr>
 							<tr>
 								<td><strong>Away Record</strong></td>
-								<td style={{backgroundColor:winPercentage(team1Info[0].records[22].wins , team1Info[0].records[22].losses) > winPercentage(team2Info[0].records[22].wins , team2Info[0].records[22].losses) ? 'green' : "red"}}>{team1Info[0].records[22].wins} - {team1Info[0].records[22].losses}</td>
-								<td style={{backgroundColor:winPercentage(team2Info[0].records[22].wins , team2Info[0].records[22].losses) > winPercentage(team1Info[0].records[22].wins , team1Info[0].records[22].losses) ? 'green' : "red"}}>{team2Info[0].records[22].wins} - {team2Info[0].records[22].losses}</td>
+								<td style={{backgroundColor:winPercentage(team1Info[0].records[22].wins , team1Info[0].records[22].losses) < winPercentage(team2Info[0].records[22].wins , team2Info[0].records[22].losses) ? 'red' : "green"}}>{team1Info[0].records[22].wins} - {team1Info[0].records[22].losses}</td>
+								<td style={{backgroundColor:winPercentage(team2Info[0].records[22].wins , team2Info[0].records[22].losses) < winPercentage(team1Info[0].records[22].wins , team1Info[0].records[22].losses) ? 'red' : "green"}}>{team2Info[0].records[22].wins} - {team2Info[0].records[22].losses}</td>
 							</tr>
 							<tr>
 								<td><strong>Last 10</strong></td>
-								<td style={{backgroundColor:winPercentage(team1Info[0].records[9].wins , team1Info[0].records[9].losses) > winPercentage(team2Info[0].records[9].wins , team2Info[0].records[9].losses) ? 'green' : "red"}}>{team1Info[0].records[9].wins} - {team1Info[0].records[9].losses}</td>
-								<td style={{backgroundColor:winPercentage(team2Info[0].records[9].wins , team2Info[0].records[9].losses) > winPercentage(team1Info[0].records[9].wins , team1Info[0].records[9].losses) ? 'green' : "red"}}>{team2Info[0].records[9].wins} - {team2Info[0].records[9].losses}</td>
+								<td style={{backgroundColor:winPercentage(team1Info[0].records[9].wins , team1Info[0].records[9].losses) < winPercentage(team2Info[0].records[9].wins , team2Info[0].records[9].losses) ? 'red' : "green"}}>{team1Info[0].records[9].wins} - {team1Info[0].records[9].losses}</td>
+								<td style={{backgroundColor:winPercentage(team2Info[0].records[9].wins , team2Info[0].records[9].losses) < winPercentage(team1Info[0].records[9].wins , team1Info[0].records[9].losses) ? 'red' : "green"}}>{team2Info[0].records[9].wins} - {team2Info[0].records[9].losses}</td>
 							</tr>
 							<tr>
 								<td><strong>Vs below .500</strong></td>
-								<td style={{backgroundColor:winPercentage(team1Info[0].records[1].wins , team1Info[0].records[1].losses) > winPercentage(team2Info[0].records[1].wins , team2Info[0].records[1].losses) ? 'green' : "red"}}>{team1Info[0].records[1].wins} - {team1Info[0].records[1].losses}</td>
-								<td style={{backgroundColor:winPercentage(team2Info[0].records[1].wins , team2Info[0].records[1].losses) > winPercentage(team1Info[0].records[1].wins , team1Info[0].records[1].losses) ? 'green' : "red"}}>{team2Info[0].records[1].wins} - {team2Info[0].records[1].losses}</td>
+								<td style={{backgroundColor:winPercentage(team1Info[0].records[1].wins , team1Info[0].records[1].losses) < winPercentage(team2Info[0].records[1].wins , team2Info[0].records[1].losses) ? 'red' : "green"}}>{team1Info[0].records[1].wins} - {team1Info[0].records[1].losses}</td>
+								<td style={{backgroundColor:winPercentage(team2Info[0].records[1].wins , team2Info[0].records[1].losses) < winPercentage(team1Info[0].records[1].wins , team1Info[0].records[1].losses) ? 'red' : "green"}}>{team2Info[0].records[1].wins} - {team2Info[0].records[1].losses}</td>
 							</tr>
 							<tr>
 								<td><strong>Vs above .500</strong></td>
-								<td style={{backgroundColor:winPercentage(team1Info[0].records[20].wins , team1Info[0].records[20].losses) > winPercentage(team2Info[0].records[20].wins , team2Info[0].records[20].losses) ? 'green' : "red"}}>{team1Info[0].records[20].wins} - {team1Info[0].records[20].losses}</td>
-								<td style={{backgroundColor:winPercentage(team2Info[0].records[20].wins , team2Info[0].records[20].losses) > winPercentage(team1Info[0].records[20].wins , team1Info[0].records[20].losses) ? 'green' : "red"}}>{team2Info[0].records[20].wins} - {team2Info[0].records[20].losses}</td>
+								<td style={{backgroundColor:winPercentage(team1Info[0].records[20].wins , team1Info[0].records[20].losses) < winPercentage(team2Info[0].records[20].wins , team2Info[0].records[20].losses) ? 'red' : "green"}}>{team1Info[0].records[20].wins} - {team1Info[0].records[20].losses}</td>
+								<td style={{backgroundColor:winPercentage(team2Info[0].records[20].wins , team2Info[0].records[20].losses) < winPercentage(team1Info[0].records[20].wins , team1Info[0].records[20].losses) ? 'red' : "green"}}>{team2Info[0].records[20].wins} - {team2Info[0].records[20].losses}</td>
 							</tr>
 							<tr>
 								<td><strong>Games Decided by 3 Points</strong></td>
-								<td style={{backgroundColor:winPercentage(team1Info[0].records[27].wins , team1Info[0].records[27].losses) > winPercentage(team2Info[0].records[27].wins , team2Info[0].records[27].losses) ? 'green' : "red"}}>{team1Info[0].records[27].wins} - {team1Info[0].records[27].losses}</td>
-								<td style={{backgroundColor:winPercentage(team2Info[0].records[27].wins , team2Info[0].records[27].losses) > winPercentage(team1Info[0].records[27].wins , team1Info[0].records[27].losses) ? 'green' : "red"}}>{team2Info[0].records[27].wins} - {team2Info[0].records[27].losses}</td>
+								<td style={{backgroundColor:winPercentage(team1Info[0].records[27].wins , team1Info[0].records[27].losses) < winPercentage(team2Info[0].records[27].wins , team2Info[0].records[27].losses) ? 'red' : "green"}}>{team1Info[0].records[27].wins} - {team1Info[0].records[27].losses}</td>
+								<td style={{backgroundColor:winPercentage(team2Info[0].records[27].wins , team2Info[0].records[27].losses) < winPercentage(team1Info[0].records[27].wins , team1Info[0].records[27].losses) ? 'red' : "green"}}>{team2Info[0].records[27].wins} - {team2Info[0].records[27].losses}</td>
 							</tr>
 							<tr>
 								<td><strong>Overtime</strong></td>
-								<td style={{backgroundColor:winPercentage(team1Info[0].records[19].wins , team1Info[0].records[19].losses) > winPercentage(team2Info[0].records[19].wins , team2Info[0].records[19].losses) ? 'green' : "red"}}>{team1Info[0].records[19].wins} - {team1Info[0].records[19].losses}</td>
-								<td style={{backgroundColor:winPercentage(team2Info[0].records[19].wins , team2Info[0].records[19].losses) > winPercentage(team1Info[0].records[19].wins , team1Info[0].records[19].losses) ? 'green' : "red"}}>{team2Info[0].records[19].wins} - {team2Info[0].records[19].losses}</td>
+								<td style={{backgroundColor:winPercentage(team1Info[0].records[19].wins , team1Info[0].records[19].losses) < winPercentage(team2Info[0].records[19].wins , team2Info[0].records[19].losses) ? 'red' : "green"}}>{team1Info[0].records[19].wins} - {team1Info[0].records[19].losses}</td>
+								<td style={{backgroundColor:winPercentage(team2Info[0].records[19].wins , team2Info[0].records[19].losses) < winPercentage(team1Info[0].records[19].wins , team1Info[0].records[19].losses) ? 'red' : "green"}}>{team2Info[0].records[19].wins} - {team2Info[0].records[19].losses}</td>
 							</tr>
 						</tbody>
 					</Table>
