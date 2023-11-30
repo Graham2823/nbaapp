@@ -46,7 +46,10 @@ export default function Home() {
                     <p><a href={`/BoxScore?gameID=${game.id}&homeTeam=${game.home_team.full_name}&awayTeam=${game.visitor_team.full_name}&date=${game.date.split("T")[0]}`}><button className="boxScoreButton" >View Box Score</button></a></p>
                     </>
                   ):(
-                    <h3 className="gameStatus">{convertTo12HourFormat(game.status, false)}</h3>
+                    <div>
+                      <h3 className="gameStatus">{convertTo12HourFormat(game.status, false)}</h3>
+                      <a href={`/TeamDetails?team1=${game.home_team.full_name}&team2=${game.visitor_team.full_name}`}><button className="compareButton">Compare Teams</button></a>
+                    </div>
                   )}
               </div>
           ))
