@@ -3,24 +3,24 @@ import axios from 'axios';
 import '../app/app.css';
 import { useRouter } from 'next/router';
 import convertTo12HourFormat from '@/utils/convertTime';
-import { Table } from 'react-bootstrap';
+import { Table, Image } from 'react-bootstrap';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
+import teams from '@/teams';
 
 const TeamDetails = () => {
 	const router = useRouter();
 	const [teamDetails, setTeamDetails] = useState([]);
+	const [teamLogoAndColors, setTeamLogoAndColors] = useState();
 	const [team1Info, setTeam1Info] = useState([]);
 	const [team2Info, setTeam2Info] = useState([]);
 	const { teamName, team1, team2 } = router.query;
-	console.log(teamName);
-	console.log(team1Info);
-	console.log(team2Info);
+	console.log(teamLogoAndColors)
 
 	useEffect(() => {
 		if (teamName) {
 			axios
-				.get(`https://nbaapp.vercel.app/api/getTeam?teamName=${teamName}`)
+				.get(`http://localhost:3000/api/getTeam?teamName=${teamName}`)
 				.then((response) => {
 					console.log(response.data);
 					setTeamDetails(response.data);
@@ -28,6 +28,8 @@ const TeamDetails = () => {
 				.catch((error) => {
 					console.error('Error fetching data:', error);
 				});
+			const teamLogo = teams.filter((team)=> team.teamName === teamName)
+			setTeamLogoAndColors(teamLogo)
 		}
 		if (team1 && team2) {
 			axios
@@ -56,8 +58,8 @@ const TeamDetails = () => {
 		<div className='teamPage'>
 			<ToastContainer />
 			{teamDetails.team_info ? (
-				<div className='teamDetails'>
-					<h2>{teamDetails.teamName}</h2>
+				<div className='teamDetails' style={{backgroundColor : teamLogoAndColors[0].primaryColor}}>
+					<h2><Image src={teamLogoAndColors[0].teamLogo} alt='team logo' className='teamLogo'/>{teamDetails.teamName}</h2>
 					<Table className='teamDetailsTable' striped='columns' responsive='xl'>
 						<thead>
 							<th>Conference Rank</th>
@@ -143,7 +145,7 @@ const TeamDetails = () => {
 						</tbody>
 					</Table>
 					<h2>Team Schedule:</h2>
-					<div className='teamSchedule'>
+					<div className='teamSchedule' style={{backgroundColor:teamLogoAndColors[0].secondaryColor}}>
 						{teamDetails.schedule.map((game, index) => (
 							<div key={index} className='teamGame'>
 								<h3>
