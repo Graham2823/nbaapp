@@ -3,19 +3,20 @@ import axios from 'axios';
 import '../app/app.css';
 import { useRouter } from 'next/router';
 import convertTo12HourFormat from '@/utils/convertTime';
-import { Table } from 'react-bootstrap';
+import { Table, Image } from 'react-bootstrap';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
+import teams from '@/teams';
 
 const TeamDetails = () => {
 	const router = useRouter();
 	const [teamDetails, setTeamDetails] = useState([]);
+	const [teamLogoAndColors, setTeamLogoAndColors] = useState();
 	const [team1Info, setTeam1Info] = useState([]);
 	const [team2Info, setTeam2Info] = useState([]);
+	const [teamCompareLogos, setTeamCompareLogos] = useState()
 	const { teamName, team1, team2 } = router.query;
-	console.log(teamName);
-	console.log(team1Info);
-	console.log(team2Info);
+	console.log(teamLogoAndColors)
 
 	useEffect(() => {
 		if (teamName) {
@@ -28,6 +29,8 @@ const TeamDetails = () => {
 				.catch((error) => {
 					console.error('Error fetching data:', error);
 				});
+			const teamLogo = teams.filter((team)=> team.teamName === teamName)
+			setTeamLogoAndColors(teamLogo)
 		}
 		if (team1 && team2) {
 			axios
@@ -41,6 +44,8 @@ const TeamDetails = () => {
 				.catch((error) => {
 					console.error('Error fetching data:', error);
 				});
+			const teamLogos = teams.filter((team)=> team.teamName === team1 || team.teamName === team2)
+			setTeamCompareLogos(teamLogos)
 		}
 	}, [teamName, team1, team2]);
 
@@ -56,8 +61,8 @@ const TeamDetails = () => {
 		<div className='teamPage'>
 			<ToastContainer />
 			{teamDetails.team_info ? (
-				<div className='teamDetails'>
-					<h2>{teamDetails.teamName}</h2>
+				<div className='teamDetails' style={{backgroundColor : teamLogoAndColors[0].primaryColor}}>
+					<h2><Image src={teamLogoAndColors[0].teamLogo} alt='team logo' className='teamLogo'/>{teamDetails.teamName}</h2>
 					<Table className='teamDetailsTable' striped='columns' responsive='xl'>
 						<thead>
 							<th>Conference Rank</th>
@@ -143,7 +148,7 @@ const TeamDetails = () => {
 						</tbody>
 					</Table>
 					<h2>Team Schedule:</h2>
-					<div className='teamSchedule'>
+					<div className='teamSchedule' style={{backgroundColor:teamLogoAndColors[0].secondaryColor}}>
 						{teamDetails.schedule.map((game, index) => (
 							<div key={index} className='teamGame'>
 								<h3>
@@ -208,8 +213,8 @@ const TeamDetails = () => {
 						<thead>
 							<tr>
 								<th></th>
-								<th ><a href={`/TeamDetails?teamName=${team1}`}>{team1Info[0].name}</a></th>
-								<th><a href={`/TeamDetails?teamName=${team2}`}>{team2Info[0].name}</a></th>
+								<th ><a href={`/TeamDetails?teamName=${team1}`}><Image src={teamCompareLogos[0].teamLogo} alt='team logo' className='teamLogo'/>{team1Info[0].name}</a></th>
+								<th><a href={`/TeamDetails?teamName=${team2}`}><Image src={teamCompareLogos[1].teamLogo} alt='team logo' className='teamLogo'/>{team2Info[0].name}</a></th>
 							</tr>
 						</thead>
 						<tbody>

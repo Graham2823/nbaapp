@@ -3,12 +3,15 @@ import { useRouter } from 'next/router';
 import axios from 'axios';
 import { Table } from 'react-bootstrap';
 import "../app/app.css"
+import teams from '@/teams';
+import {Image} from 'react-bootstrap';
 
 
 const BoxScore = () => {
     const [boxScore, setBoxScore] = useState([])
     const router = useRouter()
     const {gameID, homeTeam, awayTeam, date} = router.query
+    const [teamLogosandColors , setTeamLogosAndColors] = useState([])
 
     useEffect(()=>{
         axios
@@ -19,14 +22,16 @@ const BoxScore = () => {
     .catch((error) => {
     console.error('Error fetching data:', error);
     });
+    const teamsLogos = teams.filter((team)=> team.teamName === homeTeam || team.teamName === awayTeam)
+    setTeamLogosAndColors(teamsLogos)
     },[date])
-    console.log(boxScore)
+    console.log(teamLogosandColors)
   return (
     <div className='boxScore'>
         {boxScore.teamOneArr&&
         <h1 className='homeTeamName'>
             <a href={`/TeamDetails?teamName=${boxScore.teamOneArr[0].team.full_name}`}>
-            {boxScore.teamOneArr[0].team.full_name}
+            <Image src={teamLogosandColors[0].teamLogo} alt='team logo' className='teamLogo'/>{boxScore.teamOneArr[0].team.full_name}
             </a>
         </h1>
         }
@@ -87,7 +92,7 @@ const BoxScore = () => {
         {boxScore.teamTwoArr &&
         <h1 className='awayTeamName'>
             <a href={`/TeamDetails?teamName=${boxScore.teamTwoArr[0].team.full_name}`}>
-            {boxScore.teamTwoArr[0].team.full_name}
+            <Image src={teamLogosandColors[1].teamLogo} alt='team logo' className='teamLogo'/>{boxScore.teamTwoArr[0].team.full_name}
             </a>
         </h1>
         }

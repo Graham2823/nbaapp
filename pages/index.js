@@ -2,7 +2,8 @@ import React, {useEffect, useState} from "react"
 import axios from "axios"
 import "../app/app.css"
 import convertTo12HourFormat from "@/utils/convertTime"
-import Link from "next/link"
+import { Image } from "react-bootstrap"
+import getTeamLogo from "@/utils/getLogo"
 
 export default function Home() {
   const [todaysGames, setTodaysGames] = useState([])
@@ -18,6 +19,7 @@ export default function Home() {
     console.error('Error fetching data:', error);
     });
   },[])
+
   console.log(todaysGames)
   console.log(yesterdaysGames)
     return (
@@ -27,13 +29,13 @@ export default function Home() {
           {todaysGames ?(
             todaysGames.map((game, index) => (
               <div key={index} className="game">
-                  <h3><a href={`/TeamDetails?teamName=${game.home_team.full_name}`}>{game.home_team.abbreviation}</a>
+                  <h3><a href={`/TeamDetails?teamName=${game.home_team.full_name}`}><Image src={getTeamLogo(game.home_team.full_name)} alt='team logo' className='teamLogoFrontPage'/>{game.home_team.abbreviation}</a>
                       {typeof game.home_team_score !== 'undefined' && game.home_team_score > 0 && (
                           <span>: {game.home_team_score}</span>
                       )}
                   </h3>
                   <h3>VS</h3>
-                  <h3><a href={`/TeamDetails?teamName=${game.visitor_team.full_name}`}>{game.visitor_team.abbreviation}</a>
+                  <h3><a href={`/TeamDetails?teamName=${game.visitor_team.full_name}`}><Image src={getTeamLogo(game.visitor_team.full_name)} alt='team logo' className='teamLogoFrontPage'/>{game.visitor_team.abbreviation}</a>
                       {typeof game.visitor_team_score !== 'undefined' && game.visitor_team_score > 0 && (
                           <span>: {game.visitor_team_score}</span>
                       )}
@@ -62,13 +64,13 @@ export default function Home() {
           {yesterdaysGames ?(
             yesterdaysGames.map((game, index) => (
               <div key={index} className="game">
-                  <h3><a href={`/TeamDetails?teamName=${game.home_team.full_name}`}>{game.home_team.abbreviation}</a>
+                  <h3><a href={`/TeamDetails?teamName=${game.home_team.full_name}`}><Image src={getTeamLogo(game.home_team.full_name)} alt='team logo' className='teamLogoFrontPage'/>{game.home_team.abbreviation}</a>
                       {typeof game.home_team_score !== 'undefined' && game.home_team_score > 0 && (
                           <span>: {game.home_team_score}</span>
                       )}
                   </h3>
                   <h3>VS</h3>
-                  <h3><a href={`/TeamDetails?teamName=${game.visitor_team.full_name}`}>{game.visitor_team.abbreviation}</a>
+                  <h3><a href={`/TeamDetails?teamName=${game.visitor_team.full_name}`}><Image src={getTeamLogo(game.visitor_team.full_name)} alt='team logo' className='teamLogoFrontPage'/>{game.visitor_team.abbreviation}</a>
                       {typeof game.visitor_team_score !== 'undefined' && game.visitor_team_score > 0 && (
                           <span>: {game.visitor_team_score}</span>
                       )}
