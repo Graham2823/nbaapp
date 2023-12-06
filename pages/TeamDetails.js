@@ -66,8 +66,7 @@ const TeamDetails = () => {
 					<Table className='teamDetailsTable' striped='columns' responsive='xl'>
 						<thead>
 							<th>Conference Rank</th>
-							<th>Wins</th>
-							<th>Losses</th>
+							<th>Record</th>
 							<th>Games Behind</th>
 							<th>Points For</th>
 							<th>Points Against</th>
@@ -87,8 +86,7 @@ const TeamDetails = () => {
 						<tbody>
 							<tr class='teamInfoRow'>
 								<td> {teamDetails.team_info[0].calc_rank.conf_rank} </td>
-								<td> {teamDetails.team_info[0].wins} </td>
-								<td> {teamDetails.team_info[0].losses} </td>
+								<td> {teamDetails.team_info[0].wins}-{teamDetails.team_info[0].losses} </td>
 								<td> {teamDetails.team_info[0].games_behind.conference} </td>
 								<td> {teamDetails.team_info[0].points_for} </td>
 								<td> {teamDetails.team_info[0].points_against} </td>
