@@ -21,7 +21,7 @@ const TeamDetails = () => {
 	useEffect(() => {
 		if (teamName) {
 			axios
-				.get(`http://localhost:3000/api/getTeam?teamName=${teamName}`)
+				.get(`https://nbaapp.vercel.app/api/getTeam?teamName=${teamName}`)
 				.then((response) => {
 					console.log(response.data);
 					setTeamDetails(response.data);
