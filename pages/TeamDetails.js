@@ -145,7 +145,6 @@ const TeamDetails = () => {
 							</tr>
 						</tbody>
 					</Table>
-					<h2>Team Schedule:</h2>
 					<div className='teamSchedule' style={{backgroundColor:teamLogoAndColors[0].secondaryColor}}>
 						{teamDetails.schedule.map((game, index) => (
 							<div key={index} className='teamGame'>
