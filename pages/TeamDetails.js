@@ -21,7 +21,7 @@ const TeamDetails = () => {
 	useEffect(() => {
 		if (teamName) {
 			axios
-				.get(`https://nbaapp.vercel.app/api/getTeam?teamName=${teamName}`)
+				.get(`http://localhost:3000/api/getTeam?teamName=${teamName}`)
 				.then((response) => {
 					console.log(response.data);
 					setTeamDetails(response.data);
@@ -145,7 +145,6 @@ const TeamDetails = () => {
 							</tr>
 						</tbody>
 					</Table>
-					<h2>Team Schedule:</h2>
 					<div className='teamSchedule' style={{backgroundColor:teamLogoAndColors[0].secondaryColor}}>
 						{teamDetails.schedule.map((game, index) => (
 							<div key={index} className='teamGame'>
