@@ -1,6 +1,8 @@
 import React from 'react';
 import { Table } from 'react-bootstrap';
 import '../app/app.css';
+import getTeamLogo from '@/utils/getLogo'
+import {Image} from 'react-bootstrap';
 
 const StandingsCard = ({ conference }) => {
 	return (
@@ -10,8 +12,7 @@ const StandingsCard = ({ conference }) => {
 					<tr>
 						<th>Confernece Rank</th>
 						<th>Team</th>
-						<th>Wins</th>
-						<th>Losses</th>
+						<th>Record</th>
 						<th>Games Behind</th>
 						<th>Points For</th>
 						<th>Points Against</th>
@@ -33,11 +34,10 @@ const StandingsCard = ({ conference }) => {
 									<td>
 										<a
 											href={`/TeamDetails?teamName=${team.market}%20${team.name}`}>
-											{team.market} {team.name}
+											<Image src={getTeamLogo(team.market + ' ' + team.name)} alt='team logo' className='teamLogoStandings'/>{team.market} {team.name}
 										</a>
 									</td>
-									<td>{team.wins}</td>
-									<td>{team.losses}</td>
+									<td>{team.wins}-{team.losses}</td>
 									<td>{team.games_behind.conference}</td>
 									<td>{team.points_for}</td>
 									<td>{team.points_against}</td>

@@ -14,13 +14,14 @@ const TeamDetails = () => {
 	const [teamLogoAndColors, setTeamLogoAndColors] = useState();
 	const [team1Info, setTeam1Info] = useState([]);
 	const [team2Info, setTeam2Info] = useState([]);
+	const [teamCompareLogos, setTeamCompareLogos] = useState()
 	const { teamName, team1, team2 } = router.query;
 	console.log(teamLogoAndColors)
 
 	useEffect(() => {
 		if (teamName) {
 			axios
-				.get(`http://localhost:3000/api/getTeam?teamName=${teamName}`)
+				.get(`https://nbaapp.vercel.app/api/getTeam?teamName=${teamName}`)
 				.then((response) => {
 					console.log(response.data);
 					setTeamDetails(response.data);
@@ -43,6 +44,8 @@ const TeamDetails = () => {
 				.catch((error) => {
 					console.error('Error fetching data:', error);
 				});
+			const teamLogos = teams.filter((team)=> team.teamName === team1 || team.teamName === team2)
+			setTeamCompareLogos(teamLogos)
 		}
 	}, [teamName, team1, team2]);
 
@@ -210,8 +213,8 @@ const TeamDetails = () => {
 						<thead>
 							<tr>
 								<th></th>
-								<th ><a href={`/TeamDetails?teamName=${team1}`}>{team1Info[0].name}</a></th>
-								<th><a href={`/TeamDetails?teamName=${team2}`}>{team2Info[0].name}</a></th>
+								<th ><a href={`/TeamDetails?teamName=${team1}`}><Image src={teamCompareLogos[0].teamLogo} alt='team logo' className='teamLogo'/>{team1Info[0].name}</a></th>
+								<th><a href={`/TeamDetails?teamName=${team2}`}><Image src={teamCompareLogos[1].teamLogo} alt='team logo' className='teamLogo'/>{team2Info[0].name}</a></th>
 							</tr>
 						</thead>
 						<tbody>

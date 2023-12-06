@@ -9,11 +9,11 @@ const teams = [
         teamName: "Boston Celtics",
         teamLogo: 'NBA_Logos/Celtics.png',
         primaryColor: '#007A33',
-        secondaryColor: '#FFFFFF90'
+        secondaryColor: '#FFFFFF'
     },
     {
         teamName: "Brooklyn Nets",
-        teamLogo: 'NBA_Logos/Nets.png',
+        teamLogo: 'NBA_Logos/Nets.jpeg',
         primaryColor: '#00000070',
         secondaryColor: '#FFFFFF70'
     },
@@ -27,49 +27,49 @@ const teams = [
         teamName: "Chicago Bulls",
         teamLogo: 'NBA_Logos/Bulls.png',
         primaryColor: '#CE1141',
-        secondaryColor: '#CE1141'
+        secondaryColor: '#FFFFFF'
     },
     {
         teamName: "Cleveland Cavaliers",
         teamLogo: 'NBA_Logos/Cavs.png',
-        primaryColor: '#86003890',
-        secondaryColor: '#FDBB30'
+        primaryColor: '#FDBB30',
+        secondaryColor: '#860038'
     },
     {
         teamName: "Dallas Mavericks",
         teamLogo: 'NBA_Logos/Mavs.png',
-        primaryColor: '#002B5e90',
-        secondaryColor: '#B8C4CA'
+        primaryColor: '#B8C4CA',
+        secondaryColor: '#002B5e'
     },
     {
         teamName: "Denver Nuggets",
         teamLogo: 'NBA_Logos/Nuggets.png',
-        primaryColor: '#0E224090',
-        secondaryColor: '#FEC524'
+        primaryColor: '#FEC524',
+        secondaryColor: '#0E2240'
     },
     {
         teamName: "Detroit Pistons",
         teamLogo: 'NBA_Logos/Pistons.png',
-        primaryColor: '#C8102E98',
+        primaryColor: '#C8102E',
         secondaryColor: '#1D42BA'
     },
     {
         teamName: "Golden State Warriors",
         teamLogo: 'NBA_Logos/Warriors.png',
-        primaryColor: '#1D428A',
-        secondaryColor: '#FFC72C'
+        primaryColor: '#FFC72C',
+        secondaryColor: '#1D428A'
     },
     {
         teamName: "Houston Rockets",
-        teamLogo: 'NBA_Logos/Rockets.jpeg',
+        teamLogo: 'NBA_Logos/Rockets.png',
         primaryColor: '#CE1141',
         secondaryColor: '#000000'
     },
     {
         teamName: "Indiana Pacers",
         teamLogo: 'NBA_Logos/Pacers.png',
-        primaryColor: '#002D6299',
-        secondaryColor: '#FDBB30'
+        primaryColor: '#FDBB30',
+        secondaryColor: '#002D62'
     },
     {
         teamName: "LA Clippers",
@@ -92,8 +92,8 @@ const teams = [
     {
         teamName: "Miami Heat",
         teamLogo: 'NBA_Logos/Heat.png',
-        primaryColor: '#98002E',
-        secondaryColor: '#F9A01B'
+        primaryColor: '#F9A01B',
+        secondaryColor: '#98002E'
     },
     {
         teamName: "Milwaukee Bucks",
@@ -115,7 +115,7 @@ const teams = [
     },
     {
         teamName: "New York Knicks",
-        teamLogo: 'NBA_Logos/Knicks.jpeg',
+        teamLogo: 'NBA_Logos/Knicks.png',
         primaryColor: '#006BB6',
         secondaryColor: '#F58426'
     },
@@ -139,7 +139,7 @@ const teams = [
     },
     {
         teamName: "Phoenix Suns",
-        teamLogo: 'NBA_Logos/Suns.png',
+        teamLogo: 'NBA_Logos/Suns.jpeg',
         primaryColor: '#E56020',
         secondaryColor: '#1D1160'
     },

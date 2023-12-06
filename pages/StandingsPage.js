@@ -4,6 +4,7 @@ import StandingsCard from '@/components/StandingsCard'
 import { Button } from 'react-bootstrap'
 import "../app/app.css"
 
+
 const StandingsPage = () => {
     const [WC, setWC] = useState()
     const [EC, setEC] = useState()
