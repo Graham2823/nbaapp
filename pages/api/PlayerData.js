@@ -2,6 +2,8 @@ import { createRouter } from 'next-connect';
 import cors from 'cors'; // Import the cors middleware
 import Player from '@/models/playerSchema';
 import mongoose from 'mongoose';
+import basketballPlayers from '@/players';
+
 
 const playerData = createRouter();
 
@@ -26,10 +28,9 @@ playerData.get(async (req, res) =>{
 const requestsPerMinute = 60;
 const millisecondsPerMinute = 120000;
 await Player.deleteMany({});
-for (let i = 15; i <= 495; i++) {
-    let playerName;
+for (let i = 0; i < basketballPlayers.length; i++) {
     let playerID;
-    let playerTeam;
+    let playerTeam = null;
     let games_played;
     let min;
     let points;
@@ -43,20 +44,23 @@ for (let i = 15; i <= 495; i++) {
     let ft_pct;
     let compilePlayer = false;
     let playerObject;
+    let playerFirstName = basketballPlayers[i].split(" ")[0]
+    let playerLastName = basketballPlayers[i].split(" ")[1]
+    
 
-    // Fetch gamelog data
-    const gamelogData = await fetch(`https://www.balldontlie.io/api/v1/stats?seasons[]=2023&player_ids[]=${i}&postseason=false`).then(res => res.json());
+    const playerInfo = await fetch(`https://www.balldontlie.io/api/v1/players?search=${playerFirstName}%20${playerLastName}`).then(res=> res.json())
+    console.log(playerInfo.data[0])
+    if(playerInfo.data[0]){
 
-    if (gamelogData.data.length > 0) {
-      playerName = gamelogData.data[0].player.first_name + "%20" + gamelogData.data[0].player.last_name;
-      compilePlayer = true; // Set compilePlayer to true when gamelog data is available
-      playerTeam = gamelogData.data[0].team.full_name;
+    
+        playerID = playerInfo.data[0].id
+    
+    if(playerInfo.data[0].team.length > 0){
+        playerTeam = playerInfo.data[0].team.full_name
     }
 
-    // Continue with other fetches and processing only if compilePlayer is true
-    if (compilePlayer) {
       // Fetch season averages data
-      const playerStats = await fetch(`https://www.balldontlie.io/api/v1/season_averages?season=2023&player_ids[]=${i}`).then(res => res.json());
+      const playerStats = await fetch(`https://www.balldontlie.io/api/v1/season_averages?season=2023&player_ids[]=${playerID}`).then(res => res.json());
 
       if (playerStats.data.length > 0) {
         min = playerStats.data[0].min;
@@ -71,11 +75,12 @@ for (let i = 15; i <= 495; i++) {
         fg3_pct = playerStats.data[0].fg3_pct;
         ft_pct = playerStats.data[0].ft_pct;
       }
+    }
 
       // Create playerObject
       playerObject = {
-        name: playerName.split("%20").join(' '),
-        team: playerTeam,
+        name: basketballPlayers[i],
+        team: playerTeam === null ? "" : playerTeam,
         stats: {
           games_played,
           min,
@@ -92,10 +97,13 @@ for (let i = 15; i <= 495; i++) {
       };
 
       // Push to playerResults and save to database
-      playerResults.push(playerObject);
-      const playerDoc = new Player(playerObject);
-      await playerDoc.save();
-    }
+      if(playerObject.stats.games_played){
+          playerResults.push(playerObject);
+          const playerDoc = new Player(playerObject);
+          await playerDoc.save();
+          console.log(playerObject)
+      }
+    
 
     // Delay before next iteration
     await delay(millisecondsPerMinute / requestsPerMinute);
