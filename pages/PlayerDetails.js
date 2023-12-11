@@ -68,7 +68,7 @@ const PlayerDetails = () => {
 
 
 	return(
-<div>
+<div className='playerDetailsPage'>
 <ToastContainer/>
 	{playerDetails.playerData ? (
 
