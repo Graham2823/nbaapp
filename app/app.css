@@ -324,16 +324,16 @@ a:hover{
 	margin: auto;
 }
 
-.statCard{
-	width: 300px;
-	margin: 50px;
-	text-align: center
-}
-
 .statCards{
 	display: flex;
-	justify-content: space-evenly;
 	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+}
+
+.statCard{
+	width: 400px;
+	margin: 10px auto;
 }
 
 .statLeadersTable{
@@ -381,6 +381,9 @@ a:hover{
     .playerStats th, td{
         font-size: .6em;
     }
+	.statCardTable td{
+		font-size: .8em;
+	}
 }
 
 @media (max-width: 680px) {
@@ -469,6 +472,14 @@ a:hover{
 		padding: 0px;
 		margin: 0px;
 	}
+	
+	.statCardTable{
+		height: 100px;
+		margin: 0;
+	}
+	.statCardTable td{
+		font-size: .6em;
+	}
 }
 
 @media (max-width: 430px) {
@@ -501,13 +512,30 @@ a:hover{
     .standingsTable td{
         font-size: .7em;
     }
+	.statCards{
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.statCard{
+		margin: 5px auto;
+		width:80%;
+	}
 }
 
 @media (max-width: 400px){
+	.custom-navbar{
+		width: 100vw;
+	}
     .playerStats th, td{
 		font-size: 0.3em;
 		padding: 0px;
 		margin: 0px;
+	}
+	.statCardTable td{
+		font-size: .6em;
 	}
 }
 
@@ -527,6 +555,12 @@ a:hover{
 	}
 }
 @media (max-width: 295px) {
+	.custom-navbar .nav-link {
+		font-size: .6em;
+		padding: 5px;
+		color: white;
+		text-decoration: none;
+	}
 	.boxScoreTable {
 		width: 70%;
 		margin: auto;
