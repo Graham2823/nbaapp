@@ -2,6 +2,8 @@ import { createRouter } from 'next-connect';
 import cors from 'cors'; // Import the cors middleware
 import Player from '@/models/playerSchema';
 import mongoose from 'mongoose';
+require('dotenv').config();
+
 
 const topFiveLeaders = createRouter();
 
