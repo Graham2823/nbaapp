@@ -12,6 +12,7 @@ const TopNav = () => {
             <Nav.Link href="/PlayerSearch">Player</Nav.Link>
             <Nav.Link href="/TeamSearch">Team</Nav.Link>
             <Nav.Link href="/StandingsPage">Standings</Nav.Link>
+            <Nav.Link href="/Stats">League Leaders</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

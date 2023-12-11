@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import { Table } from 'react-bootstrap';
+import "../app/app.css"
+
 
 const StatLeaders = () => {
 	const router = useRouter();
@@ -9,20 +11,22 @@ const StatLeaders = () => {
 	const [statLeaders, setStatLeaders] = useState([]);
 
 	useEffect(() => {
-		axios
-			.get(`http://localhost:3000/api/${stat}Leaders`)
-			.then((response) => {
-				setStatLeaders(response.data)
-			})
-			.catch((error) => {
-				console.error('Error fetching data:', error);
-			});
-	}, []);
+        if(stat){
+            axios
+                .get(`https://nbaapp.vercel.app/api/${stat}Leaders`)
+                .then((response) => {
+                    setStatLeaders(response.data)
+                })
+                .catch((error) => {
+                    console.error('Error fetching data:', error);
+                });
+        }
+	}, [stat]);
 
 	return (
-		<div>
+		<div className='statLeadersPage'>
 			{statLeaders.length > 0 && (
-				<Table responsive="lg">
+				<Table responsive="lg" className='statLeadersTable'>
 					<thead>
                         <th></th>
                         <th>Player</th>
@@ -42,7 +46,7 @@ const StatLeaders = () => {
 						{statLeaders.map((player, key) => (
 							<tr key={key}>
                                 <td>{key + 1}</td>
-                                <td>{player.name}</td>
+                                <td><a href={`/PlayerDetails/?first=${player.name.split(" ")[0]}&last=${player.name.split(" ")[1]}`}>{player.name}</a></td>
                             <td class='gamesPlayed'>
                                 {player.stats.games_played}
                             </td>

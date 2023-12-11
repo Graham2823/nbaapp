@@ -33,10 +33,10 @@ const StatLeadersCard = ({cattegory, leaders}) => {
         <h2>{stat.toUpperCase()}</h2>
         <Table className='statCardTable'>
         {leaders.map((player, key)=>(
-            <tr key={key}><td>{player.name}</td><td>{player.stats[stat]}</td></tr>
+            <tr key={key}><td><a href={`/PlayerDetails/?first=${player.name.split(" ")[0]}&last=${player.name.split(" ")[1]}`}>{player.name}</a></td><td>{player.stats[stat]}</td></tr>
         ))}
         </Table>
-        <Button size='sm' onClick={()=>router.push(`/StatLeaders?stat=${stat}`)}>View All</Button>
+        <Button size='sm' onClick={()=>router.push(`/StatLeaders?stat=${stat}`)}>View Top 20</Button>
     </Card>
   )
 }
