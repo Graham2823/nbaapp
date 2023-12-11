@@ -3,7 +3,7 @@ import cors from 'cors'; // Import the cors middleware
 import Player from '@/models/playerSchema';
 import mongoose from 'mongoose';
 
-const stealLeaders = createRouter();
+const topFiveLeaders = createRouter();
 
 // Set up CORS options
 // const corsMiddleware = cors({
@@ -15,7 +15,7 @@ const stealLeaders = createRouter();
 // playerRouter.use(corsMiddleware);
 const mongoConnectionString = process.env.MONGODB_CONNECTION_STRING;
 
-stealLeaders.get(async (req, res) =>{
+topFiveLeaders.get(async (req, res) =>{
   console.log("hit")
   let leaders
     try {
@@ -62,5 +62,5 @@ stealLeaders.get(async (req, res) =>{
    });
 
 export default async (req, res) => {
-    await stealLeaders.run(req, res);
+    await topFiveLeaders.run(req, res);
 };
