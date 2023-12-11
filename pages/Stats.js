@@ -8,7 +8,7 @@ const Stats = () => {
     const [statLeaders, setStatLeaders] = useState([])
 
     useEffect(()=>{
-        axios.get(`https://nbaapp.vercel.app/api/topFiveLeaders`)
+        axios.get(`http://localhost:3000/api/topFiveLeaders`)
         .then((response) => {
             setStatLeaders(response.data)
             })
@@ -23,7 +23,7 @@ const Stats = () => {
             <h1>League Leaders</h1>
         <div className='statCards'>
             {Object.keys(statLeaders).map((category) => (
-                <div key={category}>
+                <div key={category} className='statCard'>
                     <StatLeadersCard cattegory={category} leaders={statLeaders[category]}/>
                 </div>
             ))}
