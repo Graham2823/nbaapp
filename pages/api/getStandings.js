@@ -16,7 +16,7 @@ standingsRouter.get(async (req, res) =>{
    let ec_full = []
    let wc_full =[]
     try{
-        fetch (`https://api.sportradar.us/nba/trial/v8/en/seasons/2023/REG/standings.json?api_key=ujcd47k6v4fdzvbbtpfatx63`)
+        fetch (`https://api.sportradar.us/nba/trial/v8/en/seasons/2023/REG/standings.json?api_key=qc3jvr8u7852z2s9u8hspz4s`)
         .then(res => res.json())
         .then((data)=>{
             for(let i =0; i< data.conferences.length; i++){
