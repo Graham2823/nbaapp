@@ -285,7 +285,7 @@ a:hover{
 }
 
 .searchPlayer{
-    padding-top: 50px;
+    padding-top: 10px;
 }
 
 .compareTeamsTable{
@@ -350,6 +350,23 @@ a:hover{
 	border: 1px solid black;
 }
 
+.tooltip-arrow::before{
+	display: none;
+}
+
+.tooltip-inner{
+	background-color: transparent;
+}
+
+
+
+/* .tooltip-inner{
+	display: none;
+}
+
+.tooltip-inner:first-child{
+	display: block;
+} */
 
 @media (max-width: 820px){
     .playerStats th{
