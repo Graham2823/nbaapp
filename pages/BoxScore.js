@@ -5,12 +5,13 @@ import { Table } from 'react-bootstrap';
 import "../app/app.css"
 import teams from '@/teams';
 import {Image} from 'react-bootstrap';
+import getTeamLogo from "@/utils/getLogo"
 
 
 const BoxScore = () => {
     const [boxScore, setBoxScore] = useState([])
     const router = useRouter()
-    const {gameID, homeTeam, awayTeam, date} = router.query
+    const {gameID, homeTeam, homeScore, awayTeam, awayScore, date} = router.query
     const [teamLogosandColors , setTeamLogosAndColors] = useState([])
 
     useEffect(()=>{
@@ -25,13 +26,13 @@ const BoxScore = () => {
     const teamsLogos = teams.filter((team)=> team.teamName === homeTeam || team.teamName === awayTeam)
     setTeamLogosAndColors(teamsLogos)
     },[date])
-    console.log(teamLogosandColors)
+   console.log(boxScore)
   return (
     <div className='boxScore'>
         {boxScore.teamOneArr&&
         <h1 className='homeTeamName'>
             <a href={`/TeamDetails?teamName=${boxScore.teamOneArr[0].team.full_name}`}>
-            <Image src={teamLogosandColors[0].teamLogo} alt='team logo' className='teamLogo'/>{boxScore.teamOneArr[0].team.full_name}
+            <Image src={getTeamLogo(boxScore.teamOneArr[0].team.full_name)} alt='team logo' className='teamLogo'/>{boxScore.teamOneArr[0].team.full_name}:{homeScore}
             </a>
         </h1>
         }
@@ -92,7 +93,7 @@ const BoxScore = () => {
         {boxScore.teamTwoArr &&
         <h1 className='awayTeamName'>
             <a href={`/TeamDetails?teamName=${boxScore.teamTwoArr[0].team.full_name}`}>
-            <Image src={teamLogosandColors[1].teamLogo} alt='team logo' className='teamLogo'/>{boxScore.teamTwoArr[0].team.full_name}
+            <Image src={getTeamLogo(boxScore.teamTwoArr[0].team.full_name)} alt='team logo' className='teamLogo'/>{boxScore.teamTwoArr[0].team.full_name}:{awayScore}
             </a>
         </h1>
         }

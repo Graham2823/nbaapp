@@ -187,18 +187,17 @@ const TeamDetails = () => {
 										{convertTo12HourFormat(game.status, true)}
 									</h3>
 								)}
-								{game.home_team_score > 0 && game.visitor_team_score > 0 && (
+								{game.home_team_score > 0 && game.visitor_team_score > 0 ? (
 									<p>
 										<a
-											href={`/BoxScore?gameID=${game.id}&homeTeam=${
-												game.home_team.full_name
-											}&awayTeam=${game.visitor_team.full_name}&date=${
-												game.date.split('T')[0]
-											}`}>
+											href={`/BoxScore?gameID=${game.id}&homeTeam=${game.home_team.full_name}&homeScore=${game.home_team_score}&awayTeam=${game.visitor_team.full_name}&awayScore=${game.visitor_team_score}&date=${game.date.split("T")[0]}`}>
 											<button>View Box Score</button>
 										</a>
 									</p>
-								)}
+								):
+								<div>
+								<a href={`/TeamDetails?team1=${game.home_team.full_name}&team2=${game.visitor_team.full_name}`}><button className="compareButton">Compare Teams</button></a>
+							  </div>}
 							</div>
 						))}
 					</div>
