@@ -1,5 +1,6 @@
 import { createRouter } from 'next-connect';
 import cors from 'cors'; // Import the cors middleware
+import mongoose from 'mongoose';
 
 const standingsRouter = createRouter();
 
@@ -61,3 +62,33 @@ standingsRouter.get(async (req, res) =>{
 export default async (req, res) => {
     await standingsRouter.run(req, res);
 };
+
+
+
+//
+// const Standings = mongoose.model('Standings', new mongoose.Schema({}), 'standings');
+
+// // Route handler
+// standingsRouter.get(async (req, res) => {
+//   try {
+//     const mongoConnectionString = process.env.MONGODB_CONNECTION_STRING;
+//     await mongoose.connect(mongoConnectionString, {
+//       useNewUrlParser: true,
+//       useUnifiedTopology: true,
+//     });
+
+//     // Use the existing Standings model
+//     const standings = await Standings.find({});
+//     console.log(standings);
+
+//     res.json(standings);
+
+//   } catch (err) {
+//     console.log(err);
+//     res.status(500).json({ error: 'Internal Server Error' });
+//   }
+// });
+    
+//     export default async (req, res) => {
+//         await standingsRouter.run(req, res);
+//     };
