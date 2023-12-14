@@ -16,7 +16,7 @@ const TeamDetails = () => {
 	const [team2Info, setTeam2Info] = useState([]);
 	const [teamCompareLogos, setTeamCompareLogos] = useState()
 	const { teamName, team1, team2 } = router.query;
-	console.log(teamLogoAndColors)
+
 
 	useEffect(() => {
 		if (teamName) {
@@ -209,8 +209,8 @@ const TeamDetails = () => {
 						<thead>
 							<tr>
 								<th></th>
-								<th ><a href={`/TeamDetails?teamName=${team1}`}><Image src={teamCompareLogos[0].teamLogo} alt='team logo' className='teamLogo'/>{team1Info[0].name}</a></th>
-								<th><a href={`/TeamDetails?teamName=${team2}`}><Image src={teamCompareLogos[1].teamLogo} alt='team logo' className='teamLogo'/>{team2Info[0].name}</a></th>
+								<th ><a href={`/TeamDetails?teamName=${team1}`}><Image src={teamCompareLogos[0].teamName === team1Info[0].market + " " + team1Info[0].name ? teamCompareLogos[0].teamLogo : teamCompareLogos[1].teamLogo}alt='team logo' className='teamLogo'/>{team1Info[0].name}</a></th>
+								<th><a href={`/TeamDetails?teamName=${team2}`}><Image src={teamCompareLogos[1].teamName === team2Info[0].market + " " + team2Info[0].name ? teamCompareLogos[1].teamLogo : teamCompareLogos[0].teamLogo} alt='team logo' className='teamLogo'/>{team2Info[0].name}</a></th>
 							</tr>
 						</thead>
 						<tbody>
