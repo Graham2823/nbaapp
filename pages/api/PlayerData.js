@@ -79,7 +79,7 @@ for (let i = 0; i < basketballPlayers.length; i++) {
 
       // Create playerObject
       playerObject = {
-        name: basketballPlayers[i],
+        name: basketballPlayers[i].split("%20").join(" "),
         team: playerTeam === null ? "" : playerTeam,
         stats: {
           games_played,
