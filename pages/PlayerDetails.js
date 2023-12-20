@@ -23,7 +23,7 @@ const PlayerDetails = () => {
 	const [p2Stats, setP2Stats] = useState([])
 
 	useEffect(()=>{
-		if(first && last){
+		if(first && last){ 
 			axios
 			.get(
 				`https://nbaapp.vercel.app/api/getPlayer?firstName=${first}&lastName=${last}`
