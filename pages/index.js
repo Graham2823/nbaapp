@@ -1,16 +1,18 @@
-import React, {useEffect, useState} from "react"
+import React, {useEffect, useState, useContext} from "react"
 import axios from "axios"
 import "../app/app.css"
 import convertTo12HourFormat from "@/utils/convertTime"
 import { Image } from "react-bootstrap"
 import getTeamLogo from "@/utils/getLogo"
+import { UserContext } from "@/context/userContext"
 
 export default function Home() {
   const [todaysGames, setTodaysGames] = useState([])
   const [yesterdaysGames, setYesterdaysGames] = useState([])
+  const {username} = useContext(UserContext)
   useEffect(()=>{
     axios
-    .get(`https://nbaapp.vercel.app/api/getGames`)
+    .get(`http://localhost:3000/api/getGames`)
     .then((response) => {
     setTodaysGames(response.data.tscores);
     setYesterdaysGames(response.data.yscores);
@@ -24,6 +26,7 @@ export default function Home() {
   console.log(yesterdaysGames)
     return (
       <div className="frontPage">
+        <h1>Hello {username}</h1>
           <h2>Todays Games:</h2>
         <div className="todaysGames">
           {todaysGames ?(

@@ -85,20 +85,27 @@ a:hover{
 	display: flex;
 	align-items: center;
 	z-index: 1000;
-	flex-wrap: wrap; /* Allow flex items to wrap on smaller screens */
-	justify-content: space-between; /* Ensure links are not squished together */
-}
-
-.custom-navbar .nav-link {
+	justify-content: space-between;
+  }
+  
+  .custom-navbar .nav-link {
 	padding: 10px;
 	color: white;
 	text-decoration: none;
-}
-
-.custom-navbar .nav-link:hover {
-	color: #e2e2e2; /* Link text color on hover */
-}
-
+  }
+  
+  .custom-navbar .nav-link:hover {
+	color: #e2e2e2;
+  }
+  
+  .right-nav {
+	display: flex;
+	align-items: center;
+  }
+  
+  .right-nav .nav-link {
+	margin-left: 10px;
+  }
 .frontPage,
 .playerPage,
 .teamPage{
@@ -357,6 +364,7 @@ a:hover{
 .tooltip-inner{
 	background-color: transparent;
 }
+
 
 
 
