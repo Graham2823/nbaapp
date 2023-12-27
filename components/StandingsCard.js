@@ -5,6 +5,20 @@ import getTeamLogo from '@/utils/getLogo'
 import {Image} from 'react-bootstrap';
 
 const StandingsCard = ({ conference }) => {
+	console.log(conference)
+
+	const encodeTeamNameForURL = (teamName) => {
+		// Replace various whitespace characters, including non-breaking space, with regular spaces
+		const teamNameWithSpaces = teamName.replace(/\s+/g, ' ');
+	  
+		// Encode the team name for the URL
+		return encodeURIComponent(teamNameWithSpaces);
+	  };
+
+	  const getNormalizedTeamName = (teamName) => {
+		// Replace various whitespace characters, including non-breaking space, with regular spaces
+		return teamName.replace(/\s+/g, ' ');
+	  };
 	return (
 		<div>
 			<Table className='standingsTable' responsive='xl'>
@@ -14,53 +28,35 @@ const StandingsCard = ({ conference }) => {
 						<th>Team</th>
 						<th>Record</th>
 						<th>Games Behind</th>
-						<th>Points For</th>
-						<th>Points Against</th>
-						<th>Point Differential</th>
 						<th>Streak</th>
 						<th>Conference Record</th>
 						<th>Division Record</th>
 						<th>Home Record</th>
 						<th>Away Record</th>
 						<th>Last 10</th>
+						<th>Overtime</th>
 					</tr>
 				</thead>
 				<tbody>
 					{conference &&
-						conference.map((team, index) => (
+						conference.teams.map((team, index) => (
 							<>
-								<tr className={index <6 ? 'playoffTeam' : index< 10 ? 'playinTeam' : 'lotteryTeam'}>
-									<td>{index + 1}</td>
-									<td>
-										<a
-											href={`/TeamDetails?teamName=${team.market}%20${team.name}`}>
-											<Image src={getTeamLogo(team.market + ' ' + team.name)} alt='team logo' className='teamLogoStandings'/>{team.market} {team.name}
-										</a>
-									</td>
-									<td>{team.wins}-{team.losses}</td>
-									<td>{team.games_behind.conference}</td>
-									<td>{team.points_for}</td>
-									<td>{team.points_against}</td>
-									<td>{team.point_diff}</td>
-									<td>
-										{team.streak.kind === 'loss' ? 'Lost' : 'Won'}{' '}
-										{team.streak.length}
-									</td>
-									<td>
-										{team.records[3].wins}-{team.records[3].losses}
-									</td>
-									<td>
-										{team.records[4].wins}-{team.records[4].losses}
-									</td>
-									<td>
-										{team.records[8].wins}-{team.records[8].losses}
-									</td>
-									<td>
-										{team.records[22].wins}-{team.records[22].losses}
-									</td>
-									<td>
-										{team.records[9].wins}-{team.records[9].losses}
-									</td>
+								<tr className={index <6 ? 'playoffTeam' : index< 10 ? 'playinTeam' : 'lotteryTeam'}> 
+							<td>{index + 1}</td>
+							<td><a
+											href={`/TeamDetails?teamName=${encodeTeamNameForURL(team.team)}`}>
+												<Image src={getTeamLogo(getNormalizedTeamName(team.team))} alt='team logo' className='teamLogoStandings'/>
+											{team.team}
+										</a></td>
+							<td>{team.wins}-{team.losses}</td>
+							<td>{team.gamesBehind}</td>
+							<td>{team.streak}</td>
+							<td>{team.conferenceRecord}</td>
+							<td>{team.divisionRecord}</td>
+							<td>{team.homeRecord}</td>
+							<td>{team.awayRecord}</td>
+							<td>{team.lastTen}</td>
+							<td>{team.otRecord}</td>
 								</tr>
 							</>
 						))}

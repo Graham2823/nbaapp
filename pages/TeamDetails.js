@@ -14,9 +14,8 @@ const TeamDetails = () => {
 	const [teamLogoAndColors, setTeamLogoAndColors] = useState();
 	const [team1Info, setTeam1Info] = useState([]);
 	const [team2Info, setTeam2Info] = useState([]);
-	const [teamCompareLogos, setTeamCompareLogos] = useState()
+	const [teamCompareLogos, setTeamCompareLogos] = useState();
 	const { teamName, team1, team2 } = router.query;
-
 
 	useEffect(() => {
 		if (teamName) {
@@ -29,8 +28,8 @@ const TeamDetails = () => {
 				.catch((error) => {
 					console.error('Error fetching data:', error);
 				});
-			const teamLogo = teams.filter((team)=> team.teamName === teamName)
-			setTeamLogoAndColors(teamLogo)
+			const teamLogo = teams.filter((team) => team.teamName === teamName);
+			setTeamLogoAndColors(teamLogo);
 		}
 		if (team1 && team2) {
 			axios
@@ -38,114 +37,107 @@ const TeamDetails = () => {
 					`https://nbaapp.vercel.app/api/compareTeams?team1=${team1}&team2=${team2}`
 				)
 				.then((response) => {
-					setTeam1Info(response.data.team1_info)
-					setTeam2Info(response.data.team2_info)
+					console.log('res', response.data);
+					setTeam1Info(response.data.teamOne);
+					setTeam2Info(response.data.teamTwo);
 				})
 				.catch((error) => {
 					console.error('Error fetching data:', error);
 				});
-			const teamLogos = teams.filter((team)=> team.teamName === team1 || team.teamName === team2)
-			setTeamCompareLogos(teamLogos)
+			const teamLogos = teams.filter(
+				(team) => team.teamName === team1 || team.teamName === team2
+			);
+			setTeamCompareLogos(teamLogos);
 		}
 	}, [teamName, team1, team2]);
 
-	const winPercentage = (wins, losses)=>{
-		if(wins === 0 && losses === 0){
-			return 0
-		}
-		const totalGames = wins + losses
-		return wins/totalGames
-	}
+	const winPercentageFromRecord = (record) => {
+		const [wins, losses] = record.split('-').map(Number);
+		console.log('wins', wins, 'losses', losses);
 
+		if (wins === 0 && losses === 0) {
+			return 0;
+		}
+
+		const totalGames = wins + losses;
+		return wins / totalGames;
+	};
+	const getNormalizedTeamName = (teamName) => {
+		// Replace various whitespace characters, including non-breaking space, with regular spaces
+		return teamName.replace(/\s+/g, ' ');
+	};
+
+	const extractStreakNumber = (streak) => {
+		// Find the index where the numeric part starts
+		let startIndex = 0;
+		while (startIndex < streak.length && isNaN(parseInt(streak[startIndex]))) {
+			startIndex++;
+		}
+
+		// Find the index where the numeric part ends
+		let endIndex = startIndex;
+		while (endIndex < streak.length && !isNaN(parseInt(streak[endIndex]))) {
+			endIndex++;
+		}
+
+		// Extract the numeric part and convert it to a number
+		const numericPart = streak.substring(startIndex, endIndex);
+		return numericPart ? parseInt(numericPart) : 0;
+	};
+
+	console.log('logos', teamCompareLogos);
+	console.log('teams', team1Info);
 	return (
 		<div className='teamPage'>
 			<ToastContainer />
-			{teamDetails.team_info ? (
-				<div className='teamDetails' style={{backgroundColor : teamLogoAndColors[0].primaryColor}}>
-					<h2><Image src={teamLogoAndColors[0].teamLogo} alt='team logo' className='teamLogo'/>{teamDetails.teamName}</h2>
+			{teamDetails.team ? (
+				<div
+					className='teamDetails'
+					style={{ backgroundColor: teamLogoAndColors[0].primaryColor }}>
+					<h2>
+						<Image
+							src={teamLogoAndColors[0].teamLogo}
+							alt='team logo'
+							className='teamLogo'
+						/>
+						{teamDetails.teamName}
+					</h2>
 					<Table className='teamDetailsTable' striped='columns' responsive='xl'>
 						<thead>
-							<th>Conference Rank</th>
-							<th>Record</th>
-							<th>Games Behind</th>
-							<th>Points For</th>
-							<th>Points Against</th>
-							<th>Points Differential</th>
-							<th>Streak</th>
-							<th>Conference Record</th>
-							<th>Division Record</th>
-							<th>Home Record</th>
-							<th>Away Record</th>
-							<th>Last 10</th>
-							<th>Vs below .500</th>
-							<th>Vs above .500</th>
-							<th>Games Decided by 3 Points</th>
-							<th>Overtime</th>
-							<th></th>
+							<tr>
+								<th>Confernece Rank</th>
+								<th>Record</th>
+								<th>Games Behind</th>
+								<th>Streak</th>
+								<th>Conference Record</th>
+								<th>Division Record</th>
+								<th>Home Record</th>
+								<th>Away Record</th>
+								<th>Last 10</th>
+								<th>Overtime</th>
+							</tr>
 						</thead>
 						<tbody>
 							<tr class='teamInfoRow'>
-								<td> {teamDetails.team_info[0].calc_rank.conf_rank} </td>
-								<td> {teamDetails.team_info[0].wins}-{teamDetails.team_info[0].losses} </td>
-								<td> {teamDetails.team_info[0].games_behind.conference} </td>
-								<td> {teamDetails.team_info[0].points_for} </td>
-								<td> {teamDetails.team_info[0].points_against} </td>
-								<td> {teamDetails.team_info[0].point_diff} </td>
-								<td>
-									{teamDetails.team_info[0].streak.kind === 'loss'
-										? 'Lost '
-										: 'Won '}
-									{teamDetails.team_info[0].streak.length}
-								</td>
+								<td> {teamDetails.team[0].rank} </td>
 								<td>
 									{' '}
-									{teamDetails.team_info[0].records[3].wins}-
-									{teamDetails.team_info[0].records[3].losses}{' '}
+									{teamDetails.team[0].wins}-{teamDetails.team[0].losses}
 								</td>
-								<td>
-									{' '}
-									{teamDetails.team_info[0].records[4].wins}-
-									{teamDetails.team_info[0].records[4].losses}{' '}
-								</td>
-								<td>
-									{' '}
-									{teamDetails.team_info[0].records[8].wins}-
-									{teamDetails.team_info[0].records[8].losses}{' '}
-								</td>
-								<td>
-									{' '}
-									{teamDetails.team_info[0].records[22].wins}-
-									{teamDetails.team_info[0].records[22].losses}{' '}
-								</td>
-								<td>
-									{' '}
-									{teamDetails.team_info[0].records[9].wins}-
-									{teamDetails.team_info[0].records[9].losses}{' '}
-								</td>
-								<td>
-									{' '}
-									{teamDetails.team_info[0].records[1].wins}-
-									{teamDetails.team_info[0].records[1].losses}{' '}
-								</td>
-								<td>
-									{' '}
-									{teamDetails.team_info[0].records[20].wins}-
-									{teamDetails.team_info[0].records[20].losses}{' '}
-								</td>
-								<td>
-									{' '}
-									{teamDetails.team_info[0].records[27].wins}-
-									{teamDetails.team_info[0].records[27].losses}{' '}
-								</td>
-								<td>
-									{' '}
-									{teamDetails.team_info[0].records[19].wins}-
-									{teamDetails.team_info[0].records[19].losses}
-								</td>
+								<td> {teamDetails.team[0].gamesBehind} </td>
+								<td> {teamDetails.team[0].streak} </td>
+								<td>{teamDetails.team[0].conferenceRecord}</td>
+								<td>{teamDetails.team[0].divisionRecord}</td>
+								<td>{teamDetails.team[0].homeRecord}</td>
+								<td>{teamDetails.team[0].awayRecord}</td>
+								<td>{teamDetails.team[0].lastTen}</td>
+								<td>{teamDetails.team[0].otRecord}</td>
 							</tr>
 						</tbody>
 					</Table>
-					<div className='teamSchedule' style={{backgroundColor:teamLogoAndColors[0].secondaryColor}}>
+					<div
+						className='teamSchedule'
+						style={{ backgroundColor: teamLogoAndColors[0].secondaryColor }}>
 						{teamDetails.schedule.map((game, index) => (
 							<div key={index} className='teamGame'>
 								<h3>
@@ -190,119 +182,322 @@ const TeamDetails = () => {
 								{game.home_team_score > 0 && game.visitor_team_score > 0 ? (
 									<p>
 										<a
-											href={`/BoxScore?gameID=${game.id}&homeTeam=${game.home_team.full_name}&homeScore=${game.home_team_score}&awayTeam=${game.visitor_team.full_name}&awayScore=${game.visitor_team_score}&date=${game.date.split("T")[0]}`}>
+											href={`/BoxScore?gameID=${game.id}&homeTeam=${
+												game.home_team.full_name
+											}&homeScore=${game.home_team_score}&awayTeam=${
+												game.visitor_team.full_name
+											}&awayScore=${game.visitor_team_score}&date=${
+												game.date.split('T')[0]
+											}`}>
 											<button>View Box Score</button>
 										</a>
 									</p>
-								):
-								<div>
-								<a href={`/TeamDetails?team1=${game.home_team.full_name}&team2=${game.visitor_team.full_name}`}><button className="compareButton">Compare Teams</button></a>
-							  </div>}
+								) : (
+									<div>
+										<a
+											href={`/TeamDetails?team1=${game.home_team.full_name}&team2=${game.visitor_team.full_name}`}>
+											<button className='compareButton'>Compare Teams</button>
+										</a>
+									</div>
+								)}
 							</div>
 						))}
 					</div>
 				</div>
-			) : team1Info.length > 0 && team2Info.length >0 ? (
+			) : team1Info.length > 0 && team2Info.length > 0 ? (
 				<div>
 					<h1 style={{ textAlign: 'center' }}>Teams</h1>
-					<Table striped="rows" responsive="xl" className='compareTeamsTable'>
+					<Table striped='rows' responsive='xl' className='compareTeamsTable'>
 						<thead>
 							<tr>
 								<th></th>
-								<th ><a href={`/TeamDetails?teamName=${team1}`}><Image src={teamCompareLogos[0].teamName === team1Info[0].market + " " + team1Info[0].name ? teamCompareLogos[0].teamLogo : teamCompareLogos[1].teamLogo}alt='team logo' className='teamLogo'/>{team1Info[0].name}</a></th>
-								<th><a href={`/TeamDetails?teamName=${team2}`}><Image src={teamCompareLogos[1].teamName === team2Info[0].market + " " + team2Info[0].name ? teamCompareLogos[1].teamLogo : teamCompareLogos[0].teamLogo} alt='team logo' className='teamLogo'/>{team2Info[0].name}</a></th>
+								<th>
+									<a href={`/TeamDetails?teamName=${team1}`}>
+										<Image
+											src={
+												teamCompareLogos[0].teamName ===
+												getNormalizedTeamName(team1Info[0].team)
+													? teamCompareLogos[0].teamLogo
+													: teamCompareLogos[1].teamLogo
+											}
+											alt='team logo'
+											className='teamLogo'
+										/>
+										{team1Info[0].name}
+									</a>
+								</th>
+								<th>
+									<a href={`/TeamDetails?teamName=${team2}`}>
+										<Image
+											src={
+												teamCompareLogos[1].teamName ===
+												getNormalizedTeamName(team2Info[0].team)
+													? teamCompareLogos[1].teamLogo
+													: teamCompareLogos[0].teamLogo
+											}
+											alt='team logo'
+											className='teamLogo'
+										/>
+										{team2Info[0].name}
+									</a>
+								</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr>
-								<td><strong>Conference Rank</strong></td>
-								<td style={{backgroundColor:team1Info[0].calc_rank.conf_rank < team2Info[0].calc_rank.conf_rank ? 'green' : "red"}}>{team1Info[0].calc_rank.conf_rank}</td>
-								<td style={{backgroundColor:team2Info[0].calc_rank.conf_rank < team1Info[0].calc_rank.conf_rank ? 'green' : "red"}}>{team2Info[0].calc_rank.conf_rank}</td>
-							</tr>
-							<tr>
-								<td><strong>Record</strong></td>
-								<td style={{backgroundColor:winPercentage(team1Info[0].wins , team1Info[0].losses) < winPercentage(team2Info[0].wins , team2Info[0].losses) ? 'red' : "green"}}>{team1Info[0].wins} - {team1Info[0].losses}</td>
-								<td style={{backgroundColor:winPercentage(team2Info[0].wins , team2Info[0].losses) < winPercentage(team1Info[0].wins , team1Info[0].losses) ? 'red' : "green"}}>{team2Info[0].wins} - {team2Info[0].losses}</td>
-							</tr>
-							<tr>
-								<td><strong>Games Behind</strong></td>
-								<td style={{backgroundColor:team1Info[0].games_behind.conference > team2Info[0].games_behind.conference ? 'red' : "green"}}>{team1Info[0].games_behind.conference}</td>
-								<td style={{backgroundColor:team2Info[0].games_behind.conference > team1Info[0].games_behind.conference ? 'red' : "green"}}>{team2Info[0].games_behind.conference}</td>
-							</tr>
-							<tr>
-								<td><strong>Points For</strong></td>
-								<td style={{backgroundColor:team1Info[0].points_for < team2Info[0].points_for ? 'red' : "green"}}>{team1Info[0].points_for}</td>
-								<td style={{backgroundColor:team2Info[0].points_for < team1Info[0].points_for ? 'red' : "green"}}>{team2Info[0].points_for}</td>
-							</tr>
-							<tr>
-								<td><strong>Points Against</strong></td>
-								<td style={{backgroundColor:team1Info[0].points_against > team2Info[0].points_against ? 'red' : "green"}}>{team1Info[0].points_against}</td>
-								<td style={{backgroundColor:team2Info[0].points_against > team1Info[0].points_against ? 'red' : "green"}}>{team2Info[0].points_against}</td>
-							</tr>
-							<tr>
-								<td><strong>Points Differential</strong></td>
-								<td style={{backgroundColor:team1Info[0].point_diff < team2Info[0].point_diff ? 'red' : "green"}}>{team1Info[0].point_diff}</td>
-								<td style={{backgroundColor:team2Info[0].point_diff < team1Info[0].point_diff ? 'red' : "green"}}>{team2Info[0].point_diff}</td>
-							</tr>
-							<tr>
-								<td><strong>Streak</strong></td>
-								<td style={{backgroundColor:team1Info[0].streak.kind === 'win' && team2Info[0].streak.kind === 'loss'? 'green':team1Info[0].streak.kind === 'loss' && team2Info[0].streak.kind === 'win'? 'red':team1Info[0].streak.kind === 'loss' && team2Info[0].streak.kind === 'loss' && team1Info[0].streak.length > team2Info[0].streak.length ? 'red' : team1Info[0].streak.kind === 'loss' && team2Info[0].streak.kind === 'loss' && team1Info[0].streak.length < team2Info[0].streak.length ? 'green' :team1Info[0].streak.kind === 'win' && team2Info[0].streak.kind === 'win' && team1Info[0].streak.length > team2Info[0].streak.length ? 'green' : team1Info[0].streak.kind === 'win' && team2Info[0].streak.kind === 'win' && team1Info[0].streak.length < team2Info[0].streak.length?'red': 'green' }}>
-									{team1Info[0].streak.kind === 'loss'
-										? 'Lost '
-										: 'Won '}
-									{team1Info[0].streak.length}
+								<td>
+									<strong>Conference Rank</strong>
 								</td>
-								<td style={{backgroundColor:team2Info[0].streak.kind === 'win' && team1Info[0].streak.kind === 'loss'? 'green':team2Info[0].streak.kind === 'loss' && team1Info[0].streak.kind === 'win'? 'red':team2Info[0].streak.kind === 'loss' && team1Info[0].streak.kind === 'loss' && team2Info[0].streak.length > team1Info[0].streak.length ? 'red' : team2Info[0].streak.kind === 'loss' && team1Info[0].streak.kind === 'loss' && team2Info[0].streak.length < team1Info[0].streak.length ? 'green' :team2Info[0].streak.kind === 'win' && team1Info[0].streak.kind === 'win' && team2Info[0].streak.length > team1Info[0].streak.length ? 'green' : team2Info[0].streak.kind === 'win' && team1Info[0].streak.kind === 'win' && team2Info[0].streak.length < team1Info[0].streak.length?'red': 'green' }}>
-									{team2Info[0].streak.kind === 'loss'
-										? 'Lost '
-										: 'Won '}
-									{team2Info[0].streak.length}
+								<td
+									style={{
+										backgroundColor:
+											parseInt(team1Info[0].rank) < parseInt(team2Info[0].rank)
+												? 'green'
+												: 'red',
+									}}>
+									{team1Info[0].rank}
+								</td>
+								<td
+									style={{
+										backgroundColor:
+											parseInt(team2Info[0].rank) < parseInt(team1Info[0].rank)
+												? 'green'
+												: 'red',
+									}}>
+									{team2Info[0].rank}
 								</td>
 							</tr>
 							<tr>
-								<td><strong>Conference Record</strong></td>
-								<td style={{backgroundColor:winPercentage(team1Info[0].records[3].wins , team1Info[0].records[3].losses) < winPercentage(team2Info[0].records[3].wins , team2Info[0].records[3].losses) ? 'red' : "green"}}>{team1Info[0].records[3].wins} - {team1Info[0].records[3].losses}</td>
-								<td style={{backgroundColor:winPercentage(team2Info[0].records[3].wins , team2Info[0].records[3].losses) < winPercentage(team1Info[0].records[3].wins , team1Info[0].records[3].losses) ? 'red' : "green"}}>{team2Info[0].records[3].wins} - {team2Info[0].records[3].losses}</td>
+								<td>
+									<strong>Record</strong>
+								</td>
+								<td
+									style={{
+										backgroundColor:
+											winPercentageFromRecord(
+												`${team1Info[0].wins}-${team1Info[0].losses}`
+											) <
+											winPercentageFromRecord(
+												`${team2Info[0].wins}-${team2Info[0].losses}`
+											)
+												? 'red'
+												: 'green',
+									}}>
+									{team1Info[0].wins} - {team1Info[0].losses}
+								</td>
+								<td
+									style={{
+										backgroundColor:
+											winPercentageFromRecord(
+												`${team2Info[0].wins}-${team2Info[0].losses}`
+											) <
+											winPercentageFromRecord(
+												`${team1Info[0].wins}-${team1Info[0].losses}`
+											)
+												? 'red'
+												: 'green',
+									}}>
+									{team2Info[0].wins} - {team2Info[0].losses}
+								</td>
+							</tr>
+
+							<tr>
+								<td>
+									<strong>Games Behind</strong>
+								</td>
+								<td
+									style={{
+										backgroundColor:
+											team1Info[0].gamesBehind > team2Info[0].gamesBehind
+												? 'red'
+												: 'green',
+									}}>
+									{team1Info[0].gamesBehind}
+								</td>
+								<td
+									style={{
+										backgroundColor:
+											team2Info[0].gamesBehind > team1Info[0].gamesBehind
+												? 'red'
+												: 'green',
+									}}>
+									{team2Info[0].gamesBehind}
+								</td>
 							</tr>
 							<tr>
-								<td><strong>Division Record</strong></td>
-								<td style={{backgroundColor:winPercentage(team1Info[0].records[4].wins , team1Info[0].records[4].losses) < winPercentage(team2Info[0].records[4].wins , team2Info[0].records[4].losses) ? 'red' : "green"}}>{team1Info[0].records[4].wins} - {team1Info[0].records[4].losses}</td>
-								<td style={{backgroundColor:winPercentage(team2Info[0].records[4].wins , team2Info[0].records[4].losses) < winPercentage(team1Info[0].records[4].wins , team1Info[0].records[4].losses) ? 'red' : "green"}}>{team2Info[0].records[4].wins} - {team2Info[0].records[4].losses}</td>
+								<td>
+									<strong>Streak</strong>
+								</td>
+								<td
+									style={{
+										backgroundColor:
+											Math.abs(extractStreakNumber(team1Info[0].streak)) <
+											Math.abs(extractStreakNumber(team2Info[0].streak))
+												? 'red'
+												: 'green',
+									}}>
+									{team1Info[0].streak}
+								</td>
+								<td
+									style={{
+										backgroundColor:
+											Math.abs(extractStreakNumber(team2Info[0].streak)) <
+											Math.abs(extractStreakNumber(team1Info[0].streak))
+												? 'red'
+												: 'green',
+									}}>
+									{team2Info[0].streak}
+								</td>
 							</tr>
 							<tr>
-								<td><strong>Home Record</strong></td>
-								<td style={{backgroundColor:winPercentage(team1Info[0].records[8].wins , team1Info[0].records[8].losses) < winPercentage(team2Info[0].records[8].wins , team2Info[0].records[8].losses) ? 'red' : "green"}}>{team1Info[0].records[8].wins} - {team1Info[0].records[8].losses}</td>
-								<td style={{backgroundColor:winPercentage(team2Info[0].records[8].wins , team2Info[0].records[8].losses) < winPercentage(team1Info[0].records[8].wins , team1Info[0].records[8].losses) ? 'red' : "green"}}>{team2Info[0].records[8].wins} - {team2Info[0].records[8].losses}</td>
+								<td>
+									<strong>Conference Record</strong>
+								</td>
+								<td
+									style={{
+										backgroundColor:
+											winPercentageFromRecord(team1Info[0].conferenceRecord) <
+											winPercentageFromRecord(team2Info[0].conferenceRecord)
+												? 'red'
+												: 'green',
+									}}>
+									{team1Info[0].conferenceRecord}
+								</td>
+								<td
+									style={{
+										backgroundColor:
+											winPercentageFromRecord(team2Info[0].conferenceRecord) <
+											winPercentageFromRecord(team1Info[0].conferenceRecord)
+												? 'red'
+												: 'green',
+									}}>
+									{team2Info[0].conferenceRecord}
+								</td>
 							</tr>
 							<tr>
-								<td><strong>Away Record</strong></td>
-								<td style={{backgroundColor:winPercentage(team1Info[0].records[22].wins , team1Info[0].records[22].losses) < winPercentage(team2Info[0].records[22].wins , team2Info[0].records[22].losses) ? 'red' : "green"}}>{team1Info[0].records[22].wins} - {team1Info[0].records[22].losses}</td>
-								<td style={{backgroundColor:winPercentage(team2Info[0].records[22].wins , team2Info[0].records[22].losses) < winPercentage(team1Info[0].records[22].wins , team1Info[0].records[22].losses) ? 'red' : "green"}}>{team2Info[0].records[22].wins} - {team2Info[0].records[22].losses}</td>
+								<td>
+									<strong>Division Record</strong>
+								</td>
+								<td
+									style={{
+										backgroundColor:
+											winPercentageFromRecord(team1Info[0].divisionRecord) <
+											winPercentageFromRecord(team2Info[0].divisionRecord)
+												? 'red'
+												: 'green',
+									}}>
+									{team1Info[0].divisionRecord}
+								</td>
+								<td
+									style={{
+										backgroundColor:
+											winPercentageFromRecord(team2Info[0].divisionRecord) <
+											winPercentageFromRecord(team1Info[0].divisionRecord)
+												? 'red'
+												: 'green',
+									}}>
+									{team2Info[0].divisionRecord}
+								</td>
 							</tr>
 							<tr>
-								<td><strong>Last 10</strong></td>
-								<td style={{backgroundColor:winPercentage(team1Info[0].records[9].wins , team1Info[0].records[9].losses) < winPercentage(team2Info[0].records[9].wins , team2Info[0].records[9].losses) ? 'red' : "green"}}>{team1Info[0].records[9].wins} - {team1Info[0].records[9].losses}</td>
-								<td style={{backgroundColor:winPercentage(team2Info[0].records[9].wins , team2Info[0].records[9].losses) < winPercentage(team1Info[0].records[9].wins , team1Info[0].records[9].losses) ? 'red' : "green"}}>{team2Info[0].records[9].wins} - {team2Info[0].records[9].losses}</td>
+								<td>
+									<strong>Home Record</strong>
+								</td>
+								<td
+									style={{
+										backgroundColor:
+											winPercentageFromRecord(team1Info[0].homeRecord) <
+											winPercentageFromRecord(team2Info[0].homeRecord)
+												? 'red'
+												: 'green',
+									}}>
+									{team1Info[0].homeRecord}
+								</td>
+								<td
+									style={{
+										backgroundColor:
+											winPercentageFromRecord(team2Info[0].homeRecord) <
+											winPercentageFromRecord(team1Info[0].homeRecord)
+												? 'red'
+												: 'green',
+									}}>
+									{team2Info[0].homeRecord}
+								</td>
 							</tr>
 							<tr>
-								<td><strong>Vs below .500</strong></td>
-								<td style={{backgroundColor:winPercentage(team1Info[0].records[1].wins , team1Info[0].records[1].losses) < winPercentage(team2Info[0].records[1].wins , team2Info[0].records[1].losses) ? 'red' : "green"}}>{team1Info[0].records[1].wins} - {team1Info[0].records[1].losses}</td>
-								<td style={{backgroundColor:winPercentage(team2Info[0].records[1].wins , team2Info[0].records[1].losses) < winPercentage(team1Info[0].records[1].wins , team1Info[0].records[1].losses) ? 'red' : "green"}}>{team2Info[0].records[1].wins} - {team2Info[0].records[1].losses}</td>
+								<td>
+									<strong>Away Record</strong>
+								</td>
+								<td
+									style={{
+										backgroundColor:
+											winPercentageFromRecord(team1Info[0].awayRecord) <
+											winPercentageFromRecord(team2Info[0].awayRecord)
+												? 'red'
+												: 'green',
+									}}>
+									{team1Info[0].awayRecord}
+								</td>
+								<td
+									style={{
+										backgroundColor:
+											winPercentageFromRecord(team2Info[0].awayRecord) <
+											winPercentageFromRecord(team1Info[0].awayRecord)
+												? 'red'
+												: 'green',
+									}}>
+									{team2Info[0].awayRecord}
+								</td>
 							</tr>
 							<tr>
-								<td><strong>Vs above .500</strong></td>
-								<td style={{backgroundColor:winPercentage(team1Info[0].records[20].wins , team1Info[0].records[20].losses) < winPercentage(team2Info[0].records[20].wins , team2Info[0].records[20].losses) ? 'red' : "green"}}>{team1Info[0].records[20].wins} - {team1Info[0].records[20].losses}</td>
-								<td style={{backgroundColor:winPercentage(team2Info[0].records[20].wins , team2Info[0].records[20].losses) < winPercentage(team1Info[0].records[20].wins , team1Info[0].records[20].losses) ? 'red' : "green"}}>{team2Info[0].records[20].wins} - {team2Info[0].records[20].losses}</td>
+								<td>
+									<strong>last 10</strong>
+								</td>
+								<td
+									style={{
+										backgroundColor:
+											winPercentageFromRecord(team1Info[0].lastTen) <
+											winPercentageFromRecord(team2Info[0].lastTen)
+												? 'red'
+												: 'green',
+									}}>
+									{team1Info[0].lastTen}
+								</td>
+								<td
+									style={{
+										backgroundColor:
+											winPercentageFromRecord(team2Info[0].lastTen) <
+											winPercentageFromRecord(team1Info[0].lastTen)
+												? 'red'
+												: 'green',
+									}}>
+									{team2Info[0].lastTen}
+								</td>
 							</tr>
 							<tr>
-								<td><strong>Games Decided by 3 Points</strong></td>
-								<td style={{backgroundColor:winPercentage(team1Info[0].records[27].wins , team1Info[0].records[27].losses) < winPercentage(team2Info[0].records[27].wins , team2Info[0].records[27].losses) ? 'red' : "green"}}>{team1Info[0].records[27].wins} - {team1Info[0].records[27].losses}</td>
-								<td style={{backgroundColor:winPercentage(team2Info[0].records[27].wins , team2Info[0].records[27].losses) < winPercentage(team1Info[0].records[27].wins , team1Info[0].records[27].losses) ? 'red' : "green"}}>{team2Info[0].records[27].wins} - {team2Info[0].records[27].losses}</td>
-							</tr>
-							<tr>
-								<td><strong>Overtime</strong></td>
-								<td style={{backgroundColor:winPercentage(team1Info[0].records[19].wins , team1Info[0].records[19].losses) < winPercentage(team2Info[0].records[19].wins , team2Info[0].records[19].losses) ? 'red' : "green"}}>{team1Info[0].records[19].wins} - {team1Info[0].records[19].losses}</td>
-								<td style={{backgroundColor:winPercentage(team2Info[0].records[19].wins , team2Info[0].records[19].losses) < winPercentage(team1Info[0].records[19].wins , team1Info[0].records[19].losses) ? 'red' : "green"}}>{team2Info[0].records[19].wins} - {team2Info[0].records[19].losses}</td>
+								<td>
+									<strong>Overtime</strong>
+								</td>
+								<td
+									style={{
+										backgroundColor:
+											winPercentageFromRecord(team1Info[0].otRecord) <
+											winPercentageFromRecord(team2Info[0].otRecord)
+												? 'red'
+												: 'green',
+									}}>
+									{team1Info[0].otRecord}
+								</td>
+								<td
+									style={{
+										backgroundColor:
+											winPercentageFromRecord(team2Info[0].otRecord) <
+											winPercentageFromRecord(team1Info[0].otRecord)
+												? 'red'
+												: 'green',
+									}}>
+									{team2Info[0].otRecord}
+								</td>
 							</tr>
 						</tbody>
 					</Table>
