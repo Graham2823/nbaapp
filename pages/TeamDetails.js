@@ -329,23 +329,25 @@ const TeamDetails = () => {
 									<strong>Streak</strong>
 								</td>
 								<td
-									style={{
-										backgroundColor:
-											Math.abs(extractStreakNumber(team1Info[0].streak)) <
-											Math.abs(extractStreakNumber(team2Info[0].streak))
-												? 'red'
-												: 'green',
-									}}>
+									// style={{
+									// 	backgroundColor:
+									// 		Math.abs(extractStreakNumber(team1Info[0].streak)) <
+									// 		Math.abs(extractStreakNumber(team2Info[0].streak))
+									// 			? 'red'
+									// 			: 'green',
+									// }}
+									>
 									{team1Info[0].streak}
 								</td>
 								<td
-									style={{
-										backgroundColor:
-											Math.abs(extractStreakNumber(team2Info[0].streak)) <
-											Math.abs(extractStreakNumber(team1Info[0].streak))
-												? 'red'
-												: 'green',
-									}}>
+									// style={{
+									// 	backgroundColor:
+									// 		Math.abs(extractStreakNumber(team2Info[0].streak)) <
+									// 		Math.abs(extractStreakNumber(team1Info[0].streak))
+									// 			? 'red'
+									// 			: 'green',
+									// }}
+									>
 									{team2Info[0].streak}
 								</td>
 							</tr>
