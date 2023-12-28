@@ -108,7 +108,7 @@ a:hover{
 	width: 100%;
 }
 
-.statsPage, .playerDetailsPage{
+.statsPage, .playerDetailsPage, .boxScore{
 	text-align: center;
 	background-color: #c8c8c8;
 	min-height: 100vh;
