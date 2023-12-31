@@ -43,7 +43,7 @@ const BoxScore = () => {
 							alt='team logo'
 							className='teamLogo'
 						/>
-						{boxScore.teamOneArr[0].team.full_name}:{homeScore}
+						{boxScore.teamOneArr[0].team.full_name}:{awayScore}
 					</a>
 				</h1>
 			)}
@@ -115,7 +115,7 @@ const BoxScore = () => {
 							alt='team logo'
 							className='teamLogo'
 						/>
-						{boxScore.teamTwoArr[0].team.full_name}:{awayScore}
+						{boxScore.teamTwoArr[0].team.full_name}:{homeScore}
 					</a>
 				</h1>
 			)}
