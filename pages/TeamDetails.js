@@ -67,23 +67,28 @@ const TeamDetails = () => {
 		return teamName.replace(/\s+/g, ' ');
 	};
 
-	const extractStreakNumber = (streak) => {
-		// Find the index where the numeric part starts
-		let startIndex = 0;
-		while (startIndex < streak.length && isNaN(parseInt(streak[startIndex]))) {
-			startIndex++;
-		}
 
-		// Find the index where the numeric part ends
-		let endIndex = startIndex;
-		while (endIndex < streak.length && !isNaN(parseInt(streak[endIndex]))) {
-			endIndex++;
+	const winStreakStyle = (streak1, streak2)=>{
+		if(streak1.slice(0,1) === "W" && streak2.slice(0,1) === "L"){
+			return 'green'
+		}else if(streak1.slice(0,1) === "L" && streak2.slice(0,1) === "W"){
+			return 'red'
+		}else if(streak1.slice(0,1) === "W" && streak2.slice(0,1) === "W"){
+			if(streak1.slice(1) > streak2.slice(1)){
+				return 'green'
+			}else if(streak1.slice(1) < streak2.slice(1)){
+				return 'red'
+			}
+		}else if(streak1.slice(0,1) === "L" && streak2.slice(0,1) === "L"){
+			if(streak1.slice(1) < streak2.slice(1)){
+				return 'green'
+			}else if(streak1.slice(1) > streak2.slice(1)){
+				return 'red'
+			}
 		}
-
-		// Extract the numeric part and convert it to a number
-		const numericPart = streak.substring(startIndex, endIndex);
-		return numericPart ? parseInt(numericPart) : 0;
-	};
+		return 'green'
+		
+	}
 
 	console.log('logos', teamCompareLogos);
 	console.log('teams', team1Info);
@@ -329,24 +334,18 @@ const TeamDetails = () => {
 									<strong>Streak</strong>
 								</td>
 								<td
-									// style={{
-									// 	backgroundColor:
-									// 		Math.abs(extractStreakNumber(team1Info[0].streak)) <
-									// 		Math.abs(extractStreakNumber(team2Info[0].streak))
-									// 			? 'red'
-									// 			: 'green',
-									// }}
+									style={{
+										backgroundColor:
+											winStreakStyle(team1Info[0].streak, team2Info[0].streak)
+									}}
 									>
 									{team1Info[0].streak}
 								</td>
 								<td
-									// style={{
-									// 	backgroundColor:
-									// 		Math.abs(extractStreakNumber(team2Info[0].streak)) <
-									// 		Math.abs(extractStreakNumber(team1Info[0].streak))
-									// 			? 'red'
-									// 			: 'green',
-									// }}
+									style={{
+										backgroundColor:
+											winStreakStyle(team2Info[0].streak, team1Info[0].streak)
+									}}
 									>
 									{team2Info[0].streak}
 								</td>
