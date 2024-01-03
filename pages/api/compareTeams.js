@@ -1,5 +1,6 @@
 import { createRouter } from 'next-connect';
 import cors from 'cors'; // Import the cors middleware
+import mongoose from 'mongoose';
 
 const compareTeamsRouter = createRouter();
 
@@ -35,58 +36,37 @@ compareTeamsRouter.get(async (req, res) => {
                 }
             }
         })
-        let western_conference = []
-        let eastern_conference = []
-        let wdivisions = []
-        let edivisions = []
-        let wc_teams = []
-        let wcTeams
-        let ec_teams = []
-        let teams_full = []
-        let team1_info = []
-        let team2_info = []
-        await fetch (`https://api.sportradar.us/nba/trial/v8/en/seasons/2023/REG/standings.json?api_key=qc3jvr8u7852z2s9u8hspz4s`)
-             .then(res => res.json())
-             .then((data)=>{
-                 for(let i =0; i< data.conferences.length; i++){
-                     if(data.conferences[i].name === 'WESTERN CONFERENCE'){
-                         western_conference.push(data.conferences[i])
-                     } if(data.conferences[i].name === 'EASTERN CONFERENCE'){
-                         eastern_conference.push(data.conferences[i])
-                     }
-                 }
-                 for(let i=0; i< western_conference[0].divisions.length; i++){
-                     wdivisions.push(western_conference[0].divisions[i])
-                 }
-                 for(let i=0; i< eastern_conference[0].divisions.length; i++){
-                     edivisions.push(eastern_conference[0].divisions[i])
-                 }
-                 for(let i=0; i<wdivisions.length; i++){
-                     wc_teams.push(wdivisions[i].teams)  
-                 }
-                 for(let i=0; i<edivisions.length; i++){
-                     ec_teams.push(edivisions[i].teams);
-                 }
-                 for(let i=0; i< 3; i++){
-                     for(let j=0; j<wc_teams[i].length; j++){
-                         teams_full.push(wc_teams[i][j])
-                     }
-                 }
-                 for(let i=0; i< 3; i++){
-                     for(let j=0; j<ec_teams[i].length; j++){
-                         teams_full.push(ec_teams[i][j])
-                     }
-                 }
-                 for(let i=0; i<teams_full.length; i++){
-                     if(teams_full[i].market + " " + teams_full[i].name === team1){
-                         team1_info.push(teams_full[i])
-                     }
-                     if(teams_full[i].market + " " + teams_full[i].name === team2){
-                         team2_info.push(teams_full[i])
-                     }
-                 }
-             })
-             res.json({team1_info, team2_info});
+        const mongoConnectionString = process.env.MONGODB_CONNECTION_STRING;
+        await mongoose.connect(mongoConnectionString, {
+          useNewUrlParser: true,
+          useUnifiedTopology: true,
+        });
+      
+        const standingsCollection = mongoose.connection.db.collection('standings');
+      
+        // Fetch all documents in the Standings collection
+        const allStandings = await standingsCollection.find({}).toArray();
+      
+        let teamInfo = null;
+      
+        // Iterate through Eastern and Western Conference to find the team
+        const teamOne = allStandings[0].easternConference.teams.filter((team)=> team.team.replace(/\s+/g, ' ') === team1)
+        const teamTwo = allStandings[0].easternConference.teams.filter((team)=> team.team.replace(/\s+/g, ' ') === team2)
+        if(teamOne.length > 0 && teamTwo.length > 0){
+            res.json({ teamOne, teamTwo });
+        }else if(teamOne.length > 0){
+            const teamTwo = allStandings[0].westernConference.teams.filter((team)=> team.team.replace(/\s+/g, ' ') === team2)
+            res.json({ teamOne, teamTwo });
+        } else if(teamTwo.length > 0){
+            const teamOne = allStandings[0].westernConference.teams.filter((team)=> team.team.replace(/\s+/g, ' ') === team1)
+            res.json({ teamOne, teamTwo });
+        }else if(teamOne.length < 1 && teamTwo.length < 1){
+            const teamOne = allStandings[0].westernConference.teams.filter((team)=> team.team.replace(/\s+/g, ' ') === team1)
+            const teamTwo = allStandings[0].westernConference.teams.filter((team)=> team.team.replace(/\s+/g, ' ') === team2)
+            res.json({ teamOne, teamTwo });
+        }else{
+            res.json({message:"error"})
+        }
 	} catch (err) {
 		console.log(err);
 	}

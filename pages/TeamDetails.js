@@ -89,7 +89,6 @@ const TeamDetails = () => {
 		
 	}
 
-	console.log("td",teamDetails)
 
 	return (
 		<div className='teamPage'>
