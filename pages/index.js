@@ -26,7 +26,9 @@ export default function Home() {
   console.log(yesterdaysGames)
     return (
       <div className="frontPage">
-        <h1>Hello {username}</h1>
+        {username && 
+        <h2>Hello {username}</h2>
+        }
           <h2>Todays Games:</h2>
         <div className="todaysGames">
           {todaysGames ?(

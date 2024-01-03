@@ -108,7 +108,7 @@ a:hover{
   }
 .frontPage,
 .playerPage,
-.teamPage{
+.teamPage, .signin, .signup{
 	text-align: center;
 	background-color: #c8c8c8;
 	height: 100vh;
@@ -508,6 +508,13 @@ a:hover{
 }
 
 @media (max-width: 430px) {
+	.custom-navbar .nav-link {
+		font-size: .7em;
+		padding: 3px;
+		margin: 0px;
+		color: white;
+		text-decoration: none;
+	}
 	.playerDetails {
 		width: 100vw;
 		height: auto;
@@ -551,6 +558,13 @@ a:hover{
 }
 
 @media (max-width: 400px){
+	.custom-navbar .nav-link {
+		font-size: .6em;
+		padding: 2px;
+		margin: 0px;
+		color: white;
+		text-decoration: none;
+	}
 	.custom-navbar{
 		width: 100vw;
 	}
@@ -565,6 +579,13 @@ a:hover{
 }
 
 @media (max-width: 365px) {
+	.custom-navbar .nav-link {
+		font-size: .5em;
+		padding: 1px;
+		margin: 0px;
+		color: white;
+		text-decoration: none;
+	}
 	.boxScoreTable {
 		width: 70%;
 		margin: auto;
@@ -579,10 +600,20 @@ a:hover{
 		margin: 0px;
 	}
 }
+@media (max-width: 320px) {
+	.custom-navbar .nav-link {
+		font-size: .4em;
+		padding: 1px;
+		margin: 0px;
+		color: white;
+		text-decoration: none;
+	}
+}
 @media (max-width: 295px) {
 	.custom-navbar .nav-link {
-		font-size: .6em;
-		padding: 5px;
+		font-size: .4em;
+		padding: 0px;
+		margin: 0px;
 		color: white;
 		text-decoration: none;
 	}

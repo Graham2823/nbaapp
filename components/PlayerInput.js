@@ -61,7 +61,7 @@ const PlayerInput = ({state, setState}) => {
 	return (
 		
 				<div className='searchPlayer'>
-					<p>
+					
 						<input
 							type='text'
 							name='name'
@@ -83,7 +83,7 @@ const PlayerInput = ({state, setState}) => {
 								</Tooltip>
 							)}
 						</Overlay>
-					</p>
+					
 				</div>
 	);
 };

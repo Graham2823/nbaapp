@@ -5,6 +5,8 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/router';
+import "../app/app.css"
+
 
 
 
@@ -50,10 +52,10 @@ function CreateUser() {
 	};
 
 	return (
-		<div>
+		<div className='signup'>
 		  <ToastContainer />
 		  <h2>Sign Up</h2>
-		  <div className="sign-up">
+		  <div>
 			<input
 			  type="username"
 			  placeholder="Username"
@@ -74,7 +76,7 @@ function CreateUser() {
 			/>
 		  </div>
 		  <button onClick={handleSignup}>Sign Up</button>
-          <p>Already have an account? Sign in <a href='/Signin'>Here</a></p>
+          <p>Already have an account? Sign in Here</p>
 		</div>
 	  );			  
 }

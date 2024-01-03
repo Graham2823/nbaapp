@@ -4,12 +4,14 @@ import { signOut, signInWithEmailAndPassword } from 'firebase/auth';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 export const UserContext = createContext();
+import { useRouter } from 'next/router';
 
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [username, setUsername] = useState(null);
   console.log("username", username)
+  const router = useRouter()
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user');

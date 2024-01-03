@@ -4,6 +4,9 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/router';
+import "../app/app.css"
+import Link from 'next/link';
+
 
 function SignIn() {
 	const [email, setEmail] = useState('');
@@ -45,10 +48,10 @@ function SignIn() {
     
 
 	return (
-		<div>
+		<div className='signin'>
 			<ToastContainer />
 			<h2>Sign In</h2>
-			<div className='sign-up'>
+			<div>
 			<input
 				type='email'
 				placeholder='Email'
@@ -63,7 +66,7 @@ function SignIn() {
 			/>
 			</div>
 			<button onClick={handleSignInClick}>Sign In</button>
-            <p>Dont have an account? Sign up <a href='/Signup'>Here</a></p>
+            <p>Dont have an account?Sign up <Link href="/Signup">Here</Link></p>
 		</div>
 	);
 }
