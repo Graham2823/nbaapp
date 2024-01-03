@@ -10,12 +10,16 @@ import { useRouter } from 'next/router';
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [username, setUsername] = useState(null);
+  const [favoriteTeams, setFavoriteTeams] = useState([])
+  const [favoritePlayers, setFavoritePlayers] = useState([])
   console.log("username", username)
   const router = useRouter()
-
+console.log('favorte teams from context', favoriteTeams)
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
     const storedUsername = localStorage.getItem('username');
+    const storedFavoriteTeams = localStorage.getItem('favoriteTeams')
+    const storedFavoritePlayers = localStorage.getItem('favoriteplayers')
 
     if (storedUser) {
       setUser(JSON.parse(storedUser));
@@ -24,6 +28,14 @@ export const UserProvider = ({ children }) => {
     if (storedUsername) {
       setUsername(JSON.parse(storedUsername));
     }
+    if (storedFavoriteTeams) {
+      setFavoriteTeams(JSON.parse(storedFavoriteTeams));
+    }
+    if (storedFavoritePlayers) {
+      setFavoritePlayers(JSON.parse(storedFavoritePlayers));
+    }
+
+ 
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
       if (authUser) {
         setUser(authUser);
@@ -74,6 +86,8 @@ export const UserProvider = ({ children }) => {
       await signOut(auth);
       localStorage.removeItem('user');
       localStorage.removeItem('username');
+      localStorage.removeItem('favoriteTeams');
+      localStorage.removeItem('favoritePlayers');
       
       setUser(null);
       setUsername(null);
@@ -91,6 +105,10 @@ export const UserProvider = ({ children }) => {
     handleSignout,
 	setUsername,
 	setUser,
+  setFavoritePlayers,
+  setFavoriteTeams,
+  favoritePlayers,
+  favoriteTeams
   };
 
   return (

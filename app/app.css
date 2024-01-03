@@ -6,7 +6,7 @@ bodu, html{
 
 .game {
 	border: 1px solid black;
-	width: 200px;
+	width: 225px;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;

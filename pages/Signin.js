@@ -11,33 +11,38 @@ import Link from 'next/link';
 function SignIn() {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
-	const { handleSignin, setUsername } = useContext(UserContext);
+	const { handleSignin, setUsername, setFavoriteTeams, setFavoritePlayers, favoriteTeams, favoritePlayers } = useContext(UserContext);
     const router = useRouter();
+    
 
 	const handleSignInClick = async () => {
         try {
             const userCredential = await handleSignin(email, password);
-            console.log("userCredential", userCredential)
 
             if (userCredential && userCredential.user) {
                 const userID = userCredential.user.uid;
-    
+
                 axios
                     .get(`http://localhost:3000/api/signin?uid=${userID}`)
                     .then((response) => {
-                        console.log("response", response);
+                        console.log("response", response.data.favoriteTeams);
                         const username = response.data.username;
                         setUsername(username);
+
+                        // Synchronous form of setFavoriteTeams
+                        setFavoriteTeams(response.data.favoriteTeams);
+
+                        setFavoritePlayers(response.data.favoritePlayers);
                         localStorage.setItem('username', JSON.stringify(username));
+                        localStorage.setItem('favoriteTeams', JSON.stringify(response.data.favoriteTeams))
+                        localStorage.setItem('favoritePlayers', JSON.stringify(response.data.favoritePlayers))
+                        router.push('/');
+                        console.log('Successfully signed in');
                     })
                     .catch((error) => {
                         console.error('Error fetching data:', error);
-                        // Log the complete error object
                         console.error('Complete error object:', error.response ? error.response.data : error);
                     });
-    
-                router.push('/');
-                console.log('Successfully signed in');
             } else {
                 console.error('Error signing in: userCredential or user is undefined');
             }

@@ -26,7 +26,10 @@ console.log(username)
               <Nav.Link href="/Signup">Sign up</Nav.Link>
               </>
             ):(
+              <>
+              <Nav.Link href='/MyProfile'>My Profile</Nav.Link>
               <Nav.Link onClick={()=>handleSignout()}>Log Out</Nav.Link>
+              </>
             )}
           </Nav>
         </Navbar.Collapse>
