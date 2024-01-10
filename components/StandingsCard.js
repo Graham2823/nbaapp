@@ -24,7 +24,7 @@ const StandingsCard = ({ conference }) => {
 			<Table className='standingsTable' responsive='xl'>
 				<thead>
 					<tr>
-						<th>Confernece Rank</th>
+						<th>Conference Rank</th>
 						<th>Team</th>
 						<th>Record</th>
 						<th>Games Behind</th>
