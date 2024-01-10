@@ -36,7 +36,7 @@ const PlayerInput = ({state, setState}) => {
           try {
             if (state.trim() !== '') {  // Check if input is not empty
               const response = await axios.get(
-                `https://nbaapp.vercel.app/api/findPlayers?name=${state}`
+                `http://localhost:3000/api/findPlayers?name=${state}`
               );
               setFilteredPlayers(response.data.playersToDisplay);
               setShowDropdown(true);

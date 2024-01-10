@@ -1,4 +1,4 @@
-bodu, html{
+body, html{
 	margin: 0;
 	padding: 0;
 	background-color: #c8c8c8;
@@ -64,7 +64,7 @@ a:hover{
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
-	width: 400px;
+	width: 450px;
 }
 
 .teamSchedule {
@@ -115,7 +115,7 @@ a:hover{
 	width: 100%;
 }
 
-.statsPage, .playerDetailsPage, .boxScore{
+.statsPage, .playerDetailsPage, .boxScore, .profilePage{
 	text-align: center;
 	background-color: #c8c8c8;
 	min-height: 100vh;
@@ -363,6 +363,38 @@ a:hover{
 
 .tooltip-inner{
 	background-color: transparent;
+}
+
+.favoriteTeamCard,.favoritePlayerCard{
+	width: 300px;
+	min-height: 385px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: end;
+	border: 1px solid black;
+	margin: 15px;
+}
+
+.favoriteTeamsContainer, .favoritePlayersContainer{
+	text-align: center;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+
+.buttonContainer{
+	margin: 20px;
+}
+
+.buttonContainer .button{
+	margin: 10px;
+}
+
+.favoritePlayerCard .button, .favoriteTeamCard .button{
+	margin: 10px;
 }
 
 

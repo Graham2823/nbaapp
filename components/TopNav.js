@@ -27,7 +27,7 @@ console.log(username)
               </>
             ):(
               <>
-              <Nav.Link href='/MyProfile'>My Profile</Nav.Link>
+              <Nav.Link href='/ProfilePage'>My Favorite</Nav.Link>
               <Nav.Link onClick={()=>handleSignout()}>Log Out</Nav.Link>
               </>
             )}

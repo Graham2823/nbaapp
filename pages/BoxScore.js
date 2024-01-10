@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import { Table } from 'react-bootstrap';
@@ -6,6 +6,9 @@ import '../app/app.css';
 import teams from '@/teams';
 import { Image } from 'react-bootstrap';
 import getTeamLogo from '@/utils/getLogo';
+import { UserContext } from '@/context/userContext';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {faStar} from '@fortawesome/free-solid-svg-icons';
 
 const BoxScore = () => {
 	const [boxScore, setBoxScore] = useState([]);
@@ -13,11 +16,12 @@ const BoxScore = () => {
 	const { gameID, homeTeam, homeScore, awayTeam, awayScore, date } =
 		router.query;
 	const [teamLogosandColors, setTeamLogosAndColors] = useState([]);
-
+	const {favoritePlayers} = useContext(UserContext)
+console.log('favorite players', favoritePlayers)
 	useEffect(() => {
 		axios
 			.get(
-				`https://nbaapp.vercel.app/api/getBoxScore?gameID=${gameID}&homeTeam=${homeTeam}&awayTeam=${awayTeam}&date=${date}`
+				`http://localhost:3000/api/getBoxScore?gameID=${gameID}&homeTeam=${homeTeam}&awayTeam=${awayTeam}&date=${date}`
 			)
 			.then((response) => {
 				console.log('res', response.data);
@@ -75,7 +79,9 @@ const BoxScore = () => {
 														<a
 															href={`/PlayerDetails/?first=${player.player.first_name}&last=${player.player.last_name}`}>
 															{player.player.first_name}{' '}
-															{player.player.last_name}
+															{player.player.last_name} {favoritePlayers.some((players)=>players.playerName === `${player.player.first_name} ${player.player.last_name}`) &&
+							<FontAwesomeIcon icon={faStar} style={{color:'yellow'}}/>
+						}
 														</a>
 													):(
                                                         <p>Unknown Player</p>
@@ -146,7 +152,9 @@ const BoxScore = () => {
 														<a
 															href={`/PlayerDetails/?first=${player.player.first_name}&last=${player.player.last_name}`}>
 															{player.player.first_name}{' '}
-															{player.player.last_name}
+															{player.player.last_name} {favoritePlayers.some((players)=>players.playerName === `${player.player.first_name} ${player.player.last_name}`) &&
+							<FontAwesomeIcon icon={faStar} style={{color:'yellow'}}/>
+						}
 														</a>
 													):(
                                                         <p>Unknown Player</p>

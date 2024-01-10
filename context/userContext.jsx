@@ -19,7 +19,7 @@ console.log('favorte teams from context', favoriteTeams)
     const storedUser = localStorage.getItem('user');
     const storedUsername = localStorage.getItem('username');
     const storedFavoriteTeams = localStorage.getItem('favoriteTeams')
-    const storedFavoritePlayers = localStorage.getItem('favoriteplayers')
+    const storedFavoritePlayers = localStorage.getItem('favoritePlayers')
 
     if (storedUser) {
       setUser(JSON.parse(storedUser));
