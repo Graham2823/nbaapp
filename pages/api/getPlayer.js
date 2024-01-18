@@ -13,12 +13,14 @@ playerRouter.get(async (req, res) => {
 
     if (playerName !== '_') {
       const playerData = await fetchPlayerData(playerName);
-
+        // console.log("player data", playerData)
       if (playerData) {
         const { id: playerID } = playerData[0];
         const stats = await fetchPlayerStats(playerID);
+        // console.log("stats", stats)
         const gamelog = await fetchPlayerGameLog(playerID);
         const details = await fetchPlayerDetails(firstName, lastName);
+        // console.log("details", details)
 
         gamelog.sort((a, b) => Date.parse(a.game.date) - Date.parse(b.game.date));
 
@@ -65,6 +67,10 @@ const fetchPlayerGameLog = async (playerID) => {
 
 const fetchPlayerDetails = async (firstName, lastName) => {
   const response = await fetch(`https://www.thesportsdb.com/api/v1/json/3/searchplayers.php?p=${firstName}%20${lastName}`);
+  if (!response.ok) {
+    console.error(`Error: ${response.status}`);
+    return null; // or handle the error accordingly
+  }
   const details = await response.json();
   return details;
 };

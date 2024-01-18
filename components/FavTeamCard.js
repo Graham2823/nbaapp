@@ -3,6 +3,8 @@ import teams from '@/teams';
 import { Card, Table, Button } from 'react-bootstrap';
 import axios from 'axios';
 import { useRouter } from 'next/router';
+import getTeamLogo from '@/utils/getLogo';
+import {Image} from 'react-bootstrap';
 
 const FavTeamCard = ({favoriteTeam}) => {
     const [teamDetails, setTeamDetails] = useState()
@@ -30,7 +32,7 @@ const FavTeamCard = ({favoriteTeam}) => {
   <Card className='favoriteTeamCard'>
     <Table>
         <thead>
-            <th>{favoriteTeam}</th>
+            <th><Image src={getTeamLogo(favoriteTeam)} alt='team logo' className='teamLogoFrontPage'/>{favoriteTeam}</th>
         </thead>
         <tbody>
     <tr>
