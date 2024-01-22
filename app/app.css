@@ -1,4 +1,4 @@
-bodu, html{
+body, html{
 	margin: 0;
 	padding: 0;
 	background-color: #c8c8c8;
@@ -6,7 +6,7 @@ bodu, html{
 
 .game {
 	border: 1px solid black;
-	width: 200px;
+	width: 225px;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -64,7 +64,7 @@ a:hover{
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
-	width: 400px;
+	width: 450px;
 }
 
 .teamSchedule {
@@ -85,30 +85,37 @@ a:hover{
 	display: flex;
 	align-items: center;
 	z-index: 1000;
-	flex-wrap: wrap; /* Allow flex items to wrap on smaller screens */
-	justify-content: space-between; /* Ensure links are not squished together */
-}
-
-.custom-navbar .nav-link {
+	justify-content: space-between;
+  }
+  
+  .custom-navbar .nav-link {
 	padding: 10px;
 	color: white;
 	text-decoration: none;
-}
-
-.custom-navbar .nav-link:hover {
-	color: #e2e2e2; /* Link text color on hover */
-}
-
+  }
+  
+  .custom-navbar .nav-link:hover {
+	color: #e2e2e2;
+  }
+  
+  .right-nav {
+	display: flex;
+	align-items: center;
+  }
+  
+  .right-nav .nav-link {
+	margin-left: 10px;
+  }
 .frontPage,
 .playerPage,
-.teamPage{
+.teamPage, .signin, .signup{
 	text-align: center;
 	background-color: #c8c8c8;
 	height: 100vh;
 	width: 100%;
 }
 
-.statsPage, .playerDetailsPage, .boxScore{
+.statsPage, .playerDetailsPage, .boxScore, .profilePage{
 	text-align: center;
 	background-color: #c8c8c8;
 	min-height: 100vh;
@@ -358,8 +365,48 @@ a:hover{
 	background-color: transparent;
 }
 
+.favoriteTeamCard,.favoritePlayerCard{
+	width: 400px;
+	min-height: 385px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: start;
+	border: 1px solid black;
+	margin: 15px;
+}
 
+.favoriteTeamsContainer, .favoritePlayersContainer{
+	text-align: center;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	flex-wrap: wrap;
+}
 
+.buttonContainer{
+	margin: 20px;
+}
+
+.buttonContainer .button{
+	margin: 10px;
+}
+
+.favoritePlayerCard .button, .favoriteTeamCard .button{
+	margin: 10px;
+}
+
+.playerCardButton{
+	height: 35px;
+	width: 100px;
+	font-size: .7em;
+	margin: 2px;
+}
+
+.playerCardButtonContainer{
+	display: flex;
+}
 /* .tooltip-inner{
 	display: none;
 }
@@ -500,6 +547,13 @@ a:hover{
 }
 
 @media (max-width: 430px) {
+	.custom-navbar .nav-link {
+		font-size: .7em;
+		padding: 3px;
+		margin: 0px;
+		color: white;
+		text-decoration: none;
+	}
 	.playerDetails {
 		width: 100vw;
 		height: auto;
@@ -543,6 +597,13 @@ a:hover{
 }
 
 @media (max-width: 400px){
+	.custom-navbar .nav-link {
+		font-size: .6em;
+		padding: 2px;
+		margin: 0px;
+		color: white;
+		text-decoration: none;
+	}
 	.custom-navbar{
 		width: 100vw;
 	}
@@ -557,6 +618,13 @@ a:hover{
 }
 
 @media (max-width: 365px) {
+	.custom-navbar .nav-link {
+		font-size: .5em;
+		padding: 1px;
+		margin: 0px;
+		color: white;
+		text-decoration: none;
+	}
 	.boxScoreTable {
 		width: 70%;
 		margin: auto;
@@ -571,10 +639,20 @@ a:hover{
 		margin: 0px;
 	}
 }
+@media (max-width: 320px) {
+	.custom-navbar .nav-link {
+		font-size: .4em;
+		padding: 1px;
+		margin: 0px;
+		color: white;
+		text-decoration: none;
+	}
+}
 @media (max-width: 295px) {
 	.custom-navbar .nav-link {
-		font-size: .6em;
-		padding: 5px;
+		font-size: .4em;
+		padding: 0px;
+		margin: 0px;
 		color: white;
 		text-decoration: none;
 	}

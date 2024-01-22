@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema({
     ],
     favoritePlayers:[
         {
-            playername: String
+            playerName: String
         }
     ]
  

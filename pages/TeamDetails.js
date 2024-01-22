@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import '../app/app.css';
 import { useRouter } from 'next/router';
@@ -7,6 +7,10 @@ import { Table, Image } from 'react-bootstrap';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
 import teams from '@/teams';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {faStar} from '@fortawesome/free-solid-svg-icons';
+import { UserContext } from '@/context/userContext';
+
 
 const TeamDetails = () => {
 	const router = useRouter();
@@ -16,13 +20,14 @@ const TeamDetails = () => {
 	const [team2Info, setTeam2Info] = useState([]);
 	const [teamCompareLogos, setTeamCompareLogos] = useState();
 	const { teamName, team1, team2 } = router.query;
+	const {favoriteTeams, setFavoriteTeams, user} = useContext(UserContext)
 
+	
 	useEffect(() => {
 		if (teamName) {
 			axios
-				.get(`https://nbaapp.vercel.app/api/getTeam?teamName=${teamName}`)
+				.get(`http://localhost:3000/api/getTeam?teamName=${teamName}`)
 				.then((response) => {
-					console.log(response.data);
 					setTeamDetails(response.data);
 				})
 				.catch((error) => {
@@ -34,7 +39,7 @@ const TeamDetails = () => {
 		if (team1 && team2) {
 			axios
 				.get(
-					`https://nbaapp.vercel.app/api/compareTeams?team1=${team1}&team2=${team2}`
+					`http://localhost:3000/api/compareTeams?team1=${team1}&team2=${team2}`
 				)
 				.then((response) => {
 					console.log('res', response.data);
@@ -90,8 +95,32 @@ const TeamDetails = () => {
 		
 	}
 
-	console.log('logos', teamCompareLogos);
-	console.log('teams', team1Info);
+	const handleFavoriteTeam = async() =>{
+		try {
+			const requestBody = {
+				uid: user.uid,
+				teamName: teamDetails.teamName
+			}
+
+			const response = await axios.post(
+				`http://localhost:3000/api/addFavoriteTeam`,
+				requestBody
+			);
+
+           console.log("reponse,", response.data.user.favoriteTeams.length)
+		   setFavoriteTeams(response.data.user.favoriteTeams)
+		   localStorage.setItem('favoriteTeams', JSON.stringify(response.data.user.favoriteTeams))
+		   if(response.data.user.favoriteTeams.some((teams)=> teams.teamName === teamDetails.teamName)){
+			   toast.success("Team Added to Favorites!")
+			}else{
+				toast.success("Team Removed From Favorites!")
+		   }
+		} catch (error) {
+				console.error('Error:', error);
+		}
+	}
+
+
 	return (
 		<div className='teamPage'>
 			<ToastContainer />
@@ -106,6 +135,11 @@ const TeamDetails = () => {
 							className='teamLogo'
 						/>
 						{teamDetails.teamName}
+						{favoriteTeams && favoriteTeams.some((team)=>team.teamName === teamDetails.teamName) ?(
+							<FontAwesomeIcon icon={faStar} style={{color:'yellow'}} onClick={()=> handleFavoriteTeam()}/>
+							):(
+							<FontAwesomeIcon icon={faStar} style={{color:'#FFFFFF'}} onClick={()=> handleFavoriteTeam()}/>
+						)}
 					</h2>
 					<Table className='teamDetailsTable' striped='columns' responsive='xl'>
 						<thead>
