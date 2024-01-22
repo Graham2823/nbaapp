@@ -21,7 +21,7 @@ console.log('favorite players', favoritePlayers)
 	useEffect(() => {
 		axios
 			.get(
-				`http://localhost:3000/api/getBoxScore?gameID=${gameID}&homeTeam=${homeTeam}&awayTeam=${awayTeam}&date=${date}`
+				`https://nbaapp.vercel.app/api/getBoxScore?gameID=${gameID}&homeTeam=${homeTeam}&awayTeam=${awayTeam}&date=${date}`
 			)
 			.then((response) => {
 				console.log('res', response.data);

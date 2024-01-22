@@ -23,7 +23,7 @@ function SignIn() {
                 const userID = userCredential.user.uid;
 
                 axios
-                    .get(`http://localhost:3000/api/signin?uid=${userID}`)
+                    .get(`https://nbaapp.vercel.app/api/signin?uid=${userID}`)
                     .then((response) => {
                         console.log("response", response.data.favoriteTeams);
                         const username = response.data.username;
