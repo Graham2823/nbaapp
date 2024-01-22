@@ -51,12 +51,12 @@ const FavPlayerCard = ({favoritePlayer}) => {
         <Button className='playerCardButton' name='playerDetails' onClick={(e)=>handleClickButton(e)}>Player Details</Button>
         <Button className='playerCardButton' name='last5' onClick={(e)=>handleClickButton(e)}>Last 5 Games</Button>
         </div>
-        {showPlayerStats && (
         <Table>
             <thead>
-                <th>{playerDetails.playerData[0].first_name} {playerDetails.playerData[0].last_name}</th>
-                <th onClick={()=>router.push(`/TeamDetails?teamName=${playerDetails.details.player[0].strTeam}`)}>{playerDetails.details.player[0].strTeam}</th>
+                <th colSpan={showPlayerGamelog ? 2.5 : 1}>{playerDetails.playerData[0].first_name} {playerDetails.playerData[0].last_name}</th>
+                <th colSpan={showPlayerGamelog ? 2.5 : 1} onClick={()=>router.push(`/TeamDetails?teamName=${playerDetails.details.player[0].strTeam}`)}>{playerDetails.details.player[0].strTeam}</th>
             </thead>
+        {showPlayerStats ? (
             <tbody>
         <tr>
             <td>Points:</td><td>{playerDetails.stats[0].pts}</td>
@@ -73,48 +73,34 @@ const FavPlayerCard = ({favoritePlayer}) => {
             <tr>
             <td>Blocks:</td><td>{playerDetails.stats[0].blk}</td>
             </tr>
-            </tbody>
+                </tbody>
+            ): showPlayerDetails ? (
+                <tbody>
+                    <tr>
+                        <td>Position:</td><td>{playerDetails.details.player[0].strPosition}</td>
+                    </tr>
+                    <tr><td>Height:</td><td>{playerDetails.details.player[0].strHeight}</td></tr>
+                    <tr><td>Weight:</td><td>{playerDetails.details.player[0].strWeight}</td></tr>
+                    <tr><td>Number:</td><td>{playerDetails.details.player[0].strNumber? playerDetails.details.player[0].strNumber : "Number not found"}</td></tr>
+                    <tr><td>Nationality:</td><td>{playerDetails.details.player[0].strNationality}</td></tr>
+                </tbody>
+            ):(
+                <tbody>
+                    <tr><td>Points</td><td>Rebounds</td><td>Assists</td><td>Steals</td><td>Blocks</td></tr>
+                    {last5Games && (
+                        last5Games.reverse().map((game, key)=>(
+                            <tr key={key}>
+                                <td>{game.pts}</td>
+                                <td>{game.reb}</td>
+                                <td>{game.ast}</td>
+                                <td>{game.stl}</td>
+                                <td>{game.blk}</td>
+                            </tr>
+                        ))
+                    )}
+                </tbody>
+            )}
         </Table>
-        )}
-        {showPlayerDetails && (
-        <Table>
-        <thead>
-                <th>{playerDetails.playerData[0].first_name} {playerDetails.playerData[0].last_name}</th>
-                <th>{playerDetails.details.player[0].strTeam}</th>
-            </thead>
-            <tbody>
-            <tr>
-                <td>Position:</td><td>{playerDetails.details.player[0].strPosition}</td>
-            </tr>
-            <tr><td>Height:</td><td>{playerDetails.details.player[0].strHeight}</td></tr>
-            <tr><td>Weight:</td><td>{playerDetails.details.player[0].strWeight}</td></tr>
-            <tr><td>Number:</td><td>{playerDetails.details.player[0].strNumber? playerDetails.details.player[0].strNumber : "Number not found"}</td></tr>
-            <tr><td>Nationality:</td><td>{playerDetails.details.player[0].strNationality}</td></tr>
-            </tbody>
-        </Table>
-        )}
-        {showPlayerGamelog && (
-        <Table>
-        <thead>
-                <th colSpan={2.5}>{playerDetails.playerData[0].first_name} {playerDetails.playerData[0].last_name}</th>
-                <th colSpan={2.5}>{playerDetails.details.player[0].strTeam}</th>
-            </thead>
-            <tbody>
-                <tr><td>Points</td><td>Rebounds</td><td>Assists</td><td>Steals</td><td>Blocks</td></tr>
-                {last5Games && (
-                    last5Games.reverse().map((game, key)=>(
-                        <tr key={key}>
-                            <td>{game.pts}</td>
-                            <td>{game.reb}</td>
-                            <td>{game.ast}</td>
-                            <td>{game.stl}</td>
-                            <td>{game.blk}</td>
-                        </tr>
-                    ))
-                )}
-            </tbody>
-        </Table>
-        )}
         <Button className="button" onClick={()=>router.push(`/PlayerDetails/?first=${playerDetails.playerData[0].first_name}&last=${playerDetails.playerData[0].last_name}`)}>View More</Button>
       </Card>
             )}
