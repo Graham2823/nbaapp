@@ -12,7 +12,7 @@ const FavTeamCard = ({favoriteTeam}) => {
     const router = useRouter()
     useEffect(() => {
         axios
-            .get(`https://nbaapp.vercel.app/api/getTeam?teamName=${favoriteTeam}`)
+            .get(`http://localhost:3000/api/getTeam?teamName=${favoriteTeam}`)
             .then((response) => {
                 setTeamDetails(response.data);
             })
