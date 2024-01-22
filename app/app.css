@@ -501,6 +501,11 @@ a:hover{
 	.statLeadersTable td{
 		font-size: .7em;
 	}
+	
+	.favoriteTeamCard th,.favoriteTeamCard td, .favoritePlayerCard th, .favoritePlayerCard td{
+		font-size: .8em;
+
+	}
 }
 
 @media (max-width: 470px){
@@ -594,6 +599,17 @@ a:hover{
 		margin: 5px auto;
 		width:80%;
 	}
+	.favoriteTeamCard,.favoritePlayerCard{
+		width: 300px;
+	}
+	.favoriteTeamCard th,.favoriteTeamCard td, .favoritePlayerCard th, .favoritePlayerCard td{
+		font-size: .8em;
+
+	}
+	.playerCardButton{
+		font-size: .6em;
+		width: 90px;
+	}
 }
 
 @media (max-width: 400px){
@@ -638,6 +654,17 @@ a:hover{
 		padding: 0px;
 		margin: 0px;
 	}
+	.favoriteTeamCard,.favoritePlayerCard{
+		width: 250px;
+	}
+	.favoriteTeamCard th,.favoriteTeamCard td, .favoritePlayerCard th, .favoritePlayerCard td{
+		font-size: .7em;
+
+	}
+	.playerCardButton{
+		font-size: .6em;
+		width: 70px;
+	}
 }
 @media (max-width: 320px) {
 	.custom-navbar .nav-link {
@@ -673,5 +700,16 @@ a:hover{
 		font-size: 0.15em;
 		padding: 0px;
 		margin: 0px;
+	}
+	.favoriteTeamCard,.favoritePlayerCard{
+		width: 200px;
+	}
+	.favoriteTeamCard th,.favoriteTeamCard td, .favoritePlayerCard th, .favoritePlayerCard td{
+		font-size: .8em;
+
+	}
+	.playerCardButton{
+		font-size: .6em;
+		width: 60px;
 	}
 }

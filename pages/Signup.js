@@ -37,7 +37,7 @@ function CreateUser() {
 			);
 			console.log('Successfully signed up:', user);
 			console.log('Backend response:', response.data);
-            router.push('/signin')
+            router.push('/Signin')
 			toast.success("User Successfully Created, Sign in to Continue!")
 		} catch (error) {
 			if (error.code === "auth/email-already-in-use") {
