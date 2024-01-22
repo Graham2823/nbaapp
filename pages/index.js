@@ -1,16 +1,20 @@
-import React, {useEffect, useState} from "react"
+import React, {useEffect, useState, useContext} from "react"
 import axios from "axios"
 import "../app/app.css"
 import convertTo12HourFormat from "@/utils/convertTime"
 import { Image } from "react-bootstrap"
 import getTeamLogo from "@/utils/getLogo"
+import { UserContext } from "@/context/userContext"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {faStar} from '@fortawesome/free-solid-svg-icons';
 
 export default function Home() {
   const [todaysGames, setTodaysGames] = useState([])
   const [yesterdaysGames, setYesterdaysGames] = useState([])
+  const {username, favoriteTeams} = useContext(UserContext)
   useEffect(()=>{
     axios
-    .get(`https://nbaapp.vercel.app/api/getGames`)
+    .get(`http://localhost:3000/api/getGames`)
     .then((response) => {
     setTodaysGames(response.data.tscores);
     setYesterdaysGames(response.data.yscores);
@@ -20,22 +24,31 @@ export default function Home() {
     });
   },[])
 
+  const favoriteTeam = (teamName)=>{
+    if(favoriteTeams.some((team)=> team.teamName === teamName)){
+      return <FontAwesomeIcon icon={faStar} style={{color:'yellow'}} onClick={()=> handleFavoriteTeam()}/>
+    }
+  }
+
   console.log(todaysGames)
   console.log(yesterdaysGames)
     return (
       <div className="frontPage">
+        {username && 
+        <h2>Hello {username}</h2>
+        }
           <h2>Todays Games:</h2>
         <div className="todaysGames">
           {todaysGames ?(
             todaysGames.map((game, index) => (
               <div key={index} className="game">
-                  <h3><a href={`/TeamDetails?teamName=${game.home_team.full_name}`}><Image src={getTeamLogo(game.home_team.full_name)} alt='team logo' className='teamLogoFrontPage'/>{game.home_team.abbreviation}</a>
+                  <h3><a href={`/TeamDetails?teamName=${game.home_team.full_name}`}><Image src={getTeamLogo(game.home_team.full_name)} alt='team logo' className='teamLogoFrontPage'/>{game.home_team.abbreviation}</a>{favoriteTeam(game.home_team.full_name)}
                       {typeof game.home_team_score !== 'undefined' && game.home_team_score > 0 && (
                           <span>: {game.home_team_score}</span>
                       )}
                   </h3>
                   <h3>VS</h3>
-                  <h3><a href={`/TeamDetails?teamName=${game.visitor_team.full_name}`}><Image src={getTeamLogo(game.visitor_team.full_name)} alt='team logo' className='teamLogoFrontPage'/>{game.visitor_team.abbreviation}</a>
+                  <h3><a href={`/TeamDetails?teamName=${game.visitor_team.full_name}`}><Image src={getTeamLogo(game.visitor_team.full_name)} alt='team logo' className='teamLogoFrontPage'/>{game.visitor_team.abbreviation}</a>{favoriteTeam(game.visitor_team.full_name)}
                       {typeof game.visitor_team_score !== 'undefined' && game.visitor_team_score > 0 && (
                           <span>: {game.visitor_team_score}</span>
                       )}
@@ -64,13 +77,13 @@ export default function Home() {
           {yesterdaysGames ?(
             yesterdaysGames.map((game, index) => (
               <div key={index} className="game">
-                  <h3><a href={`/TeamDetails?teamName=${game.home_team.full_name}`}><Image src={getTeamLogo(game.home_team.full_name)} alt='team logo' className='teamLogoFrontPage'/>{game.home_team.abbreviation}</a>
+                  <h3><a href={`/TeamDetails?teamName=${game.home_team.full_name}`}><Image src={getTeamLogo(game.home_team.full_name)} alt='team logo' className='teamLogoFrontPage'/>{game.home_team.abbreviation}</a>{favoriteTeam(game.home_team.full_name)}
                       {typeof game.home_team_score !== 'undefined' && game.home_team_score > 0 && (
                           <span>: {game.home_team_score}</span>
                       )}
                   </h3>
                   <h3>VS</h3>
-                  <h3><a href={`/TeamDetails?teamName=${game.visitor_team.full_name}`}><Image src={getTeamLogo(game.visitor_team.full_name)} alt='team logo' className='teamLogoFrontPage'/>{game.visitor_team.abbreviation}</a>
+                  <h3><a href={`/TeamDetails?teamName=${game.visitor_team.full_name}`}><Image src={getTeamLogo(game.visitor_team.full_name)} alt='team logo' className='teamLogoFrontPage'/>{game.visitor_team.abbreviation}</a>{favoriteTeam(game.visitor_team.full_name)}
                       {typeof game.visitor_team_score !== 'undefined' && game.visitor_team_score > 0 && (
                           <span>: {game.visitor_team_score}</span>
                       )}

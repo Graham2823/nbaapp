@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import '../app/app.css';
 import 'react-toastify/dist/ReactToastify.css';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {faStar} from '@fortawesome/free-solid-svg-icons';
 import { Image } from 'react-bootstrap';
 import { Table } from 'react-bootstrap';
 import { ToastContainer, toast } from 'react-toastify';
+import { UserContext } from '@/context/userContext';
 
 const PlayerDetails = () => {
 	const router = useRouter();
@@ -21,12 +23,14 @@ const PlayerDetails = () => {
 	const [p2Data, setP2Data] = useState([])
 	const [p1Stats, setP1Stats] = useState([])
 	const [p2Stats, setP2Stats] = useState([])
+	const {favoritePlayers, setFavoritePlayers, user} = useContext(UserContext)
+
 
 	useEffect(()=>{
 		if(first && last){ 
 			axios
 			.get(
-				`https://nbaapp.vercel.app/api/getPlayer?firstName=${first}&lastName=${last}`
+				`http://localhost:3000/api/getPlayer?firstName=${first}&lastName=${last}`
 			)
 			.then((response) => {
 				setPlayerDetails(response.data);
@@ -66,7 +70,32 @@ const PlayerDetails = () => {
         return `${percentage.toFixed(2)}%`
     }
 
+	const handleFavoritePlayer = async() =>{
+		try {
+			const requestBody = {
+				uid: user.uid,
+				playerName: `${first} ${last}`
+			}
 
+			const response = await axios.post(
+				`http://localhost:3000/api/addFavoritePlayer`,
+				requestBody
+			);
+
+           console.log("reponse,", response.data.user.favoritePlayers)
+		   setFavoritePlayers(response.data.user.favoritePlayers)
+		   localStorage.setItem('favoritePlayers', JSON.stringify(response.data.user.favoritePlayers))
+		   if(response.data.user.favoritePlayers.some((player)=> player.playerName === playerDetails.details.player[0].strPlayer)){
+			   toast.success("Player Added to Favorites!")
+			}else{
+				toast.success("Player Removed From Favorites!")
+		   }
+		} catch (error) {
+				console.error('Error:', error);
+		}
+	}
+
+console.log("favoitePlayers", favoritePlayers)
 	return(
 <div className='playerDetailsPage'>
 <ToastContainer/>
@@ -82,7 +111,11 @@ const PlayerDetails = () => {
 								alt='player Picture'
 							/>
 							<div>
-								<h3>{playerDetails.details.player[0].strPlayer}</h3>
+								<h3>{playerDetails.details.player[0].strPlayer} {favoritePlayers && favoritePlayers.some((player)=>player.playerName === first + " " + last) ?(
+							<FontAwesomeIcon icon={faStar} style={{color:'yellow'}} onClick={()=> handleFavoritePlayer()}/>
+							):(
+							<FontAwesomeIcon icon={faStar} style={{color:'#FFFFFF'}} onClick={()=> handleFavoritePlayer()}/>
+						)}</h3>
 								<h3>{playerDetails.details.player[0].strPosition}</h3>
 								<h3>{playerDetails.details.player[0].strHeight}</h3>
 								<h3><a href={`/TeamDetails?teamName=${playerDetails.playerData[0].team.full_name}`}>{playerDetails.details.player[0].strTeam}</a></h3>
