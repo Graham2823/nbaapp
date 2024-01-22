@@ -14,7 +14,7 @@ export default function Home() {
   const {username, favoriteTeams} = useContext(UserContext)
   useEffect(()=>{
     axios
-    .get(`http://localhost:3000/api/getGames`)
+    .get(`https://nbaapp.vercel.app/api/getGames`)
     .then((response) => {
     setTodaysGames(response.data.tscores);
     setYesterdaysGames(response.data.yscores);

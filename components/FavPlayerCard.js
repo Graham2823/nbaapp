@@ -14,7 +14,7 @@ const FavPlayerCard = ({favoritePlayer}) => {
 
     useEffect(() => {
         axios
-            .get(`http://localhost:3000/api/getPlayer?firstName=${favoritePlayer.playerName.split(" ")[0]}&lastName=${favoritePlayer.playerName.split(" ")[1]}${favoritePlayer.playerName.split(" ")[2]? "%20"+ favoritePlayer.playerName.split(" ")[2] : ''}`)
+            .get(`https://nbaapp.vercel.app/api/getPlayer?firstName=${favoritePlayer.playerName.split(" ")[0]}&lastName=${favoritePlayer.playerName.split(" ")[1]}${favoritePlayer.playerName.split(" ")[2]? "%20"+ favoritePlayer.playerName.split(" ")[2] : ''}`)
             .then((response) => {
                 setPlayerDetails(response.data);
                 setLast5Game(response.data.gamelog.slice(-5))

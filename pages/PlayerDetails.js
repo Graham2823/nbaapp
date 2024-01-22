@@ -30,7 +30,7 @@ const PlayerDetails = () => {
 		if(first && last){ 
 			axios
 			.get(
-				`http://localhost:3000/api/getPlayer?firstName=${first}&lastName=${last}`
+				`https://nbaapp.vercel.app/api/getPlayer?firstName=${first}&lastName=${last}`
 			)
 			.then((response) => {
 				setPlayerDetails(response.data);
@@ -78,7 +78,7 @@ const PlayerDetails = () => {
 			}
 
 			const response = await axios.post(
-				`http://localhost:3000/api/addFavoritePlayer`,
+				`https://nbaapp.vercel.app/api/addFavoritePlayer`,
 				requestBody
 			);
 
