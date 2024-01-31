@@ -17,7 +17,7 @@ const FavPlayerCard = ({favoritePlayer}) => {
             .get(`https://nbaapp.vercel.app/api/getPlayer?firstName=${favoritePlayer.playerName.split(" ")[0]}&lastName=${favoritePlayer.playerName.split(" ")[1]}${favoritePlayer.playerName.split(" ")[2]? "%20"+ favoritePlayer.playerName.split(" ")[2] : ''}`)
             .then((response) => {
                 setPlayerDetails(response.data);
-                setLast5Game(response.data.gamelog.slice(-5))
+                setLast5Game(response.data.gamelog.slice(-5).reverse())
             })
             .catch((error) => {
                 console.error('Error fetching data:', error);
@@ -88,7 +88,7 @@ const FavPlayerCard = ({favoritePlayer}) => {
                 <tbody>
                     <tr><td>Points</td><td>Rebounds</td><td>Assists</td><td>Steals</td><td>Blocks</td></tr>
                     {last5Games && (
-                        last5Games.reverse().map((game, key)=>(
+                        last5Games.map((game, key)=>(
                             <tr key={key}>
                                 <td>{game.pts}</td>
                                 <td>{game.reb}</td>
