@@ -415,6 +415,12 @@ a:hover{
 	display: block;
 } */
 
+
+.bettingOdds{
+	padding: 0px;
+	margin: 0px 0px 5px 0px;
+}
+
 @media (max-width: 820px){
     .playerStats th{
         font-size: .8em;
