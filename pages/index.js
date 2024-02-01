@@ -11,6 +11,7 @@ import {faStar} from '@fortawesome/free-solid-svg-icons';
 export default function Home() {
   const [todaysGames, setTodaysGames] = useState([])
   const [yesterdaysGames, setYesterdaysGames] = useState([])
+  const [bettingOdds, setBettingOdds] = useState([])
   const {username, favoriteTeams} = useContext(UserContext)
   useEffect(()=>{
     axios
@@ -22,6 +23,13 @@ export default function Home() {
     .catch((error) => {
     console.error('Error fetching data:', error);
     });
+
+    axios
+    .get(`https://nbaapp.vercel.app/api/bettingOdds`)
+    .then((response)=>{
+      console.log("res", response.data)
+      setBettingOdds(response.data)
+    })
   },[])
 
   const favoriteTeam = (teamName)=>{
@@ -30,8 +38,7 @@ export default function Home() {
     }
   }
 
-  console.log(todaysGames)
-  console.log(yesterdaysGames)
+
     return (
       <div className="frontPage">
         {username && 
@@ -63,7 +70,30 @@ export default function Home() {
                   ):(
                     <div>
                       <h3 className="gameStatus">{convertTo12HourFormat(game.status, false)}</h3>
-                      <a href={`/TeamDetails?team1=${game.home_team.full_name}&team2=${game.visitor_team.full_name}`}><button className="compareButton">Compare Teams</button></a>
+                      {
+                        bettingOdds.map((odds, index) => (
+                          (odds.home_team === game.home_team.full_name || odds.away_team === game.visitor_team.full_name) && odds.bookmakers && odds.bookmakers.length > 0 ? (
+                            <>
+      
+      <p key={index} className="bettingOdds">
+        {odds.bookmakers[0].markets && odds.bookmakers[0].markets.length > 1 && odds.bookmakers[0].markets[1].outcomes && odds.bookmakers[0].markets[1].outcomes.length > 1 ? (
+          odds.bookmakers[0].markets[1].outcomes[1].point < 0 ? (
+            `${odds.bookmakers[0].markets[1].outcomes[1].name} ${odds.bookmakers[0].markets[1].outcomes[1].point}`
+            ) : (
+              `${odds.bookmakers[0].markets[1].outcomes[0].name} ${odds.bookmakers[0].markets[1].outcomes[0].point}`
+              )
+              ) : null}
+      </p>
+      <p className="bettingOdds">
+          O/U:  {odds.bookmakers[0].markets[2].outcomes[0].point}  
+      </p>
+              </>
+    ) : null
+    ))
+}
+    <a href={`/TeamDetails?team1=${game.home_team.full_name}&team2=${game.visitor_team.full_name}`}><button className="compareButton">Compare Teams</button></a>
+
+
                     </div>
                   )}
               </div>
