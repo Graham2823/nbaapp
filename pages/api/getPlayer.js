@@ -16,7 +16,7 @@ playerRouter.get(async (req, res) => {
         // console.log("player data", playerData)
       if (playerData) {
         const { id: playerID } = playerData[0];
-        const stats = await fetchPlayerStats(playerID);
+        const stats = await fetchAllPlayerStats(playerID);
         // console.log("stats", stats)
         const gamelog = await fetchPlayerGameLog(playerID);
         const details = await fetchPlayerDetails(firstName, lastName);
@@ -47,11 +47,28 @@ const fetchPlayerData = async (playerName) => {
   return data.data;
 };
 
-const fetchPlayerStats = async (playerID) => {
-  const response = await fetch(`https://www.balldontlie.io/api/v1/season_averages?season=2023&player_ids[]=${playerID}`);
+const fetchPlayerStats = async (playerID, year) => {
+  const response = await fetch(`https://www.balldontlie.io/api/v1/season_averages?season=${year}&player_ids[]=${playerID}`);
   const statsData = await response.json();
   return statsData.data;
 };
+
+const fetchAllPlayerStats = async (playerID) => {
+    const statsPromises = [];
+
+    for (let i = 0; i <= 21; i++) {
+        const statsPerYear = await fetchPlayerStats(playerID, (2023 - i));
+        if (statsPerYear.length > 0) {
+            statsPromises.push(statsPerYear);
+        }
+    }
+
+    const stats = await Promise.all(statsPromises);
+
+    console.log('stats', stats);
+    return stats
+};
+
 
 const fetchPlayerGameLog = async (playerID) => {
   let gamelog = [];
