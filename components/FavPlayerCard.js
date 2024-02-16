@@ -59,19 +59,19 @@ const FavPlayerCard = ({favoritePlayer}) => {
         {showPlayerStats ? (
             <tbody>
         <tr>
-            <td>Points:</td><td>{playerDetails.stats[0].pts}</td>
+            <td>Points:</td><td>{playerDetails.stats[0][0].pts}</td>
             </tr>
             <tr>
-            <td>Rebounds:</td><td>{playerDetails.stats[0].reb}</td>
+            <td>Rebounds:</td><td>{playerDetails.stats[0][0].reb}</td>
             </tr>
             <tr>
-            <td>Assists:</td><td>{playerDetails.stats[0].ast}</td>
+            <td>Assists:</td><td>{playerDetails.stats[0][0].ast}</td>
             </tr>
             <tr>
-            <td>Steals:</td><td>{playerDetails.stats[0].stl}</td>
+            <td>Steals:</td><td>{playerDetails.stats[0][0].stl}</td>
             </tr>
             <tr>
-            <td>Blocks:</td><td>{playerDetails.stats[0].blk}</td>
+            <td>Blocks:</td><td>{playerDetails.stats[0][0].blk}</td>
             </tr>
                 </tbody>
             ): showPlayerDetails ? (
