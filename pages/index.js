@@ -121,9 +121,9 @@ export default function Home() {
                       )}
                   </h3>
                   <h3 className="gameStatus">{game.status}</h3>
-                  {game.home_team_score> 0 && game.visitor_team_score > 0 &&(
-                    // <p><a href={`/BoxScore?gameID=${game.id}&homeTeam=${game.home_team.full_name}&homeScore=${game.home_team_score}&awayTeam=${game.visitor_team.full_name}&awayScore=${game.visitor_team_score}&date=${game.date.split("T")[0]}`}><button>View Box Score</button></a></p>
-                  )}
+                  {/* {game.home_team_score> 0 && game.visitor_team_score > 0 &&(
+                    <p><a href={`/BoxScore?gameID=${game.id}&homeTeam=${game.home_team.full_name}&homeScore=${game.home_team_score}&awayTeam=${game.visitor_team.full_name}&awayScore=${game.visitor_team_score}&date=${game.date.split("T")[0]}`}><button>View Box Score</button></a></p>
+                  )} */}
               </div>
           ))
           ):(
