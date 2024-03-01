@@ -1,6 +1,7 @@
 import { createRouter } from 'next-connect';
 import cors from 'cors'; // Import the cors middleware
 import mongoose from 'mongoose';
+import axios from 'axios';
 
 const teamRouter = createRouter();
 
@@ -18,27 +19,49 @@ teamRouter.get(async (req, res) => {
 	const {teamName} = req.query
 	console.log(teamName);
     let teamID
-	await fetch(`https://www.balldontlie.io/api/v1/teams`)
-		.then((res) => res.json())
-		.then((teams) => {
-			for (let i = 0; i < teams.data.length; i++) {
-				if (teams.data[i].full_name === teamName) {
-					teamID = teams.data[i].id;
-				}
-			}
-		});
+	await axios.get(`http://api.balldontlie.io/v1/teams`, {
+  headers: {
+    'Authorization': '34db4f41-8c29-4fef-940d-db01294f67cc',
+    'Content-Type': 'application/json'
+  }
+}).then((res) => res.data)
+  .then((teams) => {
+    for (let i = 0; i < teams.data.length; i++) {
+      if (teams.data[i].full_name === teamName) {
+        teamID = teams.data[i].id;
+        break; // Once you find the matching team, exit the loop
+      }
+    }
+    console.log(teamID);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+
+	// await fetch(`https://www.balldontlie.io/api/v1/teams`)
+	// 	.then((res) => res.json())
+	// 	.then((teams) => {
+	// 		for (let i = 0; i < teams.data.length; i++) {
+	// 			if (teams.data[i].full_name === teamName) {
+	// 				teamID = teams.data[i].id;
+	// 			}
+	// 		}
+	// 	});
 	let schedule = [];
-	for (let i = 1; i < 5; i++) {
-		await fetch(
-			`https://www.balldontlie.io/api/v1/games?seasons[]=2023&team_ids[]=${teamID}&page=${i}`
-		)
-			.then((res) => res.json())
-			.then((data) => {
-				for (let i = 0; i < data.data.length; i++) {
-					schedule.push(data.data[i]);
-				}
-			});
+		await axios.get(`http://api.balldontlie.io/v1/games?seasons[]=2023&team_ids[]=${teamID}&per_page=100`, {
+  headers: {
+    'Authorization': '34db4f41-8c29-4fef-940d-db01294f67cc',
+    'Content-Type': 'application/json'
+  }
+}).then((res) => res.data)
+  .then((data) => {
+    for (let i = 0; i < data.data.length; i++) {
+		schedule.push(data.data[i]);
 	}
+  })
+  .catch((error) => {
+    console.error(error);
+  });
    const mongoConnectionString = process.env.MONGODB_CONNECTION_STRING;
   await mongoose.connect(mongoConnectionString, {
     useNewUrlParser: true,
