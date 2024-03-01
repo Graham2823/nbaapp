@@ -95,7 +95,7 @@ const PlayerDetails = () => {
 			if (
 				response.data.user.favoritePlayers.some(
 					(player) =>
-						player.playerName === playerDetails.details.player[0].strPlayer
+						player.playerName === playerDetails.playerData[0].first_name + playerDetails.playerData[0].last_name
 				)
 			) {
 				toast.success('Player Added to Favorites!');
@@ -167,13 +167,13 @@ const PlayerDetails = () => {
 						)}
 					</div>
 					<div className='playerStats'>
-						{playerDetails.stats.map((season, index) => (
+						{/* {playerDetails.playerAverages.map((season, index) => (
 							<button
 								onClick={() => setSelectedSeason(season[0].season)}
 								key={index}>
 								{season[0].season}
 							</button>
-						))}
+						))} */}
 						<Table striped='columns'>
 							<thead>
 								<th>Season</th>
@@ -190,7 +190,7 @@ const PlayerDetails = () => {
 								<th>Turnovers Per Game</th>
 							</thead>
 							<tbody>
-								{playerDetails.stats.length === 0 ? (
+								{playerDetails.playerAverages[0].length === 0 ? (
 									<tr>
 										<td>0</td>
 										<td>0</td>
@@ -206,39 +206,37 @@ const PlayerDetails = () => {
 										<td>0</td>
 									</tr>
 								) : (
-									playerDetails.stats.map(
-										(season) =>
-											season[0].season === selectedSeason && (
-												<tr key={season[0].season}>
-													<td className='season'>{season[0].season}</td>
+									
+												<tr key={playerDetails.playerAverages[0].season}>
+													<td className='season'>{playerDetails.playerAverages[0].season}</td>
 													<td className='gamesPlayed'>
-														{season[0].games_played}
+														{playerDetails.playerAverages[0].games_played}
 													</td>
-													<td>{season[0].min}</td>
+													<td>{playerDetails.playerAverages[0].min}</td>
 													<td>
-														{season[0].fgm === 0
+														{playerDetails.playerAverages[0].fgm === 0
 															? `0%`
-															: shotPercentage(season[0].fgm, season[0].fga)}
-													</td>
-													<td>
-														{season[0].fg3m === 0
-															? `0%`
-															: shotPercentage(season[0].fg3m, season[0].fg3a)}
+															: shotPercentage(playerDetails.playerAverages[0].fgm, playerDetails.playerAverages[0].fga)}
 													</td>
 													<td>
-														{season[0].ftm === 0
+														{playerDetails.playerAverages[0].fg3m === 0
 															? `0%`
-															: shotPercentage(season[0].ftm, season[0].fta)}
+															: shotPercentage(playerDetails.playerAverages[0].fg3m, playerDetails.playerAverages[0].fg3a)}
 													</td>
-													<td>{season[0].pts}</td>
-													<td>{season[0].reb}</td>
-													<td>{season[0].ast}</td>
-													<td>{season[0].stl}</td>
-													<td>{season[0].blk}</td>
-													<td>{season[0].turnover}</td>
+													<td>
+														{playerDetails.playerAverages[0].ftm === 0
+															? `0%`
+															: shotPercentage(playerDetails.playerAverages[0].ftm, playerDetails.playerAverages[0].fta)}
+													</td>
+													<td>{playerDetails.playerAverages[0].pts}</td>
+													<td>{playerDetails.playerAverages[0].reb}</td>
+													<td>{playerDetails.playerAverages[0].ast}</td>
+													<td>{playerDetails.playerAverages[0].stl}</td>
+													<td>{playerDetails.playerAverages[0].blk}</td>
+													<td>{playerDetails.playerAverages[0].turnover}</td>
 												</tr>
-											)
-									)
+											
+									
 								)}
 							</tbody>
 						</Table>
@@ -257,7 +255,7 @@ const PlayerDetails = () => {
 								<h3>No Player Details Available</h3>
 							)}
 						</div>
-					) : playerDetails.gamelog.length > 0 ? (
+					) : playerDetails.playerGamelog.length > 0 ? (
 						<div className='gamelog'>
 							<Table className='gamelogTable' striped>
 								<thead>
@@ -276,7 +274,7 @@ const PlayerDetails = () => {
 									</tr>
 								</thead>
 								<tbody>
-									{playerDetails.gamelog.reverse().map((game) => (
+									{playerDetails.playerGamelog.reverse().map((game) => (
 										<tr key={game.id}>
 											{' '}
 											{/* Add a unique key for each row */}
