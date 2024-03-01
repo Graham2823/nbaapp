@@ -15,21 +15,23 @@ export default function Home() {
   const {username, favoriteTeams} = useContext(UserContext)
   useEffect(()=>{
     axios
-    .get(`https://nbaapp.vercel.app/api/getGames`)
+    .get(`https://nbaapp.vercel.app/api/getTodaysGames`)
     .then((response) => {
-    setTodaysGames(response.data.tscores);
-    setYesterdaysGames(response.data.yscores);
+      console.log("response", response)
+    setTodaysGames(response.data.data);
     })
     .catch((error) => {
     console.error('Error fetching data:', error);
     });
-
     axios
-    .get(`https://nbaapp.vercel.app/api/bettingOdds`)
-    .then((response)=>{
-      console.log("res", response.data)
-      setBettingOdds(response.data)
+    .get(`https://nbaapp.vercel.app/api/getYesterdaysGames`)
+    .then((response) => {
+      console.log("response", response)
+    setYesterdaysGames(response.data.data);
     })
+    .catch((error) => {
+    console.error('Error fetching data:', error);
+    });
   },[])
 
   const favoriteTeam = (teamName)=>{
