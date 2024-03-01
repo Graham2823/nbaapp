@@ -15,21 +15,23 @@ export default function Home() {
   const {username, favoriteTeams} = useContext(UserContext)
   useEffect(()=>{
     axios
-    .get(`https://nbaapp.vercel.app/api/getGames`)
+    .get(`https://nbaapp.vercel.app/api/getTodaysGames`)
     .then((response) => {
-    setTodaysGames(response.data.tscores);
-    setYesterdaysGames(response.data.yscores);
+      console.log("response", response)
+    setTodaysGames(response.data.data);
     })
     .catch((error) => {
     console.error('Error fetching data:', error);
     });
-
     axios
-    .get(`https://nbaapp.vercel.app/api/bettingOdds`)
-    .then((response)=>{
-      console.log("res", response.data)
-      setBettingOdds(response.data)
+    .get(`https://nbaapp.vercel.app/api/getYesterdaysGames`)
+    .then((response) => {
+      console.log("response", response)
+    setYesterdaysGames(response.data.data);
     })
+    .catch((error) => {
+    console.error('Error fetching data:', error);
+    });
   },[])
 
   const favoriteTeam = (teamName)=>{
@@ -65,7 +67,7 @@ export default function Home() {
                     <p>
                       <h3 className="gameStatus">{game.time}</h3>
                     </p>
-                    <p><a href={`/BoxScore?gameID=${game.id}&homeTeam=${game.home_team.full_name}&homeScore=${game.home_team_score}&awayTeam=${game.visitor_team.full_name}&awayScore=${game.visitor_team_score}&date=${game.date.split("T")[0]}`}><button className="boxScoreButton" >View Box Score</button></a></p>
+                    {/* <p><a href={`/BoxScore?gameID=${game.id}&homeTeam=${game.home_team.full_name}&homeScore=${game.home_team_score}&awayTeam=${game.visitor_team.full_name}&awayScore=${game.visitor_team_score}&date=${game.date.split("T")[0]}`}><button className="boxScoreButton" >View Box Score</button></a></p> */}
                     </>
                   ):(
                     <div>
@@ -120,7 +122,7 @@ export default function Home() {
                   </h3>
                   <h3 className="gameStatus">{game.status}</h3>
                   {game.home_team_score> 0 && game.visitor_team_score > 0 &&(
-                    <p><a href={`/BoxScore?gameID=${game.id}&homeTeam=${game.home_team.full_name}&homeScore=${game.home_team_score}&awayTeam=${game.visitor_team.full_name}&awayScore=${game.visitor_team_score}&date=${game.date.split("T")[0]}`}><button>View Box Score</button></a></p>
+                    // <p><a href={`/BoxScore?gameID=${game.id}&homeTeam=${game.home_team.full_name}&homeScore=${game.home_team_score}&awayTeam=${game.visitor_team.full_name}&awayScore=${game.visitor_team_score}&date=${game.date.split("T")[0]}`}><button>View Box Score</button></a></p>
                   )}
               </div>
           ))
