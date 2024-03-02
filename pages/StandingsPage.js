@@ -11,7 +11,7 @@ const StandingsPage = () => {
   const [showEasternConference, setShowEasternconference] = useState(true)
 
   useEffect(()=>{
-            axios.get('https://nbaapp.vercel.app/api/getStandings')
+            axios.get('http://localhost:3000/api/getStandings')
             .then((response) => {
                
                 setEC(response.data[0].easternConference)
@@ -21,7 +21,8 @@ const StandingsPage = () => {
                 console.error('Error fetching data:', error);
                 });
         },[])
-
+console.log(ec)
+console.log(wc)
         return (
               <div className='standingsPage'>
                   <Button variant='info' className='Button' onClick={()=>setShowEasternconference(true)}>Eastern Conference</Button>

@@ -44,9 +44,9 @@ const StandingsCard = ({ conference }) => {
 								<tr className={index <6 ? 'playoffTeam' : index< 10 ? 'playinTeam' : 'lotteryTeam'}> 
 							<td>{index + 1}</td>
 							<td><a
-											href={`/TeamDetails?teamName=${encodeTeamNameForURL(team.team)}`}>
+											href={`/TeamDetails?teamName=${encodeTeamNameForURL(team.team.replace(/[\s-]*ps$/i, ''))}`}>
 												<Image src={getTeamLogo(getNormalizedTeamName(team.team))} alt='team logo' className='teamLogoStandings'/>
-											{team.team}
+											{team.team.replace(/[\s-]*ps$/i, '')}
 										</a></td>
 							<td>{team.wins}-{team.losses}</td>
 							<td>{team.gamesBehind}</td>
