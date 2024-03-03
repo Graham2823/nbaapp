@@ -21,6 +21,9 @@ playerData.get(async (req, res) => {
 
   await Player.deleteMany({});
 
+  // Start with the initial delay
+  let currentBackoffDelay = millisecondsPerMinute;
+
   for (const player of basketballPlayers) {
     try {
       let playerID;
@@ -107,20 +110,22 @@ playerData.get(async (req, res) => {
           await playerDoc.save();
           console.log(playerObject);
         }
+
+        // Successful API call, reset backoff delay
+        currentBackoffDelay = millisecondsPerMinute;
       }
     } catch (error) {
       console.error(`Error processing player ${player}:`, error);
 
-      // Check if the error is a 429 (Too Many Requests) status
       if (error.response && error.response.status === 429) {
         // Implement exponential backoff with a maximum delay
-        millisecondsPerMinute *= 2;
-        if (millisecondsPerMinute > maxBackoffDelay) {
-          millisecondsPerMinute = maxBackoffDelay;
+        currentBackoffDelay *= 2;
+        if (currentBackoffDelay > maxBackoffDelay) {
+          currentBackoffDelay = maxBackoffDelay;
         }
-        console.log(`Rate limit exceeded. Backing off for ${millisecondsPerMinute / 1000} seconds.`);
+        console.log(`Rate limit exceeded. Backing off for ${currentBackoffDelay / 1000} seconds.`);
         // Delay before the next iteration
-        await new Promise(resolve => setTimeout(resolve, millisecondsPerMinute));
+        await new Promise(resolve => setTimeout(resolve, currentBackoffDelay));
       }
     }
   }

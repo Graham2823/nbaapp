@@ -14,6 +14,7 @@ const FavTeamCard = ({favoriteTeam}) => {
         axios
             .get(`https://nbaapp.vercel.app/api/getTeam?teamName=${favoriteTeam}`)
             .then((response) => {
+                console.log(response)
                 setTeamDetails(response.data);
             })
             .catch((error) => {
