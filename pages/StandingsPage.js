@@ -11,7 +11,7 @@ const StandingsPage = () => {
   const [showEasternConference, setShowEasternconference] = useState(true)
 
   useEffect(()=>{
-            axios.get('http://localhost:3000/api/getStandings')
+            axios.get('https://nbaapp.vercel.app/api/getStandings')
             .then((response) => {
                
                 setEC(response.data[0].easternConference)
