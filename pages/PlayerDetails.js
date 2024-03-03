@@ -67,7 +67,7 @@ const PlayerDetails = () => {
 				});
 		}
 	}, [first, last, p1Name, p2Name]);
-	console.log('playerDetails', playerDetails);
+	console.log(p1Data);
 
 	const shotPercentage = (made, attempted) => {
 		let percentage = (made / attempted) * 100;
@@ -315,9 +315,9 @@ const PlayerDetails = () => {
 										</a>
 									</p>
 									<p>{p1Data[0].position}</p>
-									{p1Data[0].height_feet && p1Data[0].height_inches ? (
+									{p1Data[0].height ? (
 										<p>
-											{p1Data[0].height_feet}ft {p1Data[0].height_inches}in
+											Height: {p1Data[0].height}
 										</p>
 									) : (
 										<p>Height Not Found</p>
@@ -337,9 +337,9 @@ const PlayerDetails = () => {
 										</a>
 									</p>
 									<p>{p2Data[0].position}</p>
-									{p2Data[0].height_feet && p2Data[0].height_inches ? (
+									{p2Data[0].height  ? (
 										<p>
-											{p2Data[0].height_feet}ft {p2Data[0].height_inches}in
+											Height: {p2Data[0].height}
 										</p>
 									) : (
 										<p>Height Not Found</p>
