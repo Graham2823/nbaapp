@@ -1,6 +1,7 @@
 import { createRouter } from 'next-connect';
 import cors from 'cors'; // Import the cors middleware
 import mongoose from 'mongoose';
+import axios from 'axios';
 
 const compareTeamsRouter = createRouter();
 
@@ -12,14 +13,22 @@ const compareTeamsRouter = createRouter();
 
 // boxScoreRouter.use(corsMiddleware);
 
+const apiKey = '34db4f41-8c29-4fef-940d-db01294f67cc';
+
+
 compareTeamsRouter.get(async (req, res) => {
 	try {
         const {team1, team2} = req.query
         console.log(team1, team2)
         let teamID1
         let teamID2
-        await fetch(`https://www.balldontlie.io/api/v1/teams`)
-        .then(res => res.json())
+        await axios.get(`http://api.balldontlie.io/v1/teams`, {
+            headers: {
+              Authorization: apiKey,
+              'Content-Type': 'application/json'
+            }
+          })
+        .then(res => res.data)
         .then((teams)=>{
             for (let i=0; i<teams.data.length; i++){
                 if(teams.data[i].full_name === team1){
@@ -27,8 +36,13 @@ compareTeamsRouter.get(async (req, res) => {
                 }
             }
         })
-        await fetch(`https://www.balldontlie.io/api/v1/teams`)
-        .then(res => res.json())
+        await axios.get(`http://api.balldontlie.io/v1/teams`, {
+            headers: {
+              Authorization: apiKey,
+              'Content-Type': 'application/json'
+            }
+          })
+        .then(res => res.data)
         .then((teams)=>{
             for (let i=0; i<teams.data.length; i++){
                 if(teams.data[i].full_name === team2){

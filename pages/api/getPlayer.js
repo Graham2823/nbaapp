@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const playerRouter = createRouter();
 
-const apiKey = '8920cadb-f040-4b27-8823-ace24cd841fe';
+const apiKey = '34db4f41-8c29-4fef-940d-db01294f67cc';
 
 playerRouter.get(async (req, res) => {
   try {
