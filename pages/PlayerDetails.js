@@ -9,6 +9,7 @@ import { Image } from 'react-bootstrap';
 import { Table } from 'react-bootstrap';
 import { ToastContainer, toast } from 'react-toastify';
 import { UserContext } from '@/context/userContext';
+import {Spinner} from 'react-bootstrap';
 
 const PlayerDetails = () => {
 	const router = useRouter();
@@ -33,6 +34,7 @@ const PlayerDetails = () => {
 					`https://nbaapp.vercel.app/api/getPlayer?firstName=${first}&lastName=${last}`
 				)
 				.then((response) => {
+					console.log(response)
 					setPlayerDetails(response.data);
 				})
 				.catch((error) => {
@@ -107,7 +109,7 @@ const PlayerDetails = () => {
 		}
 	};
 
-	console.log('favoitePlayers', favoritePlayers);
+	console.log('player details', playerDetails);
 	return (
 		<div className='playerDetailsPage'>
 			<ToastContainer />
@@ -167,13 +169,14 @@ const PlayerDetails = () => {
 						)}
 					</div>
 					<div className='playerStats'>
-						{/* {playerDetails.playerAverages.map((season, index) => (
+						{playerDetails.playerAverages.length > 0 && 
+						playerDetails.playerAverages.map((season, index) => (
 							<button
 								onClick={() => setSelectedSeason(season[0].season)}
 								key={index}>
 								{season[0].season}
 							</button>
-						))} */}
+						))}
 						<Table striped='columns'>
 							<thead>
 								<th>Season</th>
@@ -207,36 +210,39 @@ const PlayerDetails = () => {
 									</tr>
 								) : (
 									
-												<tr key={playerDetails.playerAverages[0].season}>
-													<td className='season'>{playerDetails.playerAverages[0].season}</td>
+									playerDetails.playerAverages.map(
+										(season) =>
+											season[0].season === selectedSeason && (
+												<tr key={season[0].season}>
+													<td className='season'>{season[0].season}</td>
 													<td className='gamesPlayed'>
-														{playerDetails.playerAverages[0].games_played}
+														{season[0].games_played}
 													</td>
-													<td>{playerDetails.playerAverages[0].min}</td>
+													<td>{season[0].min}</td>
 													<td>
-														{playerDetails.playerAverages[0].fgm === 0
+														{season[0].fgm === 0
 															? `0%`
-															: shotPercentage(playerDetails.playerAverages[0].fgm, playerDetails.playerAverages[0].fga)}
-													</td>
-													<td>
-														{playerDetails.playerAverages[0].fg3m === 0
-															? `0%`
-															: shotPercentage(playerDetails.playerAverages[0].fg3m, playerDetails.playerAverages[0].fg3a)}
+															: shotPercentage(season[0].fgm, season[0].fga)}
 													</td>
 													<td>
-														{playerDetails.playerAverages[0].ftm === 0
+														{season[0].fg3m === 0
 															? `0%`
-															: shotPercentage(playerDetails.playerAverages[0].ftm, playerDetails.playerAverages[0].fta)}
+															: shotPercentage(season[0].fg3m, season[0].fg3a)}
 													</td>
-													<td>{playerDetails.playerAverages[0].pts}</td>
-													<td>{playerDetails.playerAverages[0].reb}</td>
-													<td>{playerDetails.playerAverages[0].ast}</td>
-													<td>{playerDetails.playerAverages[0].stl}</td>
-													<td>{playerDetails.playerAverages[0].blk}</td>
-													<td>{playerDetails.playerAverages[0].turnover}</td>
+													<td>
+														{season[0].ftm === 0
+															? `0%`
+															: shotPercentage(season[0].ftm, season[0].fta)}
+													</td>
+													<td>{season[0].pts}</td>
+													<td>{season[0].reb}</td>
+													<td>{season[0].ast}</td>
+													<td>{season[0].stl}</td>
+													<td>{season[0].blk}</td>
+													<td>{season[0].turnover}</td>
 												</tr>
-											
-									
+											)
+									)
 								)}
 							</tbody>
 						</Table>
@@ -587,7 +593,10 @@ const PlayerDetails = () => {
 					</Table>
 				</div>
 			) : (
-				<h1 style={{ textAlign: 'center' }}>Loading</h1>
+				<div>
+					<h1 style={{ textAlign: 'center' }}>Loading Player Stats. Please wait a minute!</h1>
+					<Spinner animation="border" variant="primary"/>
+				</div>
 			)}
 		</div>
 	);

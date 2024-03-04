@@ -28,15 +28,27 @@ playerRouter.get(async (req, res) => {
     playerData = data.data
     playerID = data.data[0].id
   });
-  await axios.get(`http://api.balldontlie.io/v1/season_averages?season=2023&player_ids[]=${playerID}`, {
-  headers: {
-    Authorization: apiKey,
-    'Content-Type': 'application/json'
+  const maxRetries = 3;
+  for(let i=0; i<= 20; i++){
+    let currentRetry = 0;
+    try{
+      await axios.get(`http://api.balldontlie.io/v1/season_averages?season=${2023 - i}&player_ids[]=${playerID}`, {
+      headers: {
+        Authorization: apiKey,
+        'Content-Type': 'application/json'
+      }
+    }).then((res) => res.data)
+      .then((data) => {
+        if(data.data.length > 0){
+          playerAverages.push(data.data)
+        }
+      });
+    }catch(error){
+      console.error('Error fetching player data:', error.message);
+      currentRetry++;
+      await new Promise(resolve => setTimeout(resolve, 2000)); // Wait for 2 seconds before retrying
+    }
   }
-}).then((res) => res.data)
-  .then((data) => {
-   playerAverages = data.data
-  });
   // for (let i = 0; i < 3; i++) {
     await axios.get(`http://api.balldontlie.io/v1/stats?seasons[]=2023&player_ids[]=${playerID}&postseason=false&per_page=100`, {
       headers: {
