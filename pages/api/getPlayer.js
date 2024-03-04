@@ -30,7 +30,7 @@ playerRouter.get(async (req, res) => {
     playerData = data.data
     playerID = data.data[0].id
   });
-  const maxRetries = 3;
+  let counter = 0;
   for(let i=0; i<= 20; i++){
     let currentRetry = 0;
     try{
@@ -45,6 +45,12 @@ playerRouter.get(async (req, res) => {
         console.log("second call")
         if(data.data.length > 0){
           playerAverages.push(data.data)
+        }else{
+          counter +=1
+        }
+
+        if(counter === 3){
+          i=20
         }
       });
     }catch(error){
