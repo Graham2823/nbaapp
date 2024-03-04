@@ -25,6 +25,7 @@ playerRouter.get(async (req, res) => {
   }
 }).then((res) => res.data)
   .then((data) => {
+    console.log("first call")
     playerData = data.data
     playerID = data.data[0].id
   });
@@ -33,12 +34,13 @@ playerRouter.get(async (req, res) => {
     let currentRetry = 0;
     try{
       await axios.get(`http://api.balldontlie.io/v1/season_averages?season=${2023 - i}&player_ids[]=${playerID}`, {
-      headers: {
-        Authorization: apiKey,
-        'Content-Type': 'application/json'
-      }
-    }).then((res) => res.data)
+        headers: {
+          Authorization: apiKey,
+          'Content-Type': 'application/json'
+        }
+      }).then((res) => res.data)
       .then((data) => {
+        console.log("second call")
         if(data.data.length > 0){
           playerAverages.push(data.data)
         }
@@ -56,15 +58,17 @@ playerRouter.get(async (req, res) => {
         'Content-Type': 'application/json'
       }
     }).then((res) => res.data)
-      .then((data) => {
-        // Concatenate the games to the existing playerGamelog array
-        playerGamelog.push(...data.data);
-      });
-  // }
+    .then((data) => {
+      console.log("Third call")
+      // Concatenate the games to the existing playerGamelog array
+      playerGamelog.push(...data.data);
+    });
+    // }
     await axios.get(`https://www.thesportsdb.com/api/v1/json/3/searchplayers.php?p=${firstName}_${lastName}`)
     .then((res) => res.data)
     .then((data) => {
-     details = data
+      console.log("Fourth call")
+      details = data
     });
   playerGamelog.sort((a, b) => Date.parse(a.game.date) - Date.parse(b.game.date));
  if(playerAverages.length > 0 && playerData.length > 0 && playerGamelog.length > 0 && details.player.length > 0){
