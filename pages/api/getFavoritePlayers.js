@@ -19,6 +19,7 @@ favoritePlayerRouter.get(async (req, res) => {
 
         console.log("yes")
         await axios.get(`http://api.balldontlie.io/v1/players?first_name=${firstName}&last_name=${lastName}`, {
+            timeout: 5000,
   headers: {
     Authorization: apiKey,
     'Content-Type': 'application/json'
@@ -29,6 +30,7 @@ favoritePlayerRouter.get(async (req, res) => {
     playerID = data.data[0].id
   });
       await axios.get(`http://api.balldontlie.io/v1/season_averages?season=2023&player_ids[]=${playerID}`, {
+        timeout: 5000,
       headers: {
         Authorization: apiKey,
         'Content-Type': 'application/json'
@@ -41,6 +43,7 @@ favoritePlayerRouter.get(async (req, res) => {
   
   // for (let i = 0; i < 3; i++) {
     await axios.get(`http://api.balldontlie.io/v1/stats?seasons[]=2023&player_ids[]=${playerID}&postseason=false&per_page=100`, {
+        timeout: 5000,
       headers: {
         Authorization: apiKey,
         'Content-Type': 'application/json'
