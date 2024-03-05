@@ -31,34 +31,44 @@ playerRouter.get(async (req, res) => {
     playerID = data.data[0].id
   });
   let counter = 0;
-  for(let i=0; i<= 4; i++){
-    let currentRetry = 0;
-    try{
-      await axios.get(`http://api.balldontlie.io/v1/season_averages?season=${2023 - i}&player_ids[]=${playerID}`, {
-        timeout: 20000,
-        headers: {
-          Authorization: apiKey,
-          'Content-Type': 'application/json'
-        }
-      }).then((res) => res.data)
-      .then((data) => {
-        console.log("second call")
-        if(data.data.length > 0){
-          playerAverages.push(data.data)
-        }else{
-          counter +=1
-        }
+  const requests = [];
 
-        if(counter === 3){
-          i=20
-        }
-      });
-    }catch(error){
-      console.error('Error fetching player data:', error.message);
-      currentRetry++;
-      await new Promise(resolve => setTimeout(resolve, 2000)); // Wait for 2 seconds before retrying
+for (let i = 0; i <= 20; i++) {
+  requests.push(
+    axios.get(`http://api.balldontlie.io/v1/season_averages?season=${2023 - i}&player_ids[]=${playerID}`, {
+      timeout: 60000,
+      headers: {
+        Authorization: apiKey,
+        'Content-Type': 'application/json'
+      }
+    }).then((res) => res.data)
+  );
+}
+
+try {
+  const results = await Promise.all(requests);
+
+  // Process the results
+  for (let i = 0; i <= 20; i++) {
+    const data = results[i];
+    console.log("Second call");
+    
+    if (data.data.length > 0) {
+      playerAverages.push(data.data);
+    } else {
+      counter += 1;
+    }
+
+    if (counter === 3) {
+      break; // Exit the loop if counter reaches 3
     }
   }
+
+} catch (error) {
+  console.error('Error fetching player data:', error.message);
+  // Handle errors
+}
+
   // for (let i = 0; i < 3; i++) {
     await axios.get(`http://api.balldontlie.io/v1/stats?seasons[]=2023&player_ids[]=${playerID}&postseason=false&per_page=100`, {
       timeout: 20000,
