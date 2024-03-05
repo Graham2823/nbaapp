@@ -31,7 +31,7 @@ playerRouter.get(async (req, res) => {
     playerID = data.data[0].id
   });
   let counter = 0;
-  for(let i=0; i<= 11; i++){
+  for(let i=0; i<= 4; i++){
     let currentRetry = 0;
     try{
       await axios.get(`http://api.balldontlie.io/v1/season_averages?season=${2023 - i}&player_ids[]=${playerID}`, {
