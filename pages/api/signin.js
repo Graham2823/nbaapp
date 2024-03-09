@@ -8,7 +8,6 @@ const signinRouter = createRouter();
 signinRouter.get(async (req, res) => {
     try {
         const { uid } = req.query;
-        console.log("uid", uid)
         const user = await User.findOne({ uid: uid });
         
 

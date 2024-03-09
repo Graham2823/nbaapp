@@ -16,8 +16,6 @@ const apiKey = '34db4f41-8c29-4fef-940d-db01294f67cc';
 comparePlayersRouter.get(async (req, res) => {
 	try {
         const { p1Name, p2Name } = req.query;
-		console.log(p1Name.split("_")[1]);
-		console.log(p2Name);
 		let p1Data = [];
 		let p2Data = [];
 		let p1Stats = [];
@@ -30,7 +28,6 @@ comparePlayersRouter.get(async (req, res) => {
           })
 			.then((res) => res.data)
 			.then((data) => {
-                console.log("playerData")
 				for (let i = 0; i < data.data.length; i++) {
 					p1Data.push(data.data[i]);
 				}

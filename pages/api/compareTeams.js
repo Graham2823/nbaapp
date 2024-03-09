@@ -19,7 +19,6 @@ const apiKey = '34db4f41-8c29-4fef-940d-db01294f67cc';
 compareTeamsRouter.get(async (req, res) => {
 	try {
         const {team1, team2} = req.query
-        console.log(team1, team2)
         let teamID1
         let teamID2
         await axios.get(`http://api.balldontlie.io/v1/teams`, {

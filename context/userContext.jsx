@@ -12,9 +12,8 @@ export const UserProvider = ({ children }) => {
   const [username, setUsername] = useState(null);
   const [favoriteTeams, setFavoriteTeams] = useState([])
   const [favoritePlayers, setFavoritePlayers] = useState([])
-  console.log("username", username)
   const router = useRouter()
-console.log('favorte teams from context', favoriteTeams)
+
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
     const storedUsername = localStorage.getItem('username');

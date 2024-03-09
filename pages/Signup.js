@@ -26,7 +26,6 @@ function CreateUser() {
 			);
 			const user = userCredential.user;
 
-			console.log(user.uid);
 			const requestData = {
 				username: username,
 				uid: user.uid,
@@ -35,8 +34,6 @@ function CreateUser() {
 				`https://nbaapp.vercel.app/api/createUser`,
 				requestData
 			);
-			console.log('Successfully signed up:', user);
-			console.log('Backend response:', response.data);
             router.push('/Signin')
 			toast.success("User Successfully Created, Sign in to Continue!")
 		} catch (error) {

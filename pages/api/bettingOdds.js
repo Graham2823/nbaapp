@@ -4,7 +4,6 @@ import cors from 'cors';
 const bettingOdds = createRouter();
 
 bettingOdds.get(async (req, res) => {
-  console.log("hit");
 
   try {
     const response = await fetch(process.env.BETTING_ODDS_API);
@@ -14,7 +13,6 @@ bettingOdds.get(async (req, res) => {
     }
 
     const data = await response.json();
-    console.log(data);
     res.json(data);
   } catch (error) {
     console.error(error);

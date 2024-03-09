@@ -10,6 +10,7 @@ import teams from '@/teams';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faStar} from '@fortawesome/free-solid-svg-icons';
 import { UserContext } from '@/context/userContext';
+import {Spinner} from 'react-bootstrap';
 
 
 const TeamDetails = () => {
@@ -42,7 +43,6 @@ const TeamDetails = () => {
 					`https://nbaapp.vercel.app/api/compareTeams?team1=${team1}&team2=${team2}`
 				)
 				.then((response) => {
-					console.log('res', response.data);
 					setTeam1Info(response.data.teamOne);
 					setTeam2Info(response.data.teamTwo);
 				})
@@ -58,7 +58,6 @@ const TeamDetails = () => {
 
 	const winPercentageFromRecord = (record) => {
 		const [wins, losses] = record.split('-').map(Number);
-		console.log('wins', wins, 'losses', losses);
 
 		if (wins === 0 && losses === 0) {
 			return 0;
@@ -107,7 +106,6 @@ const TeamDetails = () => {
 				requestBody
 			);
 
-           console.log("reponse,", response.data.user.favoriteTeams.length)
 		   setFavoriteTeams(response.data.user.favoriteTeams)
 		   localStorage.setItem('favoriteTeams', JSON.stringify(response.data.user.favoriteTeams))
 		   if(response.data.user.favoriteTeams.some((teams)=> teams.teamName === teamDetails.teamName)){
@@ -538,7 +536,11 @@ const TeamDetails = () => {
 					</Table>
 				</div>
 			) : (
-				<h1 style={{ textAlign: 'center' }}>Loading</h1>
+				<div>
+					<h1 style={{ textAlign: 'center' }}>Loading</h1>
+					<Spinner animation="border" variant="primary"/>
+				</div>
+				
 			)}
 		</div>
 	);

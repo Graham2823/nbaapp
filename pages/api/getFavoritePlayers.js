@@ -16,8 +16,6 @@ favoritePlayerRouter.get(async (req, res) => {
     let playerID
 
     if (playerName !== '_') {
-
-        console.log("yes")
         await axios.get(`http://api.balldontlie.io/v1/players?first_name=${firstName}&last_name=${lastName}`, {
             timeout: 5000,
   headers: {

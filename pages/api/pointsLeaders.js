@@ -16,7 +16,6 @@ const pointLeaders = createRouter();
 const mongoConnectionString = process.env.MONGODB_CONNECTION_STRING;
 
 pointLeaders.get(async (req, res) =>{
-  console.log("hit")
     try {
         await mongoose.connect(mongoConnectionString, {
           useNewUrlParser: true,
