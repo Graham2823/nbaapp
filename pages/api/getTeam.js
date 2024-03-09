@@ -17,7 +17,6 @@ const teamRouter = createRouter();
 
 teamRouter.get(async (req, res) => {
 	const {teamName} = req.query
-	console.log(teamName);
     let teamID
 	await axios.get(`http://api.balldontlie.io/v1/teams`, {
   headers: {
@@ -32,7 +31,6 @@ teamRouter.get(async (req, res) => {
         break; // Once you find the matching team, exit the loop
       }
     }
-    console.log(teamID);
   })
   .catch((error) => {
     console.error(error);
@@ -77,7 +75,6 @@ teamRouter.get(async (req, res) => {
 
   // Iterate through Eastern and Western Conference to find the team
   const team = allStandings[0].easternConference.teams.filter((team)=> team.team.replace(/\s+/g, ' ') === teamName)
-  console.log(team)
   if(team.length > 0){
       schedule.sort((a, b) => Date.parse(a.date) - Date.parse(b.date));
       res.json({ schedule, teamName, team });

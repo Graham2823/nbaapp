@@ -24,7 +24,6 @@ const PlayerInput = ({state, setState}) => {
 	}, [error]);
 
 	const handleInputChange = (e) => {
-		console.log(e.target.name)
 		setTarget(e.target);
 		setState(e.target.value);
 		

@@ -1,65 +1,45 @@
-import React, {useEffect, useState} from 'react'
-import teams from '@/teams';
+import React from 'react'
 import { Card, Table, Button } from 'react-bootstrap';
-import axios from 'axios';
 import { useRouter } from 'next/router';
 import getTeamLogo from '@/utils/getLogo';
 import {Image} from 'react-bootstrap';
 
 const FavTeamCard = ({favoriteTeam}) => {
-    const [teamDetails, setTeamDetails] = useState()
-    const [teamLogo, setTeamLogo] = useState()
     const router = useRouter()
-    useEffect(() => {
-        axios
-            .get(`https://nbaapp.vercel.app/api/getTeam?teamName=${favoriteTeam}`)
-            .then((response) => {
-                console.log(response)
-                setTeamDetails(response.data);
-            })
-            .catch((error) => {
-                console.error('Error fetching data:', error);
-            });
     
-        const teamLogo = teams.filter((team) => team.teamName === favoriteTeam);
-        setTeamLogo(teamLogo);
-    }, [favoriteTeam]); // Add any dependencies that should trigger the effect when changed
-    
-    console.log(teamDetails)
-    console.log(teamLogo)
   return (
     <div>
-        {teamDetails && teamLogo && (
+        {favoriteTeam && (
   <Card className='favoriteTeamCard'>
     <Table>
         <thead>
-            <th><Image src={getTeamLogo(favoriteTeam)} alt='team logo' className='teamLogoFrontPage'/>{favoriteTeam}</th>
+            <th><Image src={getTeamLogo(favoriteTeam.teamName)} alt='team logo' className='teamLogoFrontPage'/>{favoriteTeam.teamName}</th>
         </thead>
         <tbody>
     <tr>
-        <td>Record:</td><td>{teamDetails.team[0].wins}-{teamDetails.team[0].losses}</td>
+        <td>Record:</td><td>{favoriteTeam.team[0].wins}-{favoriteTeam.team[0].losses}</td>
         </tr>
         <tr>
-        <td>Conference Rank:</td><td>{teamDetails.team[0].rank}</td>
+        <td>Conference Rank:</td><td>{favoriteTeam.team[0].rank}</td>
         </tr>
         <tr>
-        <td>Conference Record:</td><td>{teamDetails.team[0].conferenceRecord}</td>
+        <td>Conference Record:</td><td>{favoriteTeam.team[0].conferenceRecord}</td>
         </tr>
         <tr>
-        <td>Division Record:</td><td>{teamDetails.team[0].divisionRecord}</td>
+        <td>Division Record:</td><td>{favoriteTeam.team[0].divisionRecord}</td>
         </tr>
         <tr>
-        <td>Streak:</td><td>{teamDetails.team[0].streak}</td>
+        <td>Streak:</td><td>{favoriteTeam.team[0].streak}</td>
         </tr>
         <tr>
-        <td>Last Ten:</td><td>{teamDetails.team[0].lastTen}</td>
+        <td>Last Ten:</td><td>{favoriteTeam.team[0].lastTen}</td>
         </tr>
         <tr>
-        <td>Overtime Record:</td><td>{teamDetails.team[0].otRecord}</td>
+        <td>Overtime Record:</td><td>{favoriteTeam.team[0].otRecord}</td>
         </tr>
         </tbody>
     </Table>
-    <Button className='button' onClick={()=>router.push(`/TeamDetails?teamName=${favoriteTeam}`)}>View More</Button>
+    <Button className='button' onClick={()=>router.push(`/TeamDetails?teamName=${favoriteTeam.teamName}`)}>View More</Button>
   </Card>
         )}
     </div>

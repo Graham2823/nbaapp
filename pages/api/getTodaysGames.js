@@ -13,7 +13,6 @@ function getCurrentDateInET() {
 }
 
 todaysGamesRouter.get(async (req, res) => {
-    console.log("hit")
     let date = getCurrentDateInET();
     const yesterday = new Date(date);
     yesterday.setDate(yesterday.getDate() - 1);
@@ -27,8 +26,6 @@ todaysGamesRouter.get(async (req, res) => {
         return `${year}-${month}-${day}`;
     }
     let todaysDate =  formatDate(date);
-    console.log("todays date", todaysDate)
-    console.log("todays date type", typeof todaysDate)
     
     try {
        

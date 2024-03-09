@@ -17,7 +17,6 @@ export default function Home() {
     axios
     .get(`https://nbaapp.vercel.app/api/getTodaysGames`)
     .then((response) => {
-      console.log("response", response)
     setTodaysGames(response.data.data);
     })
     .catch((error) => {
@@ -26,7 +25,6 @@ export default function Home() {
     axios
     .get(`https://nbaapp.vercel.app/api/getYesterdaysGames`)
     .then((response) => {
-      console.log("response", response)
     setYesterdaysGames(response.data.data);
     })
     .catch((error) => {

@@ -25,7 +25,6 @@ function SignIn() {
                 axios
                     .get(`https://nbaapp.vercel.app/api/signin?uid=${userID}`)
                     .then((response) => {
-                        console.log("response", response.data.favoriteTeams);
                         const username = response.data.username;
                         setUsername(username);
 
@@ -37,7 +36,6 @@ function SignIn() {
                         localStorage.setItem('favoriteTeams', JSON.stringify(response.data.favoriteTeams))
                         localStorage.setItem('favoritePlayers', JSON.stringify(response.data.favoritePlayers))
                         router.push('/');
-                        console.log('Successfully signed in');
                     })
                     .catch((error) => {
                         console.error('Error fetching data:', error);

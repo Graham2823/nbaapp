@@ -25,8 +25,6 @@ const StatLeadersCard = ({cattegory, leaders}) => {
         break;
     }
 
-    console.log(leaders)
-    console.log(stat)
     
   return (
     <Card className='statCard'>

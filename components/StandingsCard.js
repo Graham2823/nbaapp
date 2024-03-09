@@ -5,7 +5,6 @@ import getTeamLogo from '@/utils/getLogo'
 import {Image} from 'react-bootstrap';
 
 const StandingsCard = ({ conference }) => {
-	console.log(conference)
 
 	const encodeTeamNameForURL = (teamName) => {
 		// Replace various whitespace characters, including non-breaking space, with regular spaces

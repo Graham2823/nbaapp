@@ -21,8 +21,6 @@ const StandingsPage = () => {
                 console.error('Error fetching data:', error);
                 });
         },[])
-console.log(ec)
-console.log(wc)
         return (
               <div className='standingsPage'>
                   <Button variant='info' className='Button' onClick={()=>setShowEasternconference(true)}>Eastern Conference</Button>

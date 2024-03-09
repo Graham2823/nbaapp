@@ -18,7 +18,6 @@ const topFiveLeaders = createRouter();
 const mongoConnectionString = process.env.MONGODB_CONNECTION_STRING;
 
 topFiveLeaders.get(async (req, res) =>{
-  console.log("hit")
   let leaders
     try {
         await mongoose.connect(mongoConnectionString, {

@@ -6,7 +6,7 @@ import "../app/app.css"
 
 const TopNav = () => {
 	const { username, handleSignout } = useContext(UserContext);
-console.log(username)
+
  
   return (
     <Navbar expand={true} className="custom-navbar">

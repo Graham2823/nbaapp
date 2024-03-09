@@ -15,8 +15,6 @@ const boxScoreRouter = createRouter();
 
 boxScoreRouter.get(async (req, res)=>{
         const {gameID, homeTeam, awayTeam, date} = req.query
-        console.log("gameid", gameID)
-        console.log("date", date)
         let Data = []
         let idArray = []
         let teamOneArr = []
@@ -26,7 +24,6 @@ boxScoreRouter.get(async (req, res)=>{
         await fetch(`https://www.balldontlie.io/api/v1/stats?game_ids[]=${gameID}&start_date=${date}&end_date=${date}&page=${i}`)
         .then(res => res.json())
         .then((data)=>{
-            console.log('data', data)
             for (let i = 0; i< data.data.length; i++) {
             if(!idArray.includes(data.data[i].id)){
                 idArray.push(data.data[i].id)

@@ -16,8 +16,6 @@ playerRouter.get(async (req, res) => {
     let playerID
 
     if (playerName !== '_') {
-
-        console.log("yes")
         await axios.get(`http://api.balldontlie.io/v1/players?first_name=${firstName}&last_name=${lastName}`, {
           timeout: 20000,
   headers: {
@@ -26,7 +24,6 @@ playerRouter.get(async (req, res) => {
   }
 }).then((res) => res.data)
   .then((data) => {
-    console.log("first call")
     playerData = data.data
     playerID = data.data[0].id
   });
@@ -51,7 +48,7 @@ try {
   // Process the results
   for (let i = 0; i <= 20; i++) {
     const data = results[i];
-    console.log("Second call");
+
     
     if (data.data.length > 0) {
       playerAverages.push(data.data);
@@ -78,7 +75,7 @@ try {
       }
     }).then((res) => res.data)
     .then((data) => {
-      console.log("Third call")
+
       // Concatenate the games to the existing playerGamelog array
       playerGamelog.push(...data.data);
     });
@@ -88,7 +85,6 @@ try {
     })
     .then((res) => res.data)
     .then((data) => {
-      console.log("Fourth call")
       details = data
     });
   playerGamelog.sort((a, b) => Date.parse(a.game.date) - Date.parse(b.game.date));

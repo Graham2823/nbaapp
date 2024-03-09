@@ -14,10 +14,6 @@ import {Spinner} from 'react-bootstrap';
 const PlayerDetails = () => {
 	const router = useRouter();
 	const { first, last, p1Name, p2Name } = router.query;
-	console.log(first);
-	console.log(last);
-	console.log(p1Name);
-	console.log(p2Name);
 	const [playerDetails, setPlayerDetails] = useState([]);
 	const [showGamelog, setShowGamelog] = useState(false);
 	const [p1Data, setP1Data] = useState([]);
@@ -34,7 +30,6 @@ const PlayerDetails = () => {
 					`https://nbaapp.vercel.app/api/getPlayer?firstName=${first}&lastName=${last}`
 				)
 				.then((response) => {
-					console.log(response)
 					setPlayerDetails(response.data);
 				})
 				.catch((error) => {
@@ -50,7 +45,6 @@ const PlayerDetails = () => {
 					`https://nbaapp.vercel.app/api/comparePlayers?p1Name=${p1Name}&p2Name=${p2Name}`
 				)
 				.then((response) => {
-					console.log(response.data);
 					if (response.data === 'Could not find one of the players') {
 						toast.error(
 							'Could Not find one of the players. Please check spelling, and try again'
@@ -68,8 +62,7 @@ const PlayerDetails = () => {
 					toast.error('Players could not be found!');
 				});
 		}
-	}, [first, last, p1Name, p2Name]);
-	console.log(p1Data);
+	}, [first, last, p1Name, p2Name, router]);
 
 	const shotPercentage = (made, attempted) => {
 		let percentage = (made / attempted) * 100;
@@ -88,7 +81,6 @@ const PlayerDetails = () => {
 				requestBody
 			);
 
-			console.log('reponse,', response.data.user.favoritePlayers);
 			setFavoritePlayers(response.data.user.favoritePlayers);
 			localStorage.setItem(
 				'favoritePlayers',
@@ -109,7 +101,6 @@ const PlayerDetails = () => {
 		}
 	};
 
-	console.log('player details', playerDetails);
 	return (
 		<div className='playerDetailsPage'>
 			<ToastContainer />

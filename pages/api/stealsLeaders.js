@@ -16,7 +16,6 @@ const stealLeaders = createRouter();
 const mongoConnectionString = process.env.MONGODB_CONNECTION_STRING;
 
 stealLeaders.get(async (req, res) =>{
-  console.log("hit")
     try {
         await mongoose.connect(mongoConnectionString, {
           useNewUrlParser: true,

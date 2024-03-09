@@ -17,14 +17,13 @@ const BoxScore = () => {
 		router.query;
 	const [teamLogosandColors, setTeamLogosAndColors] = useState([]);
 	const {favoritePlayers} = useContext(UserContext)
-console.log('favorite players', favoritePlayers)
+
 	useEffect(() => {
 		axios
 			.get(
 				`https://nbaapp.vercel.app/api/getBoxScore?gameID=${gameID}&homeTeam=${homeTeam}&awayTeam=${awayTeam}&date=${date}`
 			)
 			.then((response) => {
-				console.log('res', response.data);
 				setBoxScore(response.data);
 			})
 			.catch((error) => {
@@ -34,8 +33,7 @@ console.log('favorite players', favoritePlayers)
 			(team) => team.teamName === homeTeam || team.teamName === awayTeam
 		);
 		setTeamLogosAndColors(teamsLogos);
-	}, [date]);
-	console.log('boxscore', boxScore);
+	},[date, gameID, homeTeam, awayTeam]);
 	return (
 		<div className='boxScore'>
 			{boxScore.teamOneArr && (
