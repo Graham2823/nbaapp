@@ -10,7 +10,7 @@ const FavPlayerCard = ({favoritePlayer}) => {
     const [showPlayerGamelog, setShowPlayerGamelog] = useState(false)
     const router = useRouter();
     
-
+    console.log("faovirte plauer", favoritePlayer)
 
     const handleClickButton = (e) =>{
         if (e.target.name === 'playerStats'){
@@ -64,9 +64,9 @@ const FavPlayerCard = ({favoritePlayer}) => {
                     <tr>
                         <td>Position:</td><td>{favoritePlayer.details.player[0].strPosition}</td>
                     </tr>
-                    <tr><td>Height:</td><td>{favoritePlayer.details.player[0].strHeight}</td></tr>
+                    <tr><td>Height:</td><td>{favoritePlayer.playerData[0].height}</td></tr>
                     <tr><td>Weight:</td><td>{favoritePlayer.details.player[0].strWeight}</td></tr>
-                    <tr><td>Number:</td><td>{favoritePlayer.details.player[0].strNumber? favoritePlayer.details.player[0].strNumber : "Number not found"}</td></tr>
+                    <tr><td>Number:</td><td>{favoritePlayer.playerData[0].jersey_number}</td></tr>
                     <tr><td>Nationality:</td><td>{favoritePlayer.details.player[0].strNationality}</td></tr>
                 </tbody>
             ):(

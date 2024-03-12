@@ -143,6 +143,7 @@ const processPlayer = async (player, delay) => {
       }
 
       // Successful API call, reset backoff delay
+      console.log(playerObject)
       return playerObject;
     }
   } catch (error) {

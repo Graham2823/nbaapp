@@ -22,7 +22,8 @@ findPlayersRouter.get(async (req, res) => {
           });
 
         const players = await Player.find({});
-        const filteredPlayers = players.filter((player)=> player.name.toLowerCase().startsWith(name.toLowerCase()) || player.name.toLowerCase().endsWith(name.toLowerCase()))
+        const filteredPlayers = players.filter((player) => player.name.toLowerCase().startsWith(name.toLowerCase()) || player.name.toLowerCase().split(" ")[1].startsWith(name.toLowerCase()));
+
         const playersToDisplay = filteredPlayers.splice(0,5)
 
         // Send the response back to the client
