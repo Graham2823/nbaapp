@@ -31,7 +31,9 @@ const ProfilePage = () => {
       setLoadingTeams(true);
       fetchDataForTeams();
     }
-  }, [favoriteTeams, showFavoriteTeams]);
+  }, [favoriteTeams, showFavoriteTeams]); 
+
+  
 
   useEffect(() => {
     const fetchDataForPlayers = async () => {
