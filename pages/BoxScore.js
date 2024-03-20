@@ -11,45 +11,63 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faStar} from '@fortawesome/free-solid-svg-icons';
 
 const BoxScore = () => {
-	const [boxScore, setBoxScore] = useState([]);
+	const [boxScore, setBoxScore] = useState(null);
 	const router = useRouter();
 	const { gameID, homeTeam, homeScore, awayTeam, awayScore, date } =
 		router.query;
 	const [teamLogosandColors, setTeamLogosAndColors] = useState([]);
 	const {favoritePlayers} = useContext(UserContext)
+	console.log("Home Team", homeTeam)
+	console.log("away Team", awayTeam)
 
 	useEffect(() => {
-		axios
-			.get(
-				`https://nbaapp.vercel.app/api/getBoxScore?gameID=${gameID}&homeTeam=${homeTeam}&awayTeam=${awayTeam}&date=${date}`
-			)
-			.then((response) => {
-				setBoxScore(response.data);
-			})
-			.catch((error) => {
-				console.error('Error fetching data:', error);
-			});
+		if(date){
+			axios
+				.get(
+					`https://nbaapp.vercel.app/api/getBoxScore?homeTeam=${homeTeam}&awayTeam=${awayTeam}&date=${date}`
+				)
+				.then((response) => {
+					console.log(response)
+					setBoxScore(response.data);
+				})
+				.catch((error) => {
+					console.error('Error fetching data:', error);
+				});
+		}else{
+			axios
+				.get(
+					`https://nbaapp.vercel.app/api/getBoxScore?homeTeam=${homeTeam}&awayTeam=${awayTeam}`
+				)
+				.then((response) => {
+					setBoxScore(response.data);
+				})
+				.catch((error) => {
+					console.error('Error fetching data:', error);
+				});
+
+		}
 		const teamsLogos = teams.filter(
 			(team) => team.teamName === homeTeam || team.teamName === awayTeam
 		);
 		setTeamLogosAndColors(teamsLogos);
 	},[date, gameID, homeTeam, awayTeam]);
+	console.log("boxscore", boxScore)
 	return (
 		<div className='boxScore'>
-			{boxScore.teamOneArr && (
+			{boxScore && (
 				<h1 className='homeTeamName'>
 					<a
-						href={`/TeamDetails?teamName=${boxScore.teamOneArr[0].team.full_name}`}>
+						href={`/TeamDetails?teamName=${boxScore[0].home_team.full_name}`}>
 						<Image
-							src={getTeamLogo(boxScore.teamOneArr[0].team.full_name)}
+							src={getTeamLogo(boxScore[0].home_team.full_name)}
 							alt='team logo'
 							className='teamLogo'
 						/>
-						{boxScore.teamOneArr[0].team.full_name}:{homeScore}
+						{boxScore[0].home_team.full_name}:{homeScore}
 					</a>
 				</h1>
 			)}
-			{boxScore.teamOneArr && (
+			{boxScore && boxScore[0] && boxScore[0].home_team && (
 				<div className='table-responsive'>
 					<Table striped bordered className='boxScoreTable homeTeam'>
 						<thead>
@@ -67,7 +85,7 @@ const BoxScore = () => {
 							<th>Turnovers</th>
 						</thead>
 						<tbody>
-							{boxScore.teamOneArr.map((player) => (
+							{boxScore[0].home_team.players.map((player) => (
 								<>
 									{player.min > 0 && (
 										<tr>
@@ -110,20 +128,20 @@ const BoxScore = () => {
 					</Table>
 				</div>
 			)}
-			{boxScore.teamTwoArr && (
+			{boxScore && boxScore[0] && boxScore[0].visitor_team && (
 				<h1 className='awayTeamName'>
 					<a
-						href={`/TeamDetails?teamName=${boxScore.teamTwoArr[0].team.full_name}`}>
+						href={`/TeamDetails?teamName=${boxScore[0].visitor_team.full_name}`}>
 						<Image
-							src={getTeamLogo(boxScore.teamTwoArr[0].team.full_name)}
+							src={getTeamLogo(boxScore[0].visitor_team.full_name)}
 							alt='team logo'
 							className='teamLogo'
 						/>
-						{boxScore.teamTwoArr[0].team.full_name}:{awayScore}
+						{boxScore[0].visitor_team.full_name}:{awayScore}
 					</a>
 				</h1>
 			)}
-			{boxScore.teamTwoArr && (
+			{boxScore && boxScore[0] && boxScore[0].visitor_team && (
 				<Table striped bordered className='boxScoreTable awayTeam'>
 					<thead>
 						<th>Player Name</th>
@@ -140,7 +158,7 @@ const BoxScore = () => {
 						<th>Turnovers</th>
 					</thead>
 					<tbody>
-						{boxScore.teamTwoArr.map((player) => (
+						{boxScore[0].visitor_team.players.map((player) => (
 							<>
 								{player.min > 0 && (
 									<tr>

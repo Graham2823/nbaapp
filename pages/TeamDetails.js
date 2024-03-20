@@ -27,7 +27,7 @@ const TeamDetails = () => {
 	useEffect(() => {
 		if (teamName) {
 			axios
-				.get(`http://localhost:3000/api/getTeam?teamName=${teamName}`)
+				.get(`https://nbaapp.vercel.app/api/getTeam?teamName=${teamName}`)
 				.then((response) => {
 					setTeamDetails(response.data);
 				})
@@ -218,8 +218,8 @@ const TeamDetails = () => {
 								)}
 								{game.home_team_score > 0 && game.visitor_team_score > 0 ? (
 									<p>
-										{/* <a
-											href={`/BoxScore?gameID=${game.id}&homeTeam=${
+										<a
+											href={`/BoxScore?homeTeam=${
 												game.home_team.full_name
 											}&homeScore=${game.home_team_score}&awayTeam=${
 												game.visitor_team.full_name
@@ -227,7 +227,7 @@ const TeamDetails = () => {
 												game.date.split('T')[0]
 											}`}>
 											<button>View Box Score</button>
-										</a> */}
+										</a>
 									</p>
 								) : (
 									<div>
