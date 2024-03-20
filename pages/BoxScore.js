@@ -24,7 +24,10 @@ const BoxScore = () => {
 		if(date){
 			axios
 				.get(
-					`https://nbaapp.vercel.app/api/getBoxScore?homeTeam=${homeTeam}&awayTeam=${awayTeam}&date=${date}`
+					`https://nbaapp.vercel.app/api/getBoxScore?homeTeam=${homeTeam}&awayTeam=${awayTeam}&date=${date}`,
+					{
+						timeout: 10000 // Timeout in milliseconds (e.g., 10 seconds)
+					}
 				)
 				.then((response) => {
 					console.log(response)
@@ -36,7 +39,10 @@ const BoxScore = () => {
 		}else{
 			axios
 				.get(
-					`https://nbaapp.vercel.app/api/getBoxScore?homeTeam=${homeTeam}&awayTeam=${awayTeam}`
+					`https://nbaapp.vercel.app/api/getBoxScore?homeTeam=${homeTeam}&awayTeam=${awayTeam}`,
+					{
+						timeout: 10000 // Timeout in milliseconds (e.g., 10 seconds)
+					}
 				)
 				.then((response) => {
 					setBoxScore(response.data);
@@ -54,7 +60,7 @@ const BoxScore = () => {
 	console.log("boxscore", boxScore)
 	return (
 		<div className='boxScore'>
-			{boxScore && (
+			{boxScore && boxScore[0] && boxScore[0].home_team && (
 				<h1 className='homeTeamName'>
 					<a
 						href={`/TeamDetails?teamName=${boxScore[0].home_team.full_name}`}>
