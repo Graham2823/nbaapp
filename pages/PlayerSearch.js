@@ -4,6 +4,7 @@ import '../app/app.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer} from 'react-toastify';
 import PlayerInput from '@/components/PlayerInput';
+import {Button} from "react-bootstrap"
 
 const PlayerSearch = () => {
 	const router = useRouter();
@@ -29,7 +30,7 @@ const PlayerSearch = () => {
 				<div className='searchPlayer'>
 					<h3>Search Player Stats:</h3>
 					<PlayerInput state={name} setState={setName}/>
-					<button onClick={() => handleSubmit()}>Search</button>
+					<Button onClick={() => handleSubmit()} className='button searchButton'>Search</Button>
 				</div>
 				<div className='comparePlayers'>
 					<h3>Compare Player&apos;s Stats</h3>
@@ -37,7 +38,7 @@ const PlayerSearch = () => {
 					<PlayerInput state={p1Name} setState={setp1Name}/>
 					<h4>Player Two:</h4>
 					<PlayerInput state={p2Name} setState={setp2Name}/>
-					<button onClick={()=> comparePlayers()}>Compare Players</button>
+					<Button onClick={()=> comparePlayers()} className='button searchButton'>Compare Players</Button>
 				</div>
 			</div>
 		</div>

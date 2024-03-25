@@ -10,6 +10,7 @@ import { Table } from 'react-bootstrap';
 import { ToastContainer, toast } from 'react-toastify';
 import { UserContext } from '@/context/userContext';
 import {Spinner} from 'react-bootstrap';
+import {Button} from 'react-bootstrap';
 
 const PlayerDetails = () => {
 	const router = useRouter();
@@ -162,11 +163,11 @@ const PlayerDetails = () => {
 					<div className='playerStats'>
 						{playerDetails.playerAverages.length > 0 && 
 						playerDetails.playerAverages.map((season, index) => (
-							<button
+							<Button
 								onClick={() => setSelectedSeason(season[0].season)}
-								key={index}>
+								key={index} className='searchButton button'>
 								{season[0].season}
-							</button>
+							</Button>
 						))}
 						<Table striped='columns'>
 							<thead>
@@ -239,10 +240,10 @@ const PlayerDetails = () => {
 						</Table>
 					</div>
 					<div className='sortButtons'>
-						<button onClick={() => setShowGamelog(false)}>
+						<Button onClick={() => setShowGamelog(false)} className='button'>
 							Player Details
-						</button>
-						<button onClick={() => setShowGamelog(true)}>2023 Gamelog</button>
+						</Button>
+						<Button onClick={() => setShowGamelog(true)} className='button'>2023 Gamelog</Button>
 					</div>
 					{!showGamelog ? (
 						<div className='description'>

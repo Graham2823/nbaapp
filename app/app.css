@@ -169,9 +169,20 @@ a:hover{
 	text-decoration: underline;
 }
 
-.boxScoreButton {
-	width: 75%;
-	height: auto;
+.buttonHome {
+	margin-bottom: 10px;
+}
+
+.searchButton{
+	margin: 5px;
+}
+
+.buttonHome:hover{
+	background-color: #0b267f;
+}
+
+.button:hover{
+	background-color: #0b267f;
 }
 
 .playerStatsTable {

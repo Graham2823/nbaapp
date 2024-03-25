@@ -11,6 +11,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faStar} from '@fortawesome/free-solid-svg-icons';
 import { UserContext } from '@/context/userContext';
 import {Spinner} from 'react-bootstrap';
+import RenderGames from '@/components/RenderGames';
+import { Button } from 'react-bootstrap';
 
 
 const TeamDetails = () => {
@@ -226,14 +228,14 @@ const TeamDetails = () => {
 											}&awayScore=${game.visitor_team_score}&date=${
 												game.date.split('T')[0]
 											}`}>
-											<button>View Box Score</button>
+											<Button className='button'>View Box Score</Button>
 										</a>
 									</p>
 								) : (
 									<div>
 										<a
 											href={`/TeamDetails?team1=${game.home_team.full_name}&team2=${game.visitor_team.full_name}`}>
-											<button className='compareButton'>Compare Teams</button>
+											<Button className='compareButton button'>Compare Teams</Button>
 										</a>
 									</div>
 								)}

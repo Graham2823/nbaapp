@@ -23,8 +23,8 @@ const StandingsPage = () => {
         },[])
         return (
               <div className='standingsPage'>
-                  <Button variant='info' className='Button' onClick={()=>setShowEasternconference(true)}>Eastern Conference</Button>
-                  <Button variant='info' className='Button' onClick={()=>setShowEasternconference(false)}>Western Conference</Button>
+                  <Button className='Button button' onClick={()=>setShowEasternconference(true)}>Eastern Conference</Button>
+                  <Button className='Button button' onClick={()=>setShowEasternconference(false)}>Western Conference</Button>
                   {ec && showEasternConference ?
                   (
                   <div>
