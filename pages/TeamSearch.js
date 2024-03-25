@@ -4,6 +4,7 @@ import '../app/app.css';
 import { useRouter } from 'next/router';
 import convertTo12HourFormat from '@/utils/convertTime';
 import { Table } from 'react-bootstrap';
+import {Button} from 'react-bootstrap';
 
 const TeamSearch = () => {
 	const router = useRouter();
@@ -62,7 +63,7 @@ const TeamSearch = () => {
 						<option>Utah Jazz</option>
 						<option>Washington Wizards</option>
 					</select>
-					<button onClick={() => onsubmit()}>Search</button>
+					<Button onClick={() => onsubmit()} className='button searchButton'>Search</Button>
 				</div>
 				<div className='compareTeams'>
 					<h2>Compare Teams:</h2>
@@ -144,7 +145,7 @@ const TeamSearch = () => {
 						<option>Washington Wizards</option>
 					</select>
 				</div>
-					<button onClick={() => compareTeams()}>Compare Teams</button>
+					<Button onClick={() => compareTeams()} className='button searchButton'>Compare Teams</Button>
 
 				</div>
 		</div>
