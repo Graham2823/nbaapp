@@ -177,7 +177,8 @@ const TeamDetails = () => {
 					<div
 						className='teamSchedule'
 						style={{ backgroundColor: teamLogoAndColors[0].secondaryColor }}>
-						{teamDetails.schedule.map((game, index) => (
+							<RenderGames games={teamDetails.schedule} today={false}/>
+						{/* {teamDetails.schedule.map((game, index) => (
 							<div key={index} className='teamGame'>
 								<h3>
 									<a href={`/TeamDetails?teamName=${game.home_team.full_name}`}>
@@ -240,7 +241,7 @@ const TeamDetails = () => {
 									</div>
 								)}
 							</div>
-						))}
+						))} */}
 					</div>
 				</div>
 			) : team1Info.length > 0 && team2Info.length > 0 ? (
