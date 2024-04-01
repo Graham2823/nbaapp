@@ -48,14 +48,14 @@ export default function Home() {
         }
           <h2>Today&apos;s Games:</h2>
           {todaysGames?(
-            <RenderGames games={todaysGames}/>
+            <RenderGames games={todaysGames} today={true}/>
           ):(
             <h3>No Games Today</h3>
           )}
         <h2>Yesterday&apos;s Games:</h2>
         <div className="yesterdaysGames">
           {yesterdaysGames ?(
-            <RenderGames games={yesterdaysGames}/>
+            <RenderGames games={yesterdaysGames} today={false}/>
           ):(
             <h3>No Games Yesterday</h3>
           )}

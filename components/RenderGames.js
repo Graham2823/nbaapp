@@ -7,7 +7,7 @@ import { UserContext } from '@/context/userContext';
 import convertTo12HourFormat from '@/utils/convertTime';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 
-const RenderGames = ({ games }) => {
+const RenderGames = ({ games, today }) => {
 	const { username, favoriteTeams } = useContext(UserContext);
 	const favoriteTeam = (teamName) => {
 		if (favoriteTeams.some((team) => team.teamName === teamName)) {
@@ -62,10 +62,17 @@ const RenderGames = ({ games }) => {
 									<h3 className='gameStatus'>{game.time}</h3>
 								</p>
 								<p>
+									{today ? (
 									<a
 										href={`/BoxScore?homeTeam=${game.home_team.full_name}&homeScore=${game.home_team_score}&awayTeam=${game.visitor_team.full_name}&awayScore=${game.visitor_team_score}`}>
 										<Button className='buttonHome'>View Box Score</Button>
 									</a>
+									):(
+									<a
+										href={`/BoxScore?homeTeam=${game.home_team.full_name}&homeScore=${game.home_team_score}&awayTeam=${game.visitor_team.full_name}&awayScore=${game.visitor_team_score}&date=${game.date}`}>
+										<Button className='buttonHome'>View Box Score</Button>
+									</a>
+									)}
 								</p>
 							</>
 						) : (
