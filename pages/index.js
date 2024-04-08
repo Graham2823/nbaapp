@@ -9,17 +9,22 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faStar} from '@fortawesome/free-solid-svg-icons';
 import {Button} from "react-bootstrap"
 import RenderGames from "@/components/RenderGames"
+import {Spinner} from "react-bootstrap"
 
 export default function Home() {
-  const [todaysGames, setTodaysGames] = useState([])
-  const [yesterdaysGames, setYesterdaysGames] = useState([])
+  const [todaysGames, setTodaysGames] = useState(null)
+  const [yesterdaysGames, setYesterdaysGames] = useState(null)
   const [bettingOdds, setBettingOdds] = useState([])
   const {username, favoriteTeams} = useContext(UserContext)
   useEffect(()=>{
     axios
     .get(`https://nbaapp.vercel.app/api/getTodaysGames`)
     .then((response) => {
-    setTodaysGames(response.data.data);
+      if(response.data.data.length > 0){
+        setTodaysGames(response.data.data);
+      }else{
+        setTodaysGames([])
+      }
     })
     .catch((error) => {
     console.error('Error fetching data:', error);
@@ -27,7 +32,11 @@ export default function Home() {
     axios
     .get(`https://nbaapp.vercel.app/api/getYesterdaysGames`)
     .then((response) => {
-    setYesterdaysGames(response.data.data);
+      if(response.data.data.length > 0){
+        setYesterdaysGames(response.data.data);
+      }else{
+        setYesterdaysGames([])
+      }
     })
     .catch((error) => {
     console.error('Error fetching data:', error);
@@ -39,7 +48,7 @@ export default function Home() {
       return <FontAwesomeIcon icon={faStar} style={{color:'yellow'}} onClick={()=> handleFavoriteTeam()}/>
     }
   }
-
+console.log("tg", todaysGames)
 
     return (
       <div className="frontPage">
@@ -47,17 +56,25 @@ export default function Home() {
         <h2>Hello {username}</h2>
         }
           <h2>Today&apos;s Games:</h2>
-          {todaysGames?(
-            <RenderGames games={todaysGames} today={true}/>
+          {todaysGames ?(
+            (todaysGames.length !== 0?(
+              <RenderGames games={todaysGames} today={true}/>
+            ):(
+              <h3>No Games Today</h3>
+            ))
           ):(
-            <h3>No Games Today</h3>
-          )}
+            <Spinner animation="border" variant="primary"/>
+            )}
         <h2>Yesterday&apos;s Games:</h2>
         <div className="yesterdaysGames">
           {yesterdaysGames ?(
-            <RenderGames games={yesterdaysGames} today={false}/>
-          ):(
-            <h3>No Games Yesterday</h3>
+            (yesterdaysGames.length !== 0?(
+              <RenderGames games={yesterdaysGames} today={false}/>
+              ):(
+                <h3>No Games Yesterday</h3>
+                ))
+                ):(
+                  <Spinner animation="border" variant="primary"/>
           )}
         </div>
       </div>
