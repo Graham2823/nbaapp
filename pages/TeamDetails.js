@@ -136,9 +136,9 @@ const TeamDetails = () => {
 						/>
 						{teamDetails.teamName}
 						{favoriteTeams && favoriteTeams.some((team)=>team.teamName === teamDetails.teamName) ?(
-							<FontAwesomeIcon icon={faStar} style={{color:'yellow'}} onClick={()=> handleFavoriteTeam()}/>
+							<FontAwesomeIcon icon={faStar} style={{color:'yellow', cursor:'pointer'}} onClick={()=> handleFavoriteTeam()}/>
 							):(
-							<FontAwesomeIcon icon={faStar} style={{color:'#FFFFFF'}} onClick={()=> handleFavoriteTeam()}/>
+							<FontAwesomeIcon icon={faStar} style={{color:'#FFFFFF', cursor:'pointer'}} onClick={()=> handleFavoriteTeam()}/>
 						)}
 					</h2>
 					<Table className='teamDetailsTable' striped='columns' responsive='xl'>

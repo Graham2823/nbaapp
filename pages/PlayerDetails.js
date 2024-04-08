@@ -124,13 +124,13 @@ const PlayerDetails = () => {
 										) ? (
 											<FontAwesomeIcon
 												icon={faStar}
-												style={{ color: 'yellow' }}
+												style={{ color: 'yellow', cursor:'pointer' }}
 												onClick={() => handleFavoritePlayer()}
 											/>
 										) : (
 											<FontAwesomeIcon
 												icon={faStar}
-												style={{ color: '#FFFFFF' }}
+												style={{ color: '#FFFFFF', cursor:'pointer' }}
 												onClick={() => handleFavoritePlayer()}
 											/>
 										)}
