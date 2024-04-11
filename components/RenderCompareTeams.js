@@ -147,18 +147,20 @@ const RenderCompareTeams = ({team1, team1Info, team2, team2Info, teamCompareLogo
                 <td
                     style={{
                         backgroundColor:
-                            team1Info[0].gamesBehind < team2Info[0].gamesBehind
-                                ? 'red'
-                                : 'green',
+                            team2Info[0].gamesBehind === "--" ? 'red':
+                            team1Info[0].gamesBehind < team2Info[0].gamesBehind || team1Info[0].gamesBehind === "--"
+                                ? 'green'
+                                : 'red',
                     }}>
                     {team1Info[0].gamesBehind}
                 </td>
                 <td
                     style={{
                         backgroundColor:
-                            team2Info[0].gamesBehind < team1Info[0].gamesBehind
-                                ? 'red'
-                                : 'green',
+                            team1Info[0].gamesBehind === "--"? 'red':
+                            team2Info[0].gamesBehind < team1Info[0].gamesBehind || team2Info[0].gamesBehind === "--"
+                                ? 'green'
+                                : 'red',
                     }}>
                     {team2Info[0].gamesBehind}
                 </td>
