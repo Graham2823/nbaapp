@@ -11,7 +11,7 @@ import { UserContext } from '@/context/userContext';
 import RenderBoxScore from '@/components/RenderBoxScore';
 
 const BoxScore = () => {
-    const [boxScore, setBoxScore] = useState(null);
+    const [boxScore, setBoxScore] = useState([]);
     const router = useRouter();
     const { gameID, homeTeam, homeScore, awayTeam, awayScore, date } = router.query;
     const [teamLogosandColors, setTeamLogosAndColors] = useState([]);
@@ -48,9 +48,11 @@ const BoxScore = () => {
         setTeamLogosAndColors(teamsLogos);
     }, [date, gameID, homeTeam, awayTeam]);
 
+	console.log("boxScore", boxScore)
+
     return (
         <div className='boxScore'>
-            {boxScore ? (
+            {boxScore.length > 0 ? (
                 <>
 				<RenderBoxScore boxScore={boxScore[0].home_team.players} team={boxScore[0].home_team} score={homeScore}/>
 				<RenderBoxScore boxScore={boxScore[0].visitor_team.players} team={boxScore[0].visitor_team} score={awayScore}/>
