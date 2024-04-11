@@ -1,13 +1,9 @@
 import React, {useEffect, useState, useContext} from "react"
 import axios from "axios"
 import "../app/app.css"
-import convertTo12HourFormat from "@/utils/convertTime"
-import { Image } from "react-bootstrap"
-import getTeamLogo from "@/utils/getLogo"
 import { UserContext } from "@/context/userContext"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faStar} from '@fortawesome/free-solid-svg-icons';
-import {Button} from "react-bootstrap"
 import RenderGames from "@/components/RenderGames"
 import {Spinner} from "react-bootstrap"
 
@@ -43,12 +39,6 @@ export default function Home() {
     });
   },[])
 
-  const favoriteTeam = (teamName)=>{
-    if(favoriteTeams.some((team)=> team.teamName === teamName)){
-      return <FontAwesomeIcon icon={faStar} style={{color:'yellow'}} onClick={()=> handleFavoriteTeam()}/>
-    }
-  }
-console.log("tg", todaysGames)
 
     return (
       <div className="frontPage">
