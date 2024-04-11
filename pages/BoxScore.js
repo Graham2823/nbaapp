@@ -8,6 +8,7 @@ import '../app/app.css';
 import teams from '@/teams';
 import getTeamLogo from '@/utils/getLogo';
 import { UserContext } from '@/context/userContext';
+import RenderBoxScore from '@/components/RenderBoxScore';
 
 const BoxScore = () => {
     const [boxScore, setBoxScore] = useState(null);
@@ -51,130 +52,8 @@ const BoxScore = () => {
         <div className='boxScore'>
             {boxScore ? (
                 <>
-                    {boxScore[0] && boxScore[0].home_team && (
-                        <h1 className='homeTeamName'>
-                            <a href={`/TeamDetails?teamName=${boxScore[0].home_team.full_name}`}>
-                                <Image src={getTeamLogo(boxScore[0].home_team.full_name)} alt='team logo' className='teamLogo' />
-                                {boxScore[0].home_team.full_name}:{homeScore}
-                            </a>
-                        </h1>
-                    )}
-                    {boxScore[0] && boxScore[0].home_team && (
-                        <div className='table-responsive'>
-                            <Table striped bordered className='boxScoreTable homeTeam'>
-                                <thead>
-                                    <tr>
-                                        <th>Player Name</th>
-                                        <th>Minutes Played</th>
-                                        <th>FG</th>
-                                        <th>FT</th>
-                                        <th>3PT</th>
-                                        <th>Points</th>
-                                        <th>Rebounds</th>
-                                        <th>Assists</th>
-                                        <th>Steals</th>
-                                        <th>Blocks</th>
-                                        <th>Fouls</th>
-                                        <th>Turnovers</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {boxScore[0].home_team.players.map((player) => (
-                                        <React.Fragment key={player.player.id}>
-                                            {player.min > 0 && (
-                                                <tr>
-                                                    <td>
-                                                        {player.player ? (
-                                                            <a href={`/PlayerDetails/?first=${player.player.first_name}&last=${player.player.last_name}`}>
-                                                                {player.player.first_name} {player.player.last_name}{' '}
-                                                                {favoritePlayers.some((players) => players.playerName === `${player.player.first_name} ${player.player.last_name}`) && (
-                                                                    <FontAwesomeIcon icon={faStar} style={{ color: 'yellow' }} />
-                                                                )}
-                                                            </a>
-                                                        ) : (
-                                                            <p>Unknown Player</p>
-                                                        )}
-                                                    </td>
-                                                    <td>{player.min}</td>
-                                                    <td>{`${player.fgm}/${player.fga}`}</td>
-                                                    <td>{`${player.ftm}/${player.fta}`}</td>
-                                                    <td>{`${player.fg3m}/${player.fg3a}`}</td>
-                                                    <td>{player.pts}</td>
-                                                    <td>{player.reb}</td>
-                                                    <td>{player.ast}</td>
-                                                    <td>{player.stl}</td>
-                                                    <td>{player.blk}</td>
-                                                    <td>{player.pf}</td>
-                                                    <td>{player.turnover}</td>
-                                                </tr>
-                                            )}
-                                        </React.Fragment>
-                                    ))}
-                                </tbody>
-                            </Table>
-                        </div>
-                    )}
-                    {boxScore[0] && boxScore[0].visitor_team && (
-                        <h1 className='awayTeamName'>
-                            <a href={`/TeamDetails?teamName=${boxScore[0].visitor_team.full_name}`}>
-                                <Image src={getTeamLogo(boxScore[0].visitor_team.full_name)} alt='team logo' className='teamLogo' />
-                                {boxScore[0].visitor_team.full_name}:{awayScore}
-                            </a>
-                        </h1>
-                    )}
-                    {boxScore[0] && boxScore[0].visitor_team && (
-                        <Table striped bordered className='boxScoreTable awayTeam'>
-                            <thead>
-                                <tr>
-                                    <th>Player Name</th>
-                                    <th>Minutes Played</th>
-                                    <th>FG</th>
-                                    <th>FT</th>
-                                    <th>3PT</th>
-                                    <th>Points</th>
-                                    <th>Rebounds</th>
-                                    <th>Assists</th>
-                                    <th>Steals</th>
-                                    <th>Blocks</th>
-                                    <th>Fouls</th>
-                                    <th>Turnovers</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {boxScore[0].visitor_team.players.map((player) => (
-                                    <React.Fragment key={player.player.id}>
-                                        {player.min > 0 && (
-                                            <tr>
-                                                <td>
-                                                    {player.player ? (
-                                                        <a href={`/PlayerDetails/?first=${player.player.first_name}&last=${player.player.last_name}`}>
-                                                            {player.player.first_name} {player.player.last_name}{' '}
-                                                            {favoritePlayers.some((players) => players.playerName === `${player.player.first_name} ${player.player.last_name}`) && (
-                                                                <FontAwesomeIcon icon={faStar} style={{ color: 'yellow' }} />
-                                                            )}
-                                                        </a>
-                                                    ) : (
-                                                        <p>Unknown Player</p>
-                                                    )}
-                                                </td>
-                                                <td>{player.min}</td>
-                                                <td>{`${player.fgm}/${player.fga}`}</td>
-                                                <td>{`${player.ftm}/${player.fta}`}</td>
-                                                <td>{`${player.fg3m}/${player.fg3a}`}</td>
-                                                <td>{player.pts}</td>
-                                                <td>{player.reb}</td>
-                                                <td>{player.ast}</td>
-                                                <td>{player.stl}</td>
-                                                <td>{player.blk}</td>
-                                                <td>{player.pf}</td>
-                                                <td>{player.turnover}</td>
-                                            </tr>
-                                        )}
-                                    </React.Fragment>
-                                ))}
-                            </tbody>
-                        </Table>
-                    )}
+				<RenderBoxScore boxScore={boxScore[0].home_team.players} team={boxScore[0].home_team} score={homeScore}/>
+				<RenderBoxScore boxScore={boxScore[0].visitor_team.players} team={boxScore[0].visitor_team} score={awayScore}/>
                 </>
             ) : (
 				<>
