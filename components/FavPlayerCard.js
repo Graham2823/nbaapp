@@ -86,7 +86,7 @@ const FavPlayerCard = ({favoritePlayer}) => {
                 </tbody>
             )}
         </Table>
-        <Button className="button" onClick={()=>router.push(`/PlayerDetails/?first=${playerDetails.playerData[0].first_name}&last=${playerDetails.playerData[0].last_name}`)}>View More</Button>
+        <Button className="button" onClick={()=>router.push(`/PlayerDetails/?first=${favoritePlayer.playerData[0].first_name}&last=${favoritePlayer.playerData[0].last_name}`)}>View More</Button>
       </Card>
             )}
         </div>
