@@ -5,6 +5,8 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
 import getTeamLogo from '@/utils/getLogo';
 import { UserContext } from '@/context/userContext';
 import User from '@/models/userSchema';
+import '../app/app.css';
+
 
 const RenderBoxScore = ({boxScore, team, score}) => {
     const {favoritePlayers} = useContext(UserContext)
@@ -22,8 +24,8 @@ const RenderBoxScore = ({boxScore, team, score}) => {
                         </h1>
                     )}
                     {boxScore && (
-                        <div className='table-responsive'>
-                            <Table striped bordered className='boxScoreTable homeTeam'>
+                        <div>
+                            <Table striped bordered responsive='xl' className='boxScoreTable homeTeam'>
                                 <thead>
                                     <tr>
                                         <th>Player Name</th>

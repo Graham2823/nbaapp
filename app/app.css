@@ -442,6 +442,13 @@ a:hover{
     .comparePlayersTable td{
         font-size: 1em;
     }
+	.boxScoreTable {
+		width: 400px;
+	}
+	.boxScoreTable th,
+	td {
+		font-size: 0.9em;
+	}
 }
 
 @media (max-width: 800px) {
@@ -450,11 +457,11 @@ a:hover{
 		font-size: 0.85em; /* Reduce font size for smaller screens */
 	}
 	.boxScoreTable {
-		width: 500px;
+		width: 400px;
 	}
 	.boxScoreTable th,
 	td {
-		font-size: 0.9em;
+		font-size: 0.7em;
 	}
 	.statCardTable tr{
 		height: 25px;
@@ -468,6 +475,14 @@ a:hover{
 	.statCardTable td{
 		font-size: .8em;
 	}
+	.boxScoreTable {
+		width: 60%;
+		margin: auto;
+	}
+	.boxScoreTable th,
+	td {
+		font-size: 0.7em;
+	}
 }
 
 @media (max-width: 680px) {
@@ -476,12 +491,11 @@ a:hover{
 		overflow: hidden;
 	}
 	.boxScoreTable {
-		width: 70%;
-		margin: auto;
+		width: 300px;
 	}
 	.boxScoreTable th,
 	td {
-		font-size: 0.7em;
+		font-size: 0.5em;
 	}
 	.frontPage {
 		height: 100%;
@@ -507,9 +521,12 @@ a:hover{
 	.playerBio h3 {
 		font-size: 1em;
 	}
+	.boxScoreTable {
+		width: 200px;
+	}
 	.boxScoreTable th,
 	td {
-		font-size: 0.5em;
+		font-size: 0.4em;
 	}
     .standingsTable td{
         font-size: 1em;
@@ -528,17 +545,18 @@ a:hover{
 	}
 }
 
+@media (max-width: 500px){
+	.boxScoreTable {
+		width: 200px;
+		margin: auto;
+	}
+	.boxScoreTable th,
+	td {
+		font-size: 0.3em;
+	}
+}
+
 @media (max-width: 470px){
-    .boxScoreTable {
-        width: 70%;
-        margin: auto;
-    }
-    .boxScoreTable th,
-    td {
-        font-size: 0.4em;
-        width: 20px;
-        
-    }
     .playerStats th, td{
 		font-size: 0.4em;
 		padding: 0px;
@@ -560,6 +578,14 @@ a:hover{
 		font-size: 0.8em;
 		padding: 0px;
 		margin: 0px;
+	}
+	.boxScoreTable {
+		width: 200px;
+		margin: auto;
+	}
+	.boxScoreTable th,
+	td {
+		font-size: 0.3em;
 	}
 	
 	.statCardTable{
@@ -593,12 +619,12 @@ a:hover{
 		font-size: 0.8em;
 	}
 	.boxScoreTable {
-		width: 70%;
+		width: 200px;
 		margin: auto;
 	}
 	.boxScoreTable th,
 	td {
-		font-size: 0.4em;
+		font-size: 0.2em;
 	}
     .gamelogTable th, td{
         font-size: .4em;
@@ -651,6 +677,14 @@ a:hover{
 	.statCardTable td{
 		font-size: .6em;
 	}
+	.boxScoreTable {
+		width: 70%;
+		margin: auto;
+	}
+	.boxScoreTable th,
+	td {
+		font-size: 0.20em;
+	}
 }
 
 @media (max-width: 365px) {
@@ -660,14 +694,6 @@ a:hover{
 		margin: 0px;
 		color: white;
 		text-decoration: none;
-	}
-	.boxScoreTable {
-		width: 70%;
-		margin: auto;
-	}
-	.boxScoreTable th,
-	td {
-		font-size: 0.3em;
 	}
     .playerStats th, td{
 		font-size: 0.23em;
@@ -684,6 +710,14 @@ a:hover{
 	.playerCardButton{
 		font-size: .6em;
 		width: 70px;
+	}
+	.boxScoreTable {
+		width: 200px;
+		margin: auto;
+	}
+	.boxScoreTable th,
+	td {
+		font-size: 0.1em;
 	}
 }
 @media (max-width: 320px) {
@@ -704,12 +738,12 @@ a:hover{
 		text-decoration: none;
 	}
 	.boxScoreTable {
-		width: 70%;
+		width: 200px;
 		margin: auto;
 	}
 	.boxScoreTable th,
 	td {
-		font-size: 0.23em;
+		font-size: 0.2em;
 	}
     .gamelogTable th, td{
         font-size: .28em;
