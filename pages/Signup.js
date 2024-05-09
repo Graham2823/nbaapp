@@ -6,10 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/router';
 import "../app/app.css"
-
-
-
-
+import Link from 'next/link';
 
 function CreateUser() {
 	const [email, setEmail] = useState('');
@@ -73,7 +70,7 @@ function CreateUser() {
 			/>
 		  </div>
 		  <button onClick={handleSignup}>Sign Up</button>
-          <p>Already have an account? Sign in Here</p>
+          <p>Already have an account? <Link href="/Signin">Sign in Here</Link></p>
 		</div>
 	  );			  
 }

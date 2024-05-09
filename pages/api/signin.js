@@ -1,6 +1,6 @@
 import { createRouter } from 'next-connect';
 import mongoose from 'mongoose';
-import User from '@/models/userSchema';
+const User = require('../../models/userSchema');
 
 const signinRouter = createRouter();
 
