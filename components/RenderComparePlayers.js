@@ -21,6 +21,7 @@ const RenderComparePlayers = ({p1Data, p1Stats, p2Data, p2Stats}) => {
 											{p1Data[0].first_name} {p1Data[0].last_name}
 										</a>
 									</p>
+									<p>{p1Data[0].first_name} {p1Data[0].last_name}</p>
 									<p>{p1Data[0].position}</p>
 									{p1Data[0].height ? (
 										<p>
@@ -43,6 +44,7 @@ const RenderComparePlayers = ({p1Data, p1Stats, p2Data, p2Stats}) => {
 											{p2Data[0].first_name} {p2Data[0].last_name}
 										</a>
 									</p>
+									<p>{p2Data[0].first_name} {p2Data[0].last_name}</p>
 									<p>{p2Data[0].position}</p>
 									{p2Data[0].height  ? (
 										<p>

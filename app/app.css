@@ -1,11 +1,12 @@
 body, html{
 	margin: 0;
 	padding: 0;
-	background-color: #c8c8c8;
+	background-color: #0A2540;
+	color:#FFFFFF
 }
 
 .game {
-	border: 1px solid black;
+	border: 1px solid #E63946;
 	width: 225px;
 	display: flex;
 	flex-direction: column;
@@ -14,16 +15,17 @@ body, html{
 	margin: 10px;
 	padding: 0px;
 	background-color: rgba(255, 255, 255, 0.544);
+	color: #0A2540;
 }
 
 a{
 	text-decoration: none;
-	color: black;
+	color: #0A2540;
 }
 
 a:hover{
 	text-decoration: underline;
-	color: #0b267f;
+	color: #E63946;
 }
 
 .game h3 {
@@ -72,7 +74,7 @@ a:hover{
 	flex-wrap: wrap;
 	justify-content: center;
 	align-items: center;
-	background-color: #c8c8c8;
+	background-color: #0A2540;
 }
 
 .custom-navbar {
@@ -95,7 +97,7 @@ a:hover{
   }
   
   .custom-navbar .nav-link:hover {
-	color: #e2e2e2;
+	color: #FFFFFF;
   }
   
   .right-nav {
@@ -110,21 +112,22 @@ a:hover{
 .playerPage,
 .teamPage, .signin, .signup{
 	text-align: center;
-	background-color: #c8c8c8;
+	background-color: #0A2540;
 	height: 100vh;
 	width: 100%;
 }
 
 .statsPage, .playerDetailsPage, .boxScore, .profilePage{
 	text-align: center;
-	background-color: #c8c8c8;
+	background-color: #0A2540;
 	min-height: 100vh;
 	max-width: 100vw;
 }
 
 .statLeadersPage{
-	background-color: #c8c8c8;
+	background-color: #0A2540;
 	overflow: auto;
+	color: #0A2540;
 }
 
 .frontPage{
@@ -133,17 +136,17 @@ a:hover{
 
 .standingsPage {
     text-align: center;
-	background-color: #c8c8c8;
+	background-color: #0A2540;
     width: 100%;
     height: 100%;
 }
 
 .frontPage a {
 	text-decoration: none;
-	color: black;
+	color: #FFFFFF;
 }
 .frontPage a:hover {
-	color: #0b267f;
+	color: #E63946;
 	text-decoration: underline;
 }
 
@@ -161,11 +164,11 @@ a:hover{
 
 .boxScore a {
 	text-decoration: none;
-	color: black;
+	color: #FFFFFF;
 }
 
 .boxScore a:hover {
-	color: #0b267f;
+	color: #E63946;
 	text-decoration: underline;
 }
 
@@ -186,7 +189,7 @@ a:hover{
 }
 
 .playerStatsTable {
-	background-color: #c8c8c8;
+	background-color: #0A2540;
 }
 
 .playerStats th{
@@ -198,7 +201,7 @@ a:hover{
 }
 
 .teamGame {
-	border: 1px solid black;
+	border: 1px solid #E63946;
 	width: 170px;
 	display: flex;
 	flex-direction: column;
@@ -212,12 +215,12 @@ a:hover{
 
 .teamGame a{
     text-decoration: none;
-    color: black;
+    color: #FFFFFF;
 }
 
 .teamGame a:hover{
     text-decoration: underline;
-    color: #0b267f;
+    color: #E63946;
 }
 
 .won {
@@ -241,7 +244,7 @@ a:hover{
 }
 
 .Button{
-    border: 1px solid black;
+    border: 1px solid #E63946;
     margin: 30px 10px;
 }
 
@@ -251,51 +254,52 @@ a:hover{
 }
 
 .playoffTeam td{
-    background-color: rgba(0, 230, 0, 0.1);
+    background-color: rgba(0, 230, 0, 0.5);
 }
 
 .playinTeam td{
-    background-color: rgba(255, 255, 0, 0.1);
+    background-color: rgba(255, 255, 0, 0.5);
 }
 
 .lotteryTeam td{
-    background-color: rgba(230,0,0,.1);
+    background-color: rgba(230,0,0,.5);
 }
 
 
 .standingsTable a{
     text-decoration: none;
-    color: black;
+    color: #FFFFFF;
 }
 
 .standingsTable a:hover{
-    color: #0b267f;
+    color: #E63946;
     text-decoration: underline;
 }
 
 .playerBio a{
     text-decoration: none;
-    color: black;
+    color: #FFFFFF;
 }
 
 .playerBio a:hover{
     text-decoration: underline;
-    color: #0b267f;
+    color: #E63946;
 }
 
 .comparePlayersTable{
     width: 45%;
     margin: auto;
+	margin-top: 40px;
 }
 
 .comparePlayersTable a{
     text-decoration: none;
-    color: black;
+    color: #FFFFFF;
 }
 
 .comparePlayersTable a:hover{
     text-decoration: underline;
-    color: #0b267f;
+    color: #E63946;
 }
 
 .comparePlayers{
@@ -370,6 +374,10 @@ a:hover{
 
 .tooltip-arrow::before{
 	display: none;
+}
+
+.description{
+	color: #FFFFFF;
 }
 
 .tooltip-inner{
@@ -510,7 +518,7 @@ a:hover{
 	.playerDetails {
 		width: 100%;
 		height: auto;
-		background-color: #c8c8c8;
+		background-color: #0A2540;
 		overflow: hidden;
 	}
 	.playerStats th {
@@ -608,7 +616,7 @@ a:hover{
 	.playerDetails {
 		width: 100vw;
 		height: auto;
-		background-color: #c8c8c8;
+		background-color: #0A2540;
 		overflow: hidden;
 	}
 	.playerBio {
