@@ -9,7 +9,7 @@ import { Table } from 'react-bootstrap';
 import { ToastContainer, toast } from 'react-toastify';
 import { UserContext } from '@/context/userContext';
 import {Button} from 'react-bootstrap';
-import RenderPlayerPointsChart from './charts/RenderPlayerPointsChart';
+import RenderPlayerPointsChart from './charts/RenderPlayerStatsChart';
 import DisplayCharts from './charts/DisplayCharts';
 
 const RenderPlayerDetails = ({playerDetails, first, last}) => {
@@ -57,6 +57,7 @@ const RenderPlayerDetails = ({playerDetails, first, last}) => {
 
     console.log("FP", favoritePlayers)
 	console.log("pd", playerDetails)
+	console.log("ss", selectedSeason)
   return (
     <div>
         <div className='playerDetails'>
@@ -115,15 +116,19 @@ const RenderPlayerDetails = ({playerDetails, first, last}) => {
 						)}
 					</div>
 					<div className='playerStats'>
+						<div>
+						<h6>Select Season</h6>
+						<select onChange={(e) => setSelectedSeason(Number(e.target.value))}>
 						{playerDetails.playerAverages.length > 0 && 
 						playerDetails.playerAverages.map((season, index) => (
-							<Button
-								onClick={() => setSelectedSeason(season[0].season)}
-								key={index} className='searchButton button'>
+							<option
+								key={index} className='searchButton button' value={season[0].season}>
 								{season[0].season}
-							</Button>
+							</option>
 						))}
-						<Table striped='columns'>
+						</select>
+						</div>
+						<Table striped='columns' responsive='xl'>
 							<thead>
 								<th>Season</th>
 								<th>Games Played</th>

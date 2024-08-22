@@ -3,7 +3,7 @@ import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
 } from 'recharts';
 
-const PlayerPointsChart = ({ data, stat }) => {
+const PlayerStatChart = ({ data, stat }) => {
     // Reverse the order of the data array
     const reversedData = [...data].reverse();
 
@@ -22,4 +22,4 @@ const PlayerPointsChart = ({ data, stat }) => {
     );
 };
 
-export default PlayerPointsChart;
+export default PlayerStatChart;

@@ -46,7 +46,7 @@ teamRouter.get(async (req, res) => {
 	// 		}
 	// 	});
 	let schedule = [];
-		await axios.get(`http://api.balldontlie.io/v1/games?seasons[]=2023&team_ids[]=${teamID}&per_page=100`, {
+		await axios.get(`http://api.balldontlie.io/v1/games?seasons[]=2024&team_ids[]=${teamID}&per_page=100`, {
   headers: {
     'Authorization': '34db4f41-8c29-4fef-940d-db01294f67cc',
     'Content-Type': 'application/json'

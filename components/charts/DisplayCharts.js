@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button } from 'react-bootstrap';
-import RenderPlayerPointsChart from './RenderPlayerPointsChart';
+import RenderPlayerStatsChart from './RenderPlayerStatsChart';
 import '../../app/app.css';
 
 const DisplayCharts = ({ playerDetails }) => {
@@ -34,21 +34,21 @@ const DisplayCharts = ({ playerDetails }) => {
     const renderChart = () => {
         switch (selectedStat) {
             case 'points':
-                return <RenderPlayerPointsChart data={stats.points} stat={'Points'} />;
+                return <RenderPlayerStatsChart data={stats.points} stat={'Points'} />;
             case 'assists':
-                return <RenderPlayerPointsChart data={stats.assists} stat={'Assists'}/>;
+                return <RenderPlayerStatsChart data={stats.assists} stat={'Assists'}/>;
             case 'rebounds':
-                return <RenderPlayerPointsChart data={stats.rebounds} stat={'Rebounds'}/>;
+                return <RenderPlayerStatsChart data={stats.rebounds} stat={'Rebounds'}/>;
             case 'steals':
-                return <RenderPlayerPointsChart data={stats.steals} stat={'Steals'}/>;
+                return <RenderPlayerStatsChart data={stats.steals} stat={'Steals'}/>;
             case 'blocks':
-                return <RenderPlayerPointsChart data={stats.blocks} stat={'blocks'}/>;
+                return <RenderPlayerStatsChart data={stats.blocks} stat={'Blocks'}/>;
             case 'fgPercentage':
-                return <RenderPlayerPointsChart data={stats.fgPercentage} stat={'FG%'}/>;
+                return <RenderPlayerStatsChart data={stats.fgPercentage} stat={'FG%'}/>;
             case 'threePtPercentage':
-                return <RenderPlayerPointsChart data={stats.threePtPercentage} stat={'3PT%'}/>;
+                return <RenderPlayerStatsChart data={stats.threePtPercentage} stat={'3PT%'}/>;
             case 'ftPercentage':
-                return <RenderPlayerPointsChart data={stats.ftPercentage} stat={'FT%'}/>;
+                return <RenderPlayerStatsChart data={stats.ftPercentage} stat={'FT%'}/>;
             default:
                 return null;
         }
@@ -57,14 +57,25 @@ const DisplayCharts = ({ playerDetails }) => {
     return (
         <div>
             <h2>View Players Career Stats</h2>
-            <Button onClick={() => setSelectedStat('points')} className='Button'>View Points</Button>
+            <h4>Select Stat:</h4>
+            <select onChange={(e)=>setSelectedStat(e.target.value)}>
+                <option value={'points'}>Points</option>
+                <option value={'assists'}>Assists</option>
+                <option value={'rebounds'}>Rebounds</option>
+                <option value={'steals'}>Steals</option>
+                <option value={'blocks'}>Blocks</option>
+                <option value={'fgPercentage'}>FG%</option>
+                <option value={'threePtPercentage'}>3PT%</option>
+                <option value={'ftPercentage'}>FT%</option>
+            </select>
+            {/* <Button onClick={() => setSelectedStat('points')} className='Button'>View Points</Button>
             <Button onClick={() => setSelectedStat('assists')} className='Button'>View Assists</Button>
             <Button onClick={() => setSelectedStat('rebounds')} className='Button'>View Rebounds</Button>
             <Button onClick={() => setSelectedStat('steals')} className='Button'>View Steals</Button>
             <Button onClick={() => setSelectedStat('blocks')} className='Button'>View Blocks</Button>
             <Button onClick={() => setSelectedStat('fgPercentage')} className='Button'>View FG%</Button>
             <Button onClick={() => setSelectedStat('threePtPercentage')} className='Button'>View 3PT%</Button>
-            <Button onClick={() => setSelectedStat('ftPercentage')} className='Button'>View FT%</Button>
+            <Button onClick={() => setSelectedStat('ftPercentage')} className='Button'>View FT%</Button> */}
 
             {renderChart()}
         </div>
