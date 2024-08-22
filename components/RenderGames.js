@@ -20,6 +20,8 @@ const RenderGames = ({ games, today }) => {
 			);
 		}
 	};
+
+	console.log("games", games)
 	return (
 		<div className='todaysGames'>
 			{games ? (
@@ -78,7 +80,7 @@ const RenderGames = ({ games, today }) => {
 						) : (
 							<div>
 								<h3 className='gameStatus'>
-									{convertTo12HourFormat(game.status, false)}
+									{convertTo12HourFormat(game.status, true)}
 								</h3>
 								<a
 									href={`/TeamDetails?team1=${game.home_team.full_name}&team2=${game.visitor_team.full_name}`}>

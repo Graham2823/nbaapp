@@ -58,7 +58,7 @@ const PlayerDetails = () => {
 		}
 	}, [first, last, p1Name, p2Name, router]);
 
-
+console.log("pd",playerDetails)
 	return (
 		<div className='playerDetailsPage'>
 			<ToastContainer />

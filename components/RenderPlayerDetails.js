@@ -9,11 +9,14 @@ import { Table } from 'react-bootstrap';
 import { ToastContainer, toast } from 'react-toastify';
 import { UserContext } from '@/context/userContext';
 import {Button} from 'react-bootstrap';
+import RenderPlayerPointsChart from './charts/RenderPlayerStatsChart';
+import DisplayCharts from './charts/DisplayCharts';
 
 const RenderPlayerDetails = ({playerDetails, first, last}) => {
     const { favoritePlayers, setFavoritePlayers, user } = useContext(UserContext);
     const [selectedSeason, setSelectedSeason] = useState(2023);
     const [showGamelog, setShowGamelog] = useState(false);
+	const [showGraphs, setShowGraphs] = useState(false)
 
     const shotPercentage = (made, attempted) => {
 		let percentage = (made / attempted) * 100;
@@ -53,7 +56,8 @@ const RenderPlayerDetails = ({playerDetails, first, last}) => {
 	};
 
     console.log("FP", favoritePlayers)
-
+	console.log("pd", playerDetails)
+	console.log("ss", selectedSeason)
   return (
     <div>
         <div className='playerDetails'>
@@ -112,15 +116,19 @@ const RenderPlayerDetails = ({playerDetails, first, last}) => {
 						)}
 					</div>
 					<div className='playerStats'>
+						<div>
+						<h6>Select Season</h6>
+						<select onChange={(e) => setSelectedSeason(Number(e.target.value))}>
 						{playerDetails.playerAverages.length > 0 && 
 						playerDetails.playerAverages.map((season, index) => (
-							<Button
-								onClick={() => setSelectedSeason(season[0].season)}
-								key={index} className='searchButton button'>
+							<option
+								key={index} className='searchButton button' value={season[0].season}>
 								{season[0].season}
-							</Button>
+							</option>
 						))}
-						<Table striped='columns'>
+						</select>
+						</div>
+						<Table striped='columns' responsive='xl'>
 							<thead>
 								<th>Season</th>
 								<th>Games Played</th>
@@ -191,64 +199,67 @@ const RenderPlayerDetails = ({playerDetails, first, last}) => {
 						</Table>
 					</div>
 					<div className='sortButtons'>
-						<Button onClick={() => setShowGamelog(false)} className='button'>
+						<Button onClick={() => {setShowGamelog(false), setShowGraphs(false)}} className='button'>
 							Player Details
 						</Button>
-						<Button onClick={() => setShowGamelog(true)} className='button'>2023 Gamelog</Button>
+						<Button onClick={() => {setShowGamelog(true), setShowGraphs(false)}} className='button'>2023 Gamelog</Button>
+						<Button onClick={()=> {setShowGraphs(true), setShowGamelog(false)}} className='button'>Show Graphs</Button>
 					</div>
-					{!showGamelog ? (
-						<div className='description'>
-							{playerDetails.details ? (
-								<p>{playerDetails.details.player[0].strDescriptionEN}</p>
-							) : (
-								<h3>No Player Details Available</h3>
-							)}
-						</div>
-					) : playerDetails.playerGamelog.length > 0 ? (
-						<div className='gamelog'>
-							<Table className='gamelogTable' striped>
-								<thead>
-									<tr>
-										<th>Date</th>
-										<th>Minutes</th>
-										<th>FG</th>
-										<th>FT</th>
-										<th>3PT</th>
-										<th>Points</th>
-										<th>Rebounds</th>
-										<th>Assists</th>
-										<th>Steals</th>
-										<th>Blocks</th>
-										<th>Turnovers</th>
-									</tr>
-								</thead>
-								<tbody>
-									{playerDetails.playerGamelog.reverse().map((game) => (
-										<tr key={game.id}>
-											{' '}
-											{/* Add a unique key for each row */}
-											<td>{game.game.date.slice(0, 10)}</td>
-											<td>{game.min}</td>
-											<td>{`${game.fgm}/${game.fga}`}</td>
-											<td>{`${game.ftm}/${game.fta}`}</td>
-											<td>{`${game.fg3m}/${game.fg3a}`}</td>
-											<td>{game.pts}</td>
-											<td>{game.reb}</td>
-											<td>{game.ast}</td>
-											<td>{game.stl}</td>
-											<td>{game.blk}</td>
-											<td>{game.turnover}</td>
-										</tr>
-									))}
-								</tbody>
-							</Table>
-						</div>
-					) : (
-						<h2>No Games Played Yet</h2>
-					)}
-				</div>
-    </div>
-  )
-}
+					{showGamelog ? (
+                    playerDetails.playerGamelog.length > 0 ? (
+                        <div className='gamelog'>
+                            <Table className='gamelogTable' striped>
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Minutes</th>
+                                        <th>FG</th>
+                                        <th>FT</th>
+                                        <th>3PT</th>
+                                        <th>Points</th>
+                                        <th>Rebounds</th>
+                                        <th>Assists</th>
+                                        <th>Steals</th>
+                                        <th>Blocks</th>
+                                        <th>Turnovers</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {playerDetails.playerGamelog.reverse().map((game) => (
+                                        <tr key={game.id}>
+                                            <td>{game.game.date.slice(0, 10)}</td>
+                                            <td>{game.min}</td>
+                                            <td>{`${game.fgm}/${game.fga}`}</td>
+                                            <td>{`${game.ftm}/${game.fta}`}</td>
+                                            <td>{`${game.fg3m}/${game.fg3a}`}</td>
+                                            <td>{game.pts}</td>
+                                            <td>{game.reb}</td>
+                                            <td>{game.ast}</td>
+                                            <td>{game.stl}</td>
+                                            <td>{game.blk}</td>
+                                            <td>{game.turnover}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </Table>
+                        </div>
+                    ) : (
+                        <h2>No Games Played Yet</h2>
+                    )
+                ) : showGraphs ? (
+                    <DisplayCharts playerDetails={playerDetails.playerAverages} />
+                ) : (
+                    <div className='description'>
+                        {playerDetails.details ? (
+                            <p>{playerDetails.details.player[0].strDescriptionEN}</p>
+                        ) : (
+                            <h3>No Player Details Available</h3>
+                        )}
+                    </div>
+                )}
+            </div>
+        </div>
+    );
+};
 
-export default RenderPlayerDetails
+export default RenderPlayerDetails;
