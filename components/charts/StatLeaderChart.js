@@ -20,7 +20,7 @@ const StatLeaderBarChart = ({ data, stat }) => {
     const reversedData = [...data].reverse()
     const barChartData = reversedData.map((player) => ({
         name: player.name,
-        value: player.stats[stat],
+        [stat]: player.stats[stat],
     }));
 
     return (
@@ -38,8 +38,7 @@ const StatLeaderBarChart = ({ data, stat }) => {
                 />
                 <YAxis />
                 <Tooltip content={<CustomTooltip />} />
-                <Legend />
-                <Bar dataKey="value" fill="#8884d8" />
+                <Bar dataKey={stat} fill="#8884d8" name=" "/>
             </BarChart>
         </ResponsiveContainer>
     );
