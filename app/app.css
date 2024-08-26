@@ -704,6 +704,9 @@ color: #0A2540;
 		margin: auto;
 		width: 95%;
 	}
+	.compareCharts{
+		width: 300px;
+	}
 }
 
 @media (max-width: 400px){
