@@ -1,12 +1,23 @@
-import React from 'react';
+import React, {useState} from 'react';
 import '../app/app.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { Table } from 'react-bootstrap';
+import ComparePlayerCharts from './charts/comparePlayerCharts';
+import {Button} from 'react-bootstrap';
+
 const RenderComparePlayers = ({p1Data, p1Stats, p2Data, p2Stats}) => {
+	const [showGraphs, setShowGraphs] = useState(false)
     console.log("p1Data", p1Data)
+    console.log("p1Stats", p1Stats)
+	console.log(showGraphs)
   return (
     <div>
+		<div>
+			<Button onClick={()=>setShowGraphs(!showGraphs)} style={{marginTop:"20px"}}>{!showGraphs ? "Show Graphs" : "Show Stats"}</Button>
+		</div>
         <div>
+			{!showGraphs ? (
+
 					<Table className='comparePlayersTable'>
 						<thead>
 							<tr>
@@ -21,7 +32,6 @@ const RenderComparePlayers = ({p1Data, p1Stats, p2Data, p2Stats}) => {
 											{p1Data[0].first_name} {p1Data[0].last_name}
 										</a>
 									</p>
-									<p>{p1Data[0].first_name} {p1Data[0].last_name}</p>
 									<p>{p1Data[0].position}</p>
 									{p1Data[0].height ? (
 										<p>
@@ -44,7 +54,6 @@ const RenderComparePlayers = ({p1Data, p1Stats, p2Data, p2Stats}) => {
 											{p2Data[0].first_name} {p2Data[0].last_name}
 										</a>
 									</p>
-									<p>{p2Data[0].first_name} {p2Data[0].last_name}</p>
 									<p>{p2Data[0].position}</p>
 									{p2Data[0].height  ? (
 										<p>
@@ -294,6 +303,9 @@ const RenderComparePlayers = ({p1Data, p1Stats, p2Data, p2Stats}) => {
 							</tr>
 						</tbody>
 					</Table>
+			):(
+				<ComparePlayerCharts player1Data={p1Data}  player1Stats={p1Stats} player2Data={p2Data} player2Stats={p2Stats}/>
+			)}
 				</div>
     </div>
   )
