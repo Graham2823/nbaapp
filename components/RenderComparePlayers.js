@@ -6,7 +6,7 @@ import ComparePlayerCharts from './charts/comparePlayerCharts';
 import {Button} from 'react-bootstrap';
 
 const RenderComparePlayers = ({p1Data, p1Stats, p2Data, p2Stats}) => {
-	const [showGraphs, setShowGraphs] = useState(false)
+	const [showGraphs, setShowGraphs] = useState(true)
     console.log("p1Data", p1Data)
     console.log("p1Stats", p1Stats)
 	console.log(showGraphs)
