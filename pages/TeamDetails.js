@@ -22,7 +22,7 @@ const TeamDetails = () => {
 	useEffect(() => {
 		if (teamName) {
 			axios
-				.get(`https://nbaapp.vercel.app/api/getTeam?teamName=${teamName}`)
+				.get(`http://localhost:3000/api/team/getTeam?teamName=${teamName}`)
 				.then((response) => {
 					setTeamDetails(response.data);
 				})
@@ -35,7 +35,7 @@ const TeamDetails = () => {
 		if (team1 && team2) {
 			axios
 				.get(
-					`https://nbaapp.vercel.app/api/compareTeams?team1=${team1}&team2=${team2}`
+					`http://localhost:3000/api/compare/compareTeams?team1=${team1}&team2=${team2}`
 				)
 				.then((response) => {
 					setTeam1Info(response.data.teamOne);

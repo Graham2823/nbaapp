@@ -1,9 +1,8 @@
 import { createRouter } from 'next-connect';
 import mongoose from 'mongoose';
+const User = require('../../../models/userSchema');
 
-const User = require('../../models/userSchema');
-
-const createUserRouter = createRouter();
+const signinRouter = createRouter();
 
 // Connect to MongoDB at application startup
 const mongoConnectionString = process.env.MONGODB_CONNECTION_STRING;
@@ -12,18 +11,20 @@ mongoose.connect(mongoConnectionString, {
   useUnifiedTopology: true,
 });
 
-createUserRouter.post(async (req, res) => {
+
+signinRouter.get(async (req, res) => {
     try {
-        const { uid, username } = req.body;
+        const { uid } = req.query;
+        console.log(uid)
+        const user = await User.findOne({ uid: uid });
+        console.log(user)
+        
 
-        const newUser = new User({
-            uid: uid,
-            username: username,
-        });
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
 
-        const savedUser = await newUser.save();
-
-        res.json(savedUser);
+        res.json(user);
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: 'Internal Server Error' });
@@ -31,5 +32,5 @@ createUserRouter.post(async (req, res) => {
 });
 
 export default async (req, res) => {
-    await createUserRouter.run(req, res);
+    await signinRouter.run(req, res);
 };

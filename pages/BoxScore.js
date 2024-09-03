@@ -20,7 +20,7 @@ const BoxScore = () => {
     useEffect(() => {
         if (date) {
             axios.get(
-                `https://nbaapp.vercel.app/api/getBoxScore?homeTeam=${homeTeam}&awayTeam=${awayTeam}&date=${date}`,
+                `http://localhost:3000/api/boxScore/getBoxScore?homeTeam=${homeTeam}&awayTeam=${awayTeam}&date=${date}`,
                 { timeout: 10000 }
             )
                 .then((response) => {
@@ -31,7 +31,7 @@ const BoxScore = () => {
                 });
         } else {
             axios.get(
-                `https://nbaapp.vercel.app/api/getBoxScore?homeTeam=${homeTeam}&awayTeam=${awayTeam}`,
+                `http://localhost:3000/api/boxScore/getBoxScore?homeTeam=${homeTeam}&awayTeam=${awayTeam}`,
                 { timeout: 10000 }
             )
                 .then((response) => {

@@ -28,7 +28,7 @@ function CreateUser() {
 				uid: user.uid,
 			};
 			const response = await axios.post(
-				`https://nbaapp.vercel.app/api/createUser`,
+				`http://localhost:3000/api/auth/createUser`,
 				requestData
 			);
             router.push('/Signin')

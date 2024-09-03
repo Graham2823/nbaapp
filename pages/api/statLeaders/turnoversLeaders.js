@@ -3,11 +3,11 @@ import cors from 'cors'; // Import the cors middleware
 import Player from '@/models/playerSchema';
 import mongoose from 'mongoose';
 
-const stealLeaders = createRouter();
+const turnoverLeaders = createRouter();
 
 // Set up CORS options
 // const corsMiddleware = cors({
-//   origin: ['http://localhost:3000', 'https://nbaapp.vercel.app'], // Replace with your local development URL
+//   origin: ['http://localhost:3000', 'http://localhost:3000'], // Replace with your local development URL
 //   methods: ['GET'], // Allow only the HTTP methods you need
 // });
 
@@ -15,7 +15,7 @@ const stealLeaders = createRouter();
 // playerRouter.use(corsMiddleware);
 const mongoConnectionString = process.env.MONGODB_CONNECTION_STRING;
 
-stealLeaders.get(async (req, res) =>{
+turnoverLeaders.get(async (req, res) =>{
     try {
         await mongoose.connect(mongoConnectionString, {
           useNewUrlParser: true,
@@ -23,7 +23,7 @@ stealLeaders.get(async (req, res) =>{
         });
     
         const players = await Player.find({})
-          .sort({ 'stats.steals': -1 }) // Sort by assists in descending order
+          .sort({ 'stats.turnovers': -1 }) // Sort by assists in descending order
           .limit(20); // Limit to the top 20 players
     
         res.json(players);
@@ -34,5 +34,5 @@ stealLeaders.get(async (req, res) =>{
    });
 
 export default async (req, res) => {
-    await stealLeaders.run(req, res);
+    await turnoverLeaders.run(req, res);
 };

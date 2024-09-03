@@ -7,7 +7,7 @@ const compareTeamsRouter = createRouter();
 
 // Set up CORS options
 // const corsMiddleware = cors({
-//   origin: ['http://localhost:3000', 'https://nbaapp.vercel.app'], // Replace with your local development URL
+//   origin: ['http://localhost:3000', 'http://localhost:3000'], // Replace with your local development URL
 //   methods: ['GET'], // Allow only the HTTP methods you need
 // });
 
