@@ -28,7 +28,7 @@ const RenderGames = ({ games, today }) => {
 				games.map((game, index) => (
 					<div key={index} className='game'>
 						<h3>
-							<a href={`/TeamDetails?teamName=${game.home_team.full_name}`}>
+							<a href={`/team/TeamDetails?teamName=${game.home_team.full_name}`}>
 								<Image
 									src={getTeamLogo(game.home_team.full_name)}
 									alt='team logo'
@@ -44,7 +44,7 @@ const RenderGames = ({ games, today }) => {
 						</h3>
 						<h3>VS</h3>
 						<h3>
-							<a href={`/TeamDetails?teamName=${game.visitor_team.full_name}`}>
+							<a href={`/team/TeamDetails?teamName=${game.visitor_team.full_name}`}>
 								<Image
 									src={getTeamLogo(game.visitor_team.full_name)}
 									alt='team logo'
@@ -66,12 +66,12 @@ const RenderGames = ({ games, today }) => {
 								<p>
 									{today ? (
 									<a
-										href={`/BoxScore?homeTeam=${game.home_team.full_name}&homeScore=${game.home_team_score}&awayTeam=${game.visitor_team.full_name}&awayScore=${game.visitor_team_score}`}>
+										href={`/boxScore/BoxScore?homeTeam=${game.home_team.full_name}&homeScore=${game.home_team_score}&awayTeam=${game.visitor_team.full_name}&awayScore=${game.visitor_team_score}`}>
 										<Button className='buttonHome'>View Box Score</Button>
 									</a>
 									):(
 									<a
-										href={`/BoxScore?homeTeam=${game.home_team.full_name}&homeScore=${game.home_team_score}&awayTeam=${game.visitor_team.full_name}&awayScore=${game.visitor_team_score}&date=${game.date}`}>
+										href={`/boxScore/BoxScore?homeTeam=${game.home_team.full_name}&homeScore=${game.home_team_score}&awayTeam=${game.visitor_team.full_name}&awayScore=${game.visitor_team_score}&date=${game.date}`}>
 										<Button className='buttonHome'>View Box Score</Button>
 									</a>
 									)}
@@ -83,7 +83,7 @@ const RenderGames = ({ games, today }) => {
 									{convertTo12HourFormat(game.status, true)}
 								</h3>
 								<a
-									href={`/TeamDetails?team1=${game.home_team.full_name}&team2=${game.visitor_team.full_name}`}>
+									href={`/team/TeamDetails?team1=${game.home_team.full_name}&team2=${game.visitor_team.full_name}`}>
 									<Button className='buttonHome'>Compare Teams</Button>
 								</a>
 							</div>

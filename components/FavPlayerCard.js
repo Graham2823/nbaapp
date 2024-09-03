@@ -39,7 +39,7 @@ const FavPlayerCard = ({favoritePlayer}) => {
         <Table>
             <thead>
                 <th colSpan={showPlayerGamelog ? 2.5 : 1}>{favoritePlayer.playerData[0].first_name} {favoritePlayer.playerData[0].last_name}</th>
-                <th colSpan={showPlayerGamelog ? 2.5 : 1} onClick={()=>router.push(`/TeamDetails?teamName=${favoritePlayer.details.player[0].strTeam}`)}>{favoritePlayer.details.player[0].strTeam}</th>
+                <th colSpan={showPlayerGamelog ? 2.5 : 1} onClick={()=>router.push(`/team/TeamDetails?teamName=${favoritePlayer.details.player[0].strTeam}`)}>{favoritePlayer.details.player[0].strTeam}</th>
             </thead>
         {showPlayerStats ? (
             <tbody>
@@ -86,7 +86,7 @@ const FavPlayerCard = ({favoritePlayer}) => {
                 </tbody>
             )}
         </Table>
-        <Button className="button" onClick={()=>router.push(`/PlayerDetails/?first=${favoritePlayer.playerData[0].first_name}&last=${favoritePlayer.playerData[0].last_name}`)}>View More</Button>
+        <Button className="button" onClick={()=>router.push(`/player/PlayerDetails/?first=${favoritePlayer.playerData[0].first_name}&last=${favoritePlayer.playerData[0].last_name}`)}>View More</Button>
       </Card>
             )}
         </div>

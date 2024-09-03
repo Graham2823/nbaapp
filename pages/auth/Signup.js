@@ -5,7 +5,7 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/router';
-import "../app/app.css"
+import "../../app/app.css"
 import Link from 'next/link';
 
 function CreateUser() {
@@ -70,7 +70,7 @@ function CreateUser() {
 			/>
 		  </div>
 		  <button onClick={handleSignup}>Sign Up</button>
-          <p>Already have an account? <Link href="/Signin">Sign in Here</Link></p>
+          <p>Already have an account? <Link href="/auth/Signin">Sign in Here</Link></p>
 		</div>
 	  );			  
 }

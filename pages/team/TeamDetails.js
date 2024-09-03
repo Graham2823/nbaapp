@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
-import '../app/app.css';
+import '../../app/app.css';
 import { useRouter } from 'next/router';
 import 'react-toastify/dist/ReactToastify.css';
-import teams from '@/teams';
+import teams from '../../teams';
 import {Spinner} from 'react-bootstrap';
 import RenderTeamDetails from '@/components/RenderTeamDetails';
 import RenderCompareTeams from '@/components/RenderCompareTeams';
@@ -18,7 +18,7 @@ const TeamDetails = () => {
 	const [teamCompareLogos, setTeamCompareLogos] = useState();
 	const { teamName, team1, team2 } = router.query;
 
-	
+	console.log("teams", teams)
 	useEffect(() => {
 		if (teamName) {
 			axios
@@ -30,6 +30,7 @@ const TeamDetails = () => {
 					console.error('Error fetching data:', error);
 				});
 			const teamLogo = teams.filter((team) => team.teamName === teamName);
+			console.log("team logo", teamLogo)
 			setTeamLogoAndColors(teamLogo);
 		}
 		if (team1 && team2) {

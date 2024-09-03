@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import { Table } from 'react-bootstrap';
-import "../app/app.css"
+import "../../app/app.css"
 import StatLeaderChart from '@/components/charts/StatLeaderChart';
 import {Button} from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -36,7 +36,7 @@ const StatLeaders = () => {
 	console.log("stat", stat)
 	return (
 		<div className='statLeadersPage'>
-			<Button onClick={()=>router.push('/Stats')} className='returnButton'><FontAwesomeIcon icon={faArrowLeft}/> Stat Leaders</Button>
+			<Button onClick={()=>router.push('/stats/Stats')} className='returnButton'><FontAwesomeIcon icon={faArrowLeft}/> Stat Leaders</Button>
 			<div>
 			<h2>{capitalizeFirstLetter(stat)} Leaders</h2>
 			<Button onClick={()=>setShowChart(!showChart)}>{showChart== false ? "Show Chart" : "Show Stats"}</Button>
@@ -63,7 +63,7 @@ const StatLeaders = () => {
 							{statLeaders.map((player, key) => (
 								<tr key={key}>
 									<td>{key + 1}</td>
-									<td><a href={`/PlayerDetails/?first=${player.name.split(" ")[0]}&last=${player.name.split(" ")[1]}`}>{player.name}</a></td>
+									<td><a href={`/player/PlayerDetails/?first=${player.name.split(" ")[0]}&last=${player.name.split(" ")[1]}`}>{player.name}</a></td>
 								<td class='gamesPlayed'>
 									{player.stats.games_played}
 								</td>

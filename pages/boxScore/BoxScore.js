@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Table, Spinner, Image } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
-import '../app/app.css';
+import '../../app/app.css';
 import teams from '@/teams';
 import getTeamLogo from '@/utils/getLogo';
 import { UserContext } from '@/context/userContext';

@@ -2,7 +2,7 @@ import React,{useEffect, useState} from 'react'
 import axios from 'axios'
 import StandingsCard from '@/components/StandingsCard'
 import { Button } from 'react-bootstrap'
-import "../app/app.css"
+import "../../app/app.css"
 
 
 const StandingsPage = () => {

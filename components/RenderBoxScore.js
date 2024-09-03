@@ -17,7 +17,7 @@ const RenderBoxScore = ({boxScore, team, score}) => {
     <div>
         {boxScore && team && score &&(
                         <h1 className='homeTeamName'>
-                            <a href={`/TeamDetails?teamName=${team.full_name}`}>
+                            <a href={`/team/TeamDetails?teamName=${team.full_name}`}>
                                 <Image src={getTeamLogo(team.full_name)} alt='team logo' className='teamLogo' />
                                 {team.full_name}:{score}
                             </a>
@@ -49,7 +49,7 @@ const RenderBoxScore = ({boxScore, team, score}) => {
                                                 <tr>
                                                     <td>
                                                         {player.player ? (
-                                                            <a href={`/PlayerDetails/?first=${player.player.first_name}&last=${player.player.last_name}`}>
+                                                            <a href={`/player/PlayerDetails/?first=${player.player.first_name}&last=${player.player.last_name}`}>
                                                                 {player.player.first_name} {player.player.last_name}{' '}
                                                                 {favoritePlayers.some((players) => players.playerName === `${player.player.first_name} ${player.player.last_name}`) && (
                                                                     <FontAwesomeIcon icon={faStar} style={{ color: 'yellow' }} />

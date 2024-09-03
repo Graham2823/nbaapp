@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import '../app/app.css';
+import '../../app/app.css';
 import { useRouter } from 'next/router';
 import convertTo12HourFormat from '@/utils/convertTime';
 import { Table } from 'react-bootstrap';
@@ -24,12 +24,12 @@ const teams = [
 	'Memphis Grizzlies',
 	'Miami Heat',
 	'Milwaukee Bucks',
-	'Minnesota Timberwolve',
+	'Minnesota Timberwolves',
 	'New Orleans Pelicans',
 	'New York Knicks',
 	'Oklahoma City Thunder',
 	'Orlando Magic',
-	'Philadelphia 76er',
+	'Philadelphia 76ers',
 	'Phoenix Suns',
 	'Portland Trail Blazers',
 	'Sacramento Kings',
@@ -48,11 +48,11 @@ const TeamSearch = () => {
 	const { teamName } = router.query;
 
 	const onsubmit = () => {
-		router.push(`/TeamDetails?teamName=${selectedTeam}`);
+		router.push(`/team/TeamDetails?teamName=${selectedTeam}`);
 	};
 
 	const compareTeams = () => {
-		router.push(`/TeamDetails?team1=${team1}&team2=${team2}`);
+		router.push(`/team/TeamDetails?team1=${team1}&team2=${team2}`);
 	};
 
 	return (

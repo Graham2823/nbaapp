@@ -39,7 +39,7 @@ const FavTeamCard = ({favoriteTeam}) => {
         </tr>
         </tbody>
     </Table>
-    <Button className='button' onClick={()=>router.push(`/TeamDetails?teamName=${favoriteTeam.teamName}`)}>View More</Button>
+    <Button className='button' onClick={()=>router.push(`/team/TeamDetails?teamName=${favoriteTeam.teamName}`)}>View More</Button>
   </Card>
         )}
     </div>

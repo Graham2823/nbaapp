@@ -51,7 +51,7 @@ const RenderCompareTeams = ({team1, team1Info, team2, team2Info, teamCompareLogo
             <tr>
                 <th></th>
                 <th>
-                    <a href={`/TeamDetails?teamName=${team1}`}>
+                    <a href={`/team/TeamDetails?teamName=${team1}`}>
                         <Image
                             src={
                                 teamCompareLogos[0].teamName ===
@@ -66,7 +66,7 @@ const RenderCompareTeams = ({team1, team1Info, team2, team2Info, teamCompareLogo
                     </a>
                 </th>
                 <th>
-                    <a href={`/TeamDetails?teamName=${team2}`}>
+                    <a href={`/team/TeamDetails?teamName=${team2}`}>
                         <Image
                             src={
                                 teamCompareLogos[1].teamName ===

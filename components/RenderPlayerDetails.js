@@ -94,7 +94,7 @@ const RenderPlayerDetails = ({playerDetails, first, last}) => {
 									<h3>{playerDetails.details.player[0].strHeight}</h3>
 									<h3>
 										<a
-											href={`/TeamDetails?teamName=${playerDetails.playerData[0].team.full_name}`}>
+											href={`/team/TeamDetails?teamName=${playerDetails.playerData[0].team.full_name}`}>
 											{playerDetails.details.player[0].strTeam}
 										</a>
 									</h3>
@@ -108,7 +108,7 @@ const RenderPlayerDetails = ({playerDetails, first, last}) => {
 								</h3>
 								<h3>
 									<a
-										href={`/TeamDetails?teamName=${playerDetails.playerData[0].team.full_name}`}>
+										href={`/team/TeamDetails?teamName=${playerDetails.playerData[0].team.full_name}`}>
 										{playerDetails.playerData[0].team.full_name}
 									</a>
 								</h3>

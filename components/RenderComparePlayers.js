@@ -28,7 +28,7 @@ const RenderComparePlayers = ({p1Data, p1Stats, p2Data, p2Stats}) => {
 								<th>
 									<p>
 										<a
-											href={`/PlayerDetails/?first=${p1Data[0].first_name}&last=${p1Data[0].last_name}`}>
+											href={`/player/PlayerDetails/?first=${p1Data[0].first_name}&last=${p1Data[0].last_name}`}>
 											{p1Data[0].first_name} {p1Data[0].last_name}
 										</a>
 									</p>
@@ -42,7 +42,7 @@ const RenderComparePlayers = ({p1Data, p1Stats, p2Data, p2Stats}) => {
 									)}
 									<p>
 										<a
-											href={`/TeamDetails?teamName=${p1Data[0].team.full_name}`}>
+											href={`/team/TeamDetails?teamName=${p1Data[0].team.full_name}`}>
 											{p1Data[0].team.full_name}
 										</a>
 									</p>
@@ -50,7 +50,7 @@ const RenderComparePlayers = ({p1Data, p1Stats, p2Data, p2Stats}) => {
 								<th>
 									<p>
 										<a
-											href={`/PlayerDetails/?first=${p2Data[0].first_name}&last=${p2Data[0].last_name}`}>
+											href={`/player/PlayerDetails/?first=${p2Data[0].first_name}&last=${p2Data[0].last_name}`}>
 											{p2Data[0].first_name} {p2Data[0].last_name}
 										</a>
 									</p>
@@ -64,7 +64,7 @@ const RenderComparePlayers = ({p1Data, p1Stats, p2Data, p2Stats}) => {
 									)}
 									<p>
 										<a
-											href={`/TeamDetails?teamName=${p2Data[0].team.full_name}`}>
+											href={`/team/TeamDetails?teamName=${p2Data[0].team.full_name}`}>
 											{p2Data[0].team.full_name}
 										</a>
 									</p>

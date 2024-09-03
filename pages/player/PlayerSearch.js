@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import '../app/app.css';
+import '../../app/app.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer} from 'react-toastify';
 import PlayerInput from '@/components/PlayerInput';
@@ -14,12 +14,12 @@ const PlayerSearch = () => {
 
 
 	const handleSubmit = () => {
-		router.push(`/PlayerDetails/?first=${name.split(" ")[0]}&last=${name.split(" ")[1]}${name.split(" ")[2]? "%20"+ name.split(" ")[2] : ''}`);
+		router.push(`/player/PlayerDetails/?first=${name.split(" ")[0]}&last=${name.split(" ")[1]}${name.split(" ")[2]? "%20"+ name.split(" ")[2] : ''}`);
 	};
 
 	const comparePlayers = () => {
 		router.push(
-			`/PlayerDetails?p1Name=${p1Name.split(" ")[0]}_${p1Name.split(" ")[1]}${p1Name.split(" ")[2]? "%20"+ p1Name.split(" ")[2] : ''}&p2Name=${p2Name.split(" ")[0]}_${p2Name.split(" ")[1]}${p2Name.split(" ")[2]? "%20"+ p2Name.split(" ")[2] : ''}`
+			`/player/PlayerDetails?p1Name=${p1Name.split(" ")[0]}_${p1Name.split(" ")[1]}${p1Name.split(" ")[2]? "%20"+ p1Name.split(" ")[2] : ''}&p2Name=${p2Name.split(" ")[0]}_${p2Name.split(" ")[1]}${p2Name.split(" ")[2]? "%20"+ p2Name.split(" ")[2] : ''}`
 		);
 	};
 

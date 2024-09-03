@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import '../app/app.css';
+import '../../app/app.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
 import {Spinner} from 'react-bootstrap';
@@ -29,7 +29,7 @@ const PlayerDetails = () => {
 				.catch((error) => {
 					console.error('Error fetching data:', error);
 					toast.error('Player Not Found!');
-					router.push('/PlayerSearch?error=PlayerNotFound');
+					router.push('/player/PlayerSearch?error=PlayerNotFound');
 				});
 		}
 
@@ -43,7 +43,7 @@ const PlayerDetails = () => {
 						toast.error(
 							'Could Not find one of the players. Please check spelling, and try again'
 						);
-						router.push('/PlayerSearch?error=PlayersNotFound');
+						router.push('/player/PlayerSearch?error=PlayersNotFound');
 					} else {
 						setP1Data(response.data.p1Data);
 						setP2Data(response.data.p2Data);
