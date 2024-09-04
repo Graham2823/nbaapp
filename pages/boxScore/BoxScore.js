@@ -8,7 +8,7 @@ import '../../app/app.css';
 import teams from '@/teams';
 import getTeamLogo from '@/utils/getLogo';
 import { UserContext } from '@/context/userContext';
-import RenderBoxScore from '@/components/RenderBoxScore';
+import RenderBoxScore from '@/components/boxScore/RenderBoxScore';
 
 const BoxScore = () => {
     const [boxScore, setBoxScore] = useState([]);

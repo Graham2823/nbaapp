@@ -4,7 +4,7 @@ import "../app/app.css"
 import { UserContext } from "@/context/userContext"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faStar} from '@fortawesome/free-solid-svg-icons';
-import RenderGames from "@/components/RenderGames"
+import RenderGames from "@/components/games/RenderGames"
 import {Spinner} from "react-bootstrap"
 
 export default function Home() {

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import axios from 'axios'
 import { Card, Table, Button } from 'react-bootstrap'
-import "../app/app.css"
+import "../../app/app.css"
 import { useRouter } from 'next/router'
 
 

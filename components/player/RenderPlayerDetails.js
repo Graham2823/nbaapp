@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
-import '../app/app.css';
+import '../../app/app.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
@@ -9,8 +9,8 @@ import { Table } from 'react-bootstrap';
 import { ToastContainer, toast } from 'react-toastify';
 import { UserContext } from '@/context/userContext';
 import {Button} from 'react-bootstrap';
-import RenderPlayerPointsChart from './charts/RenderPlayerStatsChart';
-import DisplayCharts from './charts/DisplayCharts';
+import RenderPlayerPointsChart from '../charts/RenderPlayerStatsChart';
+import DisplayCharts from '../charts/DisplayCharts';
 
 const RenderPlayerDetails = ({playerDetails, first, last}) => {
     const { favoritePlayers, setFavoritePlayers, user } = useContext(UserContext);

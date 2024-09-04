@@ -1,8 +1,8 @@
 import React, { useContext, useState, useEffect } from 'react';
-import FavTeamCard from '@/components/FavTeamCard';
+import FavTeamCard from '@/components/favorites/FavTeamCard';
 import { Button, Spinner } from 'react-bootstrap';
 import { UserContext } from '@/context/userContext';
-import FavPlayerCard from '@/components/FavPlayerCard';
+import FavPlayerCard from '@/components/favorites/FavPlayerCard';
 import axios from 'axios';
 
 const ProfilePage = () => {

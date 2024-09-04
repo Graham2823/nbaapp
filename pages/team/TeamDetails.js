@@ -5,8 +5,8 @@ import { useRouter } from 'next/router';
 import 'react-toastify/dist/ReactToastify.css';
 import teams from '../../teams';
 import {Spinner} from 'react-bootstrap';
-import RenderTeamDetails from '@/components/RenderTeamDetails';
-import RenderCompareTeams from '@/components/RenderCompareTeams';
+import RenderTeamDetails from '@/components/team/RenderTeamDetails';
+import RenderCompareTeams from '@/components/compare/RenderCompareTeams';
 
 
 const TeamDetails = () => {

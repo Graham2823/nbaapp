@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import { UserProvider } from '@/context/userContext';
 import 'bootstrap/dist/css/bootstrap.min.css'
-import TopNav from '@/components/TopNav';
+import TopNav from '@/components/nav/TopNav';
 
 export default function App({ Component, pageProps }) {
     return(

@@ -2,7 +2,7 @@ import React, {useContext} from 'react'
 import { UserContext } from '@/context/userContext';
 import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import "../app/app.css"
+import "../../app/app.css"
 
 const TopNav = () => {
 	const { username, handleSignout } = useContext(UserContext);

@@ -5,7 +5,7 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
 import getTeamLogo from '@/utils/getLogo';
 import { UserContext } from '@/context/userContext';
 import User from '@/models/userSchema';
-import '../app/app.css';
+import '../../app/app.css';
 
 
 const RenderBoxScore = ({boxScore, team, score}) => {

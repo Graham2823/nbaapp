@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
-import '../app/app.css';
+import '../../app/app.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { Table } from 'react-bootstrap';
-import ComparePlayerCharts from './charts/comparePlayerCharts';
+import ComparePlayerCharts from '../charts/comparePlayerCharts';
 import {Button} from 'react-bootstrap';
 
 const RenderComparePlayers = ({p1Data, p1Stats, p2Data, p2Stats}) => {

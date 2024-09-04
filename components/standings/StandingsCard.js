@@ -1,6 +1,6 @@
 import React from 'react';
 import { Table } from 'react-bootstrap';
-import '../app/app.css';
+import '../../app/app.css';
 import getTeamLogo from '@/utils/getLogo'
 import {Image} from 'react-bootstrap';
 

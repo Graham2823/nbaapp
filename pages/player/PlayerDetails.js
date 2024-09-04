@@ -5,8 +5,8 @@ import '../../app/app.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
 import {Spinner} from 'react-bootstrap';
-import RenderPlayerDetails from '@/components/RenderPlayerDetails';
-import RenderComparePlayers from '@/components/RenderComparePlayers';
+import RenderPlayerDetails from '@/components/player/RenderPlayerDetails';
+import RenderComparePlayers from '@/components/compare/RenderComparePlayers';
 
 const PlayerDetails = () => {
 	const router = useRouter();

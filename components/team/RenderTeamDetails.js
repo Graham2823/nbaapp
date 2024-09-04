@@ -1,13 +1,13 @@
 import React, {useContext } from 'react';
 import axios from 'axios';
-import '../app/app.css';
+import '../../app/app.css';
 import { Table, Image } from 'react-bootstrap';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faStar} from '@fortawesome/free-solid-svg-icons';
 import { UserContext } from '@/context/userContext';
-import RenderGames from '@/components/RenderGames';
+import RenderGames from '@/components/games/RenderGames';
 
 const RenderTeamDetails = ({teamDetails, teamLogoAndColors}) => {
     const {favoriteTeams, setFavoriteTeams, user} = useContext(UserContext)

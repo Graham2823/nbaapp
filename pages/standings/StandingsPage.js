@@ -1,6 +1,6 @@
 import React,{useEffect, useState} from 'react'
 import axios from 'axios'
-import StandingsCard from '@/components/StandingsCard'
+import StandingsCard from '@/components/standings/StandingsCard'
 import { Button } from 'react-bootstrap'
 import "../../app/app.css"
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import StatLeadersCard from '@/components/StatLeadersCard'
+import StatLeadersCard from '@/components/stats/StatLeadersCard'
 import "../../app/app.css"
 import { Spinner } from 'react-bootstrap'
 

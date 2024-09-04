@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import '../../app/app.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer} from 'react-toastify';
-import PlayerInput from '@/components/PlayerInput';
+import PlayerInput from '@/components/player/PlayerInput';
 import {Button} from "react-bootstrap"
 
 const PlayerSearch = () => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import '../app/app.css';
+import '../../app/app.css';
 import { Table, Image } from 'react-bootstrap';
 import 'react-toastify/dist/ReactToastify.css';
 
