@@ -4,7 +4,7 @@ import "../app/app.css"
 import { UserContext } from "@/context/userContext"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faStar} from '@fortawesome/free-solid-svg-icons';
-import RenderGames from "@/components/RenderGames"
+import RenderGames from "@/components/games/RenderGames"
 import {Spinner} from "react-bootstrap"
 
 export default function Home() {
@@ -14,7 +14,7 @@ export default function Home() {
   const {username, favoriteTeams} = useContext(UserContext)
   useEffect(()=>{
     axios
-    .get(`https://nbaapp.vercel.app/api/getTodaysGames`)
+    .get(`https://nbaapp.vercel.app/api/games/getTodaysGames`)
     .then((response) => {
       if(response.data.data.length > 0){
         setTodaysGames(response.data.data);
@@ -26,7 +26,7 @@ export default function Home() {
     console.error('Error fetching data:', error);
     });
     axios
-    .get(`https://nbaapp.vercel.app/api/getYesterdaysGames`)
+    .get(`https://nbaapp.vercel.app/api/games/getYesterdaysGames`)
     .then((response) => {
       if(response.data.data.length > 0){
         setYesterdaysGames(response.data.data);
