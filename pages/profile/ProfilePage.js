@@ -15,7 +15,7 @@ const ProfilePage = () => {
 
   useEffect(() => {
     const fetchDataForTeams = async () => {
-      const promises = favoriteTeams.map((team) => axios.get(`http://localhost:3000/api/team/getTeam?teamName=${team.teamName}`));
+      const promises = favoriteTeams.map((team) => axios.get(`https://nbaapp.vercel.app/api/team/getTeam?teamName=${team.teamName}`));
 
       try {
         const teamResults = await Promise.all(promises);
@@ -37,7 +37,7 @@ const ProfilePage = () => {
 
   useEffect(() => {
     const fetchDataForPlayers = async () => {
-      const promises = favoritePlayers.map((player) => axios.get(`http://localhost:3000/api/favorites/getFavoritePlayers?firstName=${player.playerName.split(" ")[0]}&lastName=${player.playerName.split(" ")[1]}${player.playerName.split(" ")[2]? "%20"+ player.playerName.split(" ")[2] : ''}`));
+      const promises = favoritePlayers.map((player) => axios.get(`https://nbaapp.vercel.app/api/favorites/getFavoritePlayers?firstName=${player.playerName.split(" ")[0]}&lastName=${player.playerName.split(" ")[1]}${player.playerName.split(" ")[2]? "%20"+ player.playerName.split(" ")[2] : ''}`));
 
       try {
         const playerResults = await Promise.all(promises);

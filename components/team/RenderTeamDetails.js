@@ -20,7 +20,7 @@ console.log(teamDetails)
 			}
 
 			const response = await axios.post(
-				`http://localhost:3000/api/favorites/addFavoriteTeam`,
+				`https://nbaapp.vercel.app/api/favorites/addFavoriteTeam`,
 				requestBody
 			);
 
