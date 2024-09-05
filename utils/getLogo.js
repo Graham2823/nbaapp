@@ -9,7 +9,7 @@ export default function getTeamLogo(teamName) {
     const team = teams.find((team) => team.teamName.toLowerCase() === cleanTeamName.toLowerCase());
 
     if (team) {
-      return `/${team.teamLogo}`;
+      return `/../${team.teamLogo}`;
     } else {
       console.log('Team not found');
       // Handle the case where the team is not found
