@@ -31,7 +31,7 @@ const RenderPlayerDetails = ({playerDetails, first, last}) => {
 			};
 
 			const response = await axios.post(
-				`http://localhost:3000/api/favorites/addFavoritePlayer`,
+				`https://nbaapp.vercel.app/api/favorites/addFavoritePlayer`,
 				requestBody
 			);
 
