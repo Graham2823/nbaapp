@@ -14,7 +14,7 @@ export default function Home() {
   const {username, favoriteTeams} = useContext(UserContext)
   useEffect(()=>{
     axios
-    .get(`https://nbaapp.vercel.app/api/games/getTodaysGames`)
+    .get(`http://localhost:3000/api/games/getTodaysGames`)
     .then((response) => {
       if(response.data.data.length > 0){
         setTodaysGames(response.data.data);
@@ -26,7 +26,7 @@ export default function Home() {
     console.error('Error fetching data:', error);
     });
     axios
-    .get(`https://nbaapp.vercel.app/api/games/getYesterdaysGames`)
+    .get(`http://localhost:3000/api/games/getYesterdaysGames`)
     .then((response) => {
       if(response.data.data.length > 0){
         setYesterdaysGames(response.data.data);

@@ -9,7 +9,7 @@ const Stats = () => {
     const [statLeaders, setStatLeaders] = useState()
 
     useEffect(()=>{
-        axios.get(`https://nbaapp.vercel.app/api/statLeaders/topFiveLeaders`)
+        axios.get(`http://localhost:3000/api/statLeaders/topFiveLeaders`)
         .then((response) => {
             setStatLeaders(response.data)
             })

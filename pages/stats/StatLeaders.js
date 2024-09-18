@@ -23,7 +23,7 @@ const StatLeaders = () => {
 	useEffect(() => {
         if(stat){
             axios
-                .get(`https://nbaapp.vercel.app/api/statLeaders/${stat}Leaders`)
+                .get(`http://localhost:3000/api/statLeaders/${stat}Leaders`)
                 .then((response) => {
                     setStatLeaders(response.data)
                 })

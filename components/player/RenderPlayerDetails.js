@@ -31,7 +31,7 @@ const RenderPlayerDetails = ({playerDetails, first, last}) => {
 			};
 
 			const response = await axios.post(
-				`https://nbaapp.vercel.app/api/favorites/addFavoritePlayer`,
+				`http://localhost:3000/api/favorites/addFavoritePlayer`,
 				requestBody
 			);
 
@@ -95,7 +95,7 @@ const RenderPlayerDetails = ({playerDetails, first, last}) => {
 									<h3>
 										<a
 											href={`/team/TeamDetails?teamName=${playerDetails.playerData[0].team.full_name}`}>
-											{playerDetails.details.player[0].strTeam}
+											{playerDetails.playerData[0].team.full_name}
 										</a>
 									</h3>
 								</div>
