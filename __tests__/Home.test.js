@@ -1,167 +1,124 @@
-import React from 'react';
-import { render, screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import axios from 'axios';
+import { render, screen, waitFor } from '@testing-library/react';
+import { UserContext } from '@/context/userContext';
 import Home from '../pages/index';
-import '@testing-library/jest-dom'
+import '@testing-library/jest-dom';
+// import '@testing-library/jest-dom/extend-expect';
+import RenderGames from '@/components/games/RenderGames';
 
-jest.mock('axios');
 
-// Sample mock data for Axios response
-const mockResponse = {
-  data: {
-    tscores: [],  // Empty today's games array
-    yscores: [],  // Empty yesterday's games array
+// Mock the getTeamLogo function
+jest.mock('../utils/getLogo', () => (teamName) => `logo-${teamName}.png`);
+
+// Mock the convertTo12HourFormat function
+jest.mock('../utils/convertTime', () => (time) => '8:00 PM');
+
+// Mock game data
+const mockGame = {
+  date: "2024-10-31",
+  home_team: {
+    id: 15,
+    conference: 'West',
+    division: 'Southwest',
+    city: 'Memphis',
+    name: 'Grizzlies',
+    abbreviation: 'MEM',
+    full_name: 'Memphis Grizzlies',
   },
+  home_team_score: 0,
+  id: 15907505,
+  period: 0,
+  postseason: false,
+  season: 2024,
+  status: "2024-11-01T00:00:00Z",
+  time: null,
+  visitor_team: {
+    id: 17,
+    conference: 'East',
+    division: 'Central',
+    city: 'Milwaukee',
+    name: 'Bucks',
+    abbreviation: 'MIL',
+    full_name: 'Milwaukee Bucks',
+  },
+  visitor_team_score: 0,
 };
 
-// Mock Axios get method to return mock data
-axios.get.mockResolvedValue(mockResponse);
+// Mock UserContext values
+const mockUserContext = {
+  username: 'TestUser',
+  favoriteTeams: [
+    { teamName: 'Memphis Grizzlies' },  // Mock that Memphis Grizzlies is a favorite team
+  ],
+};
 
-describe('Home Component', () => {
-    test('renders "No Games Today" when no today\'s games are available', async () => {
-        render(<Home />);
-        await waitFor(() => {
-          const noGamesToday = screen.getByText("No Games Today"); // Use getByTestId to find elements by data-testID
-          expect(noGamesToday).toBeInTheDocument();
-        });
-      });
+describe('RenderGames component', () => {
+  it('should render the game correctly', () => {
+    render(
+      <UserContext.Provider value={mockUserContext}>
+        <RenderGames games={[mockGame]} today={true} />
+      </UserContext.Provider>
+    );
+
+    // Check for team names and logos
+    expect(screen.getByText('MEM')).toBeInTheDocument();
+    expect(screen.getByText('MIL')).toBeInTheDocument();
+    expect(screen.getByAltText('Memphis Grizzlies logo')).toHaveAttribute('src', 'logo-Memphis Grizzlies.png');
+    expect(screen.getByAltText('Milwaukee Bucks logo')).toHaveAttribute('src', 'logo-Milwaukee Bucks.png');
+
+    // Check for the "Compare Teams" button
+    expect(screen.getByText('Compare Teams')).toBeInTheDocument();
+  });
+
+  it('should render "No Games Today" if there are no games', () => {
+    render(
+      <UserContext.Provider value={mockUserContext}>
+        <RenderGames games={null}/>
+      </UserContext.Provider>
+    );
+
+    // Check for "No Games Today" message
+    expect(screen.getByText('No Games Today')).toBeInTheDocument();
+  });
 });
 
 
 
+// Mock axios
+jest.mock('axios');
 
-// // ... rest of your tests
+// Mock the axios response for today's and yesterday's games
+axios.get.mockImplementation((url) => {
+  if (url === 'http://localhost:3000/api/games/getTodaysGames') {
+    return Promise.resolve({
+      data: {
+        data: [] // Mock data for today's games
+      }
+    });
+  } else if (url === 'http://localhost:3000/api/games/getYesterdaysGames') {
+    return Promise.resolve({
+      data: {
+        data: [] // Mock data for yesterday's games
+      }
+    });
+  }
+  return Promise.reject(new Error('Not Found'));
+});
 
-// // Mock Axios request to simulate API response
-// jest.mock('axios');
+describe('Home', () => {
+  it('should display Hello with username from UserContext', async () => {
+    // Render the component without using act manually
+    render(
+      <UserContext.Provider value={mockUserContext}>
+        <Home />
+      </UserContext.Provider>
+    );
 
-// // Sample mock data for Axios response
-// const mockResponse = {
-// 	data: {
-// 		tscores: [
-// 			{
-// 				date: '2023-11-08T00:00:00.000Z',
-// 				home_team_score: 0,
-// 				id: 1037696,
-// 				period: 0,
-// 				postseason: false,
-// 				season: 2023,
-// 				status: '2023-11-09T00:00:00Z',
-// 				time: null,
-// 				visitor_team_score: 0,
-// 				home_team: {
-// 					abbreviation: 'CHA',
-// 					city: 'Charlotte',
-// 					conference: 'East',
-// 					division: 'Southeast',
-// 					full_name: 'Charlotte Hornets',
-// 					id: 4,
-// 					name: 'Hornets',
-// 				},
-// 				visitor_team: {
-// 					abbreviation: 'WAS',
-// 					city: 'Washington',
-// 					conference: 'East',
-// 					division: 'Southeast',
-// 					full_name: 'Washington Wizards',
-// 					id: 30,
-// 					name: 'Wizards',
-// 				},
-// 			},
-// 		],
-// 		yscores: [
-// 			{
-// 				date: '2023-11-08T00:00:00.000Z',
-// 				home_team_score: 0,
-// 				id: 1037696,
-// 				period: 0,
-// 				postseason: false,
-// 				season: 2023,
-// 				status: '2023-11-09T00:00:00Z',
-// 				time: null,
-// 				visitor_team_score: 0,
-// 				home_team: {
-// 					abbreviation: 'CHA',
-// 					city: 'Charlotte',
-// 					conference: 'East',
-// 					division: 'Southeast',
-// 					full_name: 'Charlotte Hornets',
-// 					id: 4,
-// 					name: 'Hornets',
-// 				},
-// 				visitor_team: {
-// 					abbreviation: 'WAS',
-// 					city: 'Washington',
-// 					conference: 'East',
-// 					division: 'Southeast',
-// 					full_name: 'Washington Wizards',
-// 					id: 30,
-// 					name: 'Wizards',
-// 				},
-// 			}
-// 		],
-// 	},
-// };
-
-// // Mock Axios get method to return mock data
-// axios.get.mockResolvedValue(mockResponse);
-
-// // ...
-
-// describe('Home Component', () => {
-// 	test('renders "No Games Today" when no today\'s games are available', async () => {
-// 		// Modify the mock data to have empty tscores
-// 		const modifiedMockResponse = {
-// 			data: {
-// 				tscores: [],
-// 				yscores: mockResponse.data.yscores,
-// 			},
-// 		};
-// 		axios.get.mockResolvedValue(modifiedMockResponse);
-
-// 		render(<Home />);
-// 		await waitFor(() => {
-// 			const noGamesToday = screen.getByText('No Games Today');
-// 			expect(noGamesToday).toBeInTheDocument();
-// 		});
-// 	});
-
-// 	test("renders today's games", async () => {
-// 		render(<Home />);
-// 		await waitFor(() => {
-// 			const todaysGames = screen.getByText('Todays Games:');
-// 			expect(todaysGames).toBeInTheDocument()
-
-// 			// You can write assertions for game data here
-// 		});
-// 	});
-
-// 	test('renders "No Games Yesterday" when no yesterday\'s games are available', async () => {
-// 		// Modify the mock data to have empty yscores
-// 		const modifiedMockResponse = {
-// 			data: {
-// 				tscores: mockResponse.data.tscores,
-// 				yscores: [],
-// 			},
-// 		};
-// 		axios.get.mockResolvedValue(modifiedMockResponse);
-
-// 		render(<Home />);
-// 		await waitFor(() => {
-// 			const noGamesYesterday = screen.getByText('No Games Yesterday');
-// 			expect(noGamesYesterday).toBeInTheDocument();
-// 		});
-// 	});
-
-// 	test("renders yesterday's games", async () => {
-// 		render(<Home />);
-// 		await waitFor(() => {
-// 			const yesterdaysGames = screen.getByText('Yesterdays Games:');
-// 			expect(yesterdaysGames).toBeInTheDocument();
-
-// 			// You can write assertions for game data here
-// 		});
-// 	});
-// });
+    // Wait for any state updates caused by axios calls
+    await waitFor(() => {
+      const myElem = screen.getByText('Hello TestUser');
+      expect(myElem).toBeInTheDocument();
+    });
+  });
+});
 

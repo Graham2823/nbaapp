@@ -3,7 +3,7 @@ import { auth } from '@/config/fireBase.config';
 import { signOut, signInWithEmailAndPassword } from 'firebase/auth';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-export const UserContext = createContext();
+export const UserContext = createContext({username:'', favoriteTeams:[]});
 import { useRouter } from 'next/router';
 
 

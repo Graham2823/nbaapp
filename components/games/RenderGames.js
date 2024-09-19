@@ -31,7 +31,7 @@ const RenderGames = ({ games, today }) => {
 							<a href={`/team/TeamDetails?teamName=${game.home_team.full_name}`}>
 								<Image
 									src={getTeamLogo(game.home_team.full_name)}
-									alt='team logo'
+									alt={`${game.home_team.full_name} logo`}
 									className='teamLogoFrontPage'
 								/>
 								{game.home_team.abbreviation}
@@ -47,7 +47,7 @@ const RenderGames = ({ games, today }) => {
 							<a href={`/team/TeamDetails?teamName=${game.visitor_team.full_name}`}>
 								<Image
 									src={getTeamLogo(game.visitor_team.full_name)}
-									alt='team logo'
+									alt={`${game.visitor_team.full_name} logo`}
 									className='teamLogoFrontPage'
 								/>
 								{game.visitor_team.abbreviation}
