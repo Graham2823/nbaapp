@@ -69,7 +69,7 @@ function SignIn() {
 			/>
 			</div>
 			<button onClick={handleSignInClick}>Sign In</button>
-            <p>Dont have an account?Sign up <Link href="/Signup">Here</Link></p>
+            <p>Dont have an account?Sign up <Link href="/auth/Signup">Here</Link></p>
 		</div>
 	);
 }
