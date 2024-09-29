@@ -23,7 +23,7 @@ const TopNav = () => {
             {!username ?(
               <>
               <Nav.Link href="/auth/Signin">Sign in</Nav.Link>
-              <Nav.Link href="/Signup">Sign up</Nav.Link>
+              <Nav.Link href="/auth/Signup">Sign up</Nav.Link>
               </>
             ):(
               <>
