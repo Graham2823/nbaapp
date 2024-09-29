@@ -31,7 +31,7 @@ function CreateUser() {
 				`https://nbaapp.vercel.app/api/auth/createUser`,
 				requestData
 			);
-            router.push('/Signin')
+            router.push('/auth/Signin')
 			toast.success("User Successfully Created, Sign in to Continue!")
 		} catch (error) {
 			if (error.code === "auth/email-already-in-use") {
