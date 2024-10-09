@@ -30,9 +30,9 @@ playerRouter.get(async (req, res) => {
   let counter = 0;
   const requests = [];
 
-for (let i = 0; i <= 20; i++) {
+for (let i = 0; i <= 21; i++) {
   requests.push(
-    axios.get(`http://api.balldontlie.io/v1/season_averages?season=${2023 - i}&player_ids[]=${playerID}`, {
+    axios.get(`http://api.balldontlie.io/v1/season_averages?season=${2024 - i}&player_ids[]=${playerID}`, {
       timeout: 60000,
       headers: {
         Authorization: apiKey,
@@ -46,7 +46,7 @@ try {
   const results = await Promise.all(requests);
 
   // Process the results
-  for (let i = 0; i <= 20; i++) {
+  for (let i = 0; i <= 21; i++) {
     const data = results[i];
 
     
@@ -67,7 +67,7 @@ try {
 }
 
   // for (let i = 0; i < 3; i++) {
-    await axios.get(`http://api.balldontlie.io/v1/stats?seasons[]=2023&player_ids[]=${playerID}&postseason=false&per_page=100`, {
+    await axios.get(`http://api.balldontlie.io/v1/stats?seasons[]=2024&player_ids[]=${playerID}&postseason=false&per_page=100`, {
       timeout: 20000,
       headers: {
         Authorization: apiKey,
@@ -88,17 +88,22 @@ try {
       details = data
     });
   playerGamelog.sort((a, b) => Date.parse(a.game.date) - Date.parse(b.game.date));
- if(playerAverages.length > 0 && playerData.length > 0 && playerGamelog.length > 0 && details.player.length > 0){
-  res.json({playerData, playerAverages, playerGamelog, details})
-}else if(playerAverages.length > 0 && playerData.length > 0 && playerGamelog.length > 0){
-  res.json({playerAverages, playerData, playerGamelog})
-}else if(playerData.length > 0 && playerGamelog.length > 0){
-  res.json({playerData, playerGamelog})
-}else if(playerAverages.length > 0 && playerGamelog.length > 0){
-  res.json({playerAverages, playerGamelog})
-}else{
-  res.json("Player Not Found")
-}
+
+  console.log("pa:",playerAverages, "pd:",playerData, "pg:",playerGamelog, "d:", details)
+//  if(playerAverages.length > 0 && playerData.length > 0 && playerGamelog.length > 0 && details.player.length > 0){
+//   res.json({playerData, playerAverages, playerGamelog, details})
+// }else if(playerAverages.length > 0 && playerData.length > 0 && playerGamelog.length > 0){
+//   res.json({playerAverages, playerData, playerGamelog})
+// }else if(playerData.length > 0 && playerGamelog.length > 0){
+//   res.json({playerData, playerGamelog})
+// }else if(playerAverages.length > 0 && playerGamelog.length > 0){
+//   res.json({playerAverages, playerGamelog})
+// }else if(playerData){
+//   res.json({playerData})
+// }else{
+//   res.json("Player Not Found")
+// }
+res.json({playerData, playerAverages, playerGamelog, details})
    }
 
  }
