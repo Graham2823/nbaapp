@@ -1,7 +1,6 @@
 import { createRouter } from 'next-connect';
 import Player from '@/models/playerSchema';
 import mongoose from 'mongoose';
-import basketballPlayers from '@/players';
 import axios from 'axios';
 
 const playerData = createRouter();
@@ -9,160 +8,157 @@ const playerData = createRouter();
 const mongoConnectionString = process.env.MONGODB_CONNECTION_STRING;
 
 playerData.get(async (req, res) => {
-  await mongoose.connect(mongoConnectionString, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
+	await mongoose.connect(mongoConnectionString, {
+		useNewUrlParser: true,
+		useUnifiedTopology: true,
+	});
 
-  const playerResults = [];
-  const processedPlayers = new Set(); // Keep track of processed players
-  const requestsPerMinute = 60;
-  let millisecondsPerMinute = 150000;
-  const maxBackoffDelay = 30000; // 5 minutes
+	const playerResults = [];
+	const processedPlayers = new Set(); // Keep track of processed players
+	const requestsPerMinute = 60;
+	let millisecondsPerMinute = 150000;
+	const maxBackoffDelay = 30000; // 5 minutes
 
-  await Player.deleteMany({});
+	await Player.deleteMany({});
 
-  // Start with the initial delay
-  let currentBackoffDelay = millisecondsPerMinute;
+	// Start with the initial delay
+	let currentBackoffDelay = millisecondsPerMinute;
 
-  for (const player of basketballPlayers) {
-    // Check if the player has already been processed
-    if (processedPlayers.has(player)) {
-      continue;
-    }
+	// Loop through team IDs from 1 to 30
+	for (let teamId = 1; teamId <= 30; teamId++) {
+		try {
+			const playersResponse = await axios.get(
+				`https://api.balldontlie.io/v1/players/active?per_page=100&team_ids[]=${teamId}`,
+				{
+					headers: {
+						Authorization: '34db4f41-8c29-4fef-940d-db01294f67cc',
+						'Content-Type': 'application/json',
+					},
+				}
+			);
 
-    let playerObject = await processPlayer(player, currentBackoffDelay);
+			// Process each player in the team
+			for (const player of playersResponse.data.data) {
+				// Check if the player has already been processed
+				if (processedPlayers.has(player.id)) {
+					continue;
+				}
 
-    // Retry if player processing failed
-    if (!playerObject) {
-      let retryCount = 0;
+				let playerObject = await processPlayer(player, currentBackoffDelay);
 
-      while (retryCount < 3) {
-        playerObject = await processPlayer(player, currentBackoffDelay);
+				// Retry if player processing failed
+				if (!playerObject) {
+					let retryCount = 0;
 
-        if (playerObject) {
-          break; // Successful retry, exit the loop
-        }
+					while (retryCount < 3) {
+						playerObject = await processPlayer(player, currentBackoffDelay);
 
-        retryCount++;
-      }
-    }
+						if (playerObject) {
+							break; // Successful retry, exit the loop
+						}
 
-    if (playerObject) {
-      playerResults.push(playerObject);
-      processedPlayers.add(player); // Mark the player as processed
-    }
-  }
+						retryCount++;
+					}
+				}
 
-  res.json(playerResults);
+				if (playerObject) {
+					playerResults.push(playerObject);
+					processedPlayers.add(player.id); // Mark the player as processed
+				}
+			}
+		} catch (error) {
+			console.error(`Error fetching players for team ${teamId}:`, error);
+		}
+	}
+
+	res.json(playerResults);
 });
 
 const processPlayer = async (player, delay) => {
-  try {
-    let playerID;
-    let playerTeam = null;
-    let games_played;
-    let min;
-    let points;
-    let assists;
-    let rebounds;
-    let blocks;
-    let steals;
-    let turnovers;
-    let fg_pct;
-    let fg3_pct;
-    let ft_pct;
-    let compilePlayer = false;
-    let playerObject;
-    const [playerFirstName, playerLastName] = player.split(" ");
+	try {
+		const { id, first_name, last_name, team } = player;
+		let playerTeam = team.full_name || '';
+		let games_played;
+		let min;
+		let points;
+		let assists;
+		let rebounds;
+		let blocks;
+		let steals;
+		let turnovers;
+		let fg_pct;
+		let fg3_pct;
+		let ft_pct;
+		let playerObject;
 
-    const playersResponse = await axios.get(
-      `http://api.balldontlie.io/v1/players?first_name=${playerFirstName}&last_name=${playerLastName}`,
-      {
-        headers: {
-          Authorization: '34db4f41-8c29-4fef-940d-db01294f67cc',
-          'Content-Type': 'application/json',
-        },
-      }
-    );
+		const seasonAveragesResponse = await axios.get(
+			`http://api.balldontlie.io/v1/season_averages?season=2023&player_ids[]=${id}`,
+			{
+				headers: {
+					Authorization: '34db4f41-8c29-4fef-940d-db01294f67cc',
+					'Content-Type': 'application/json',
+				},
+			}
+		);
 
-    if (playersResponse.data.data[0]) {
-      playerID = playersResponse.data.data[0].id;
+		if (seasonAveragesResponse.data.data.length > 0) {
+			const seasonData = seasonAveragesResponse.data.data[0];
+			min = seasonData.min;
+			points = seasonData.pts;
+			rebounds = seasonData.reb;
+			assists = seasonData.ast;
+			steals = seasonData.stl;
+			blocks = seasonData.blk;
+			games_played = seasonData.games_played;
+			turnovers = seasonData.turnover;
+			fg_pct = seasonData.fg_pct;
+			fg3_pct = seasonData.fg3_pct;
+			ft_pct = seasonData.ft_pct;
+		}
 
-      if (playersResponse.data.data[0].team.length > 0) {
-        playerTeam = playersResponse.data.data[0].team.full_name;
-      }
+		// Create playerObject
+		playerObject = {
+			name: `${first_name} ${last_name}`,
+			team: playerTeam,
+			stats: {
+				games_played,
+				min,
+				points,
+				assists,
+				rebounds,
+				blocks,
+				steals,
+				turnovers,
+				fg_pct,
+				fg3_pct,
+				ft_pct,
+			},
+		};
 
-      const seasonAveragesResponse = await axios.get(
-        `http://api.balldontlie.io/v1/season_averages?season=2023&player_ids[]=${playerID}`,
-        {
-          headers: {
-            Authorization: '34db4f41-8c29-4fef-940d-db01294f67cc',
-            'Content-Type': 'application/json',
-          },
-        }
-      );
+		// Push to playerResults and save to database
+		const playerDoc = new Player(playerObject);
+		await playerDoc.save();
 
-      if (seasonAveragesResponse.data.data.length > 0) {
-        min = seasonAveragesResponse.data.data[0].min;
-        points = seasonAveragesResponse.data.data[0].pts;
-        rebounds = seasonAveragesResponse.data.data[0].reb;
-        assists = seasonAveragesResponse.data.data[0].ast;
-        steals = seasonAveragesResponse.data.data[0].stl;
-        blocks = seasonAveragesResponse.data.data[0].blk;
-        games_played = seasonAveragesResponse.data.data[0].games_played;
-        turnovers = seasonAveragesResponse.data.data[0].turnover;
-        fg_pct = seasonAveragesResponse.data.data[0].fg_pct;
-        fg3_pct = seasonAveragesResponse.data.data[0].fg3_pct;
-        ft_pct = seasonAveragesResponse.data.data[0].ft_pct;
-      }
+		// Successful API call, reset backoff delay
+		console.log(playerObject);
+		return playerObject;
+	} catch (error) {
+		console.error(`Error processing player ${player.name}:`, error);
 
-      // Create playerObject
-      playerObject = {
-        name: player.split("%20").join(" "),
-        team: playerTeam === null ? "" : playerTeam,
-        stats: {
-          games_played,
-          min,
-          points,
-          assists,
-          rebounds,
-          blocks,
-          steals,
-          turnovers,
-          fg_pct,
-          fg3_pct,
-          ft_pct,
-        },
-      };
+		if (error.response && error.response.status === 429) {
+			// Implement exponential backoff with a maximum delay
+			delay *= 2;
+			if (delay > maxBackoffDelay) {
+				delay = maxBackoffDelay;
+			}
+			// Delay before the next iteration
+			await new Promise((resolve) => setTimeout(resolve, delay));
+		}
 
-      // Push to playerResults and save to database
-      if (playerObject.stats.games_played) {
-        const playerDoc = new Player(playerObject);
-        await playerDoc.save();
-      }
-
-      // Successful API call, reset backoff delay
-      console.log(playerObject)
-      return playerObject;
-    }
-  } catch (error) {
-    console.error(`Error processing player ${player}:`, error);
-
-    if (error.response && error.response.status === 429) {
-      // Implement exponential backoff with a maximum delay
-      delay *= 2;
-      if (delay > maxBackoffDelay) {
-        delay = maxBackoffDelay;
-      }
-      // Delay before the next iteration
-      await new Promise(resolve => setTimeout(resolve, delay));
-    }
-
-    return null; // Signal failure to process player
-  }
+		return null; // Signal failure to process player
+	}
 };
 
 export default async (req, res) => {
-  await playerData.run(req, res);
+	await playerData.run(req, res);
 };
