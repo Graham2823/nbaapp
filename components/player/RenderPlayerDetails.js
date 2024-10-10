@@ -17,6 +17,7 @@ const RenderPlayerDetails = ({ playerDetails, first, last }) => {
 	const [selectedSeason, setSelectedSeason] = useState(2023);
 	const [showGamelog, setShowGamelog] = useState(false);
 	const [showGraphs, setShowGraphs] = useState(false);
+	const [showFullDescription, setShowFullDescription] = useState(false)
 
 	const shotPercentage = (made, attempted) => {
 		let percentage = (made / attempted) * 100;
@@ -53,6 +54,24 @@ const RenderPlayerDetails = ({ playerDetails, first, last }) => {
 			console.error('Error:', error);
 		}
 	};
+
+	const renderDescription = (description)=>{
+		const splitDesc = description.split(".")
+		const preview = splitDesc.slice(0, 2).join(".")
+		return showFullDescription ? (
+			<>
+			<p>{description}</p>
+			<button onClick={()=>setShowFullDescription(false)}>Show Less</button>
+			</>
+		):(
+			<>
+			<p>{preview}</p>
+			<button onClick={()=>setShowFullDescription(true)}>Show More</button>
+			</>
+
+		)
+
+	}
 
 	return (
 		<div>
@@ -272,7 +291,7 @@ const RenderPlayerDetails = ({ playerDetails, first, last }) => {
 				) : (
 					<div className='description'>
 						{playerDetails.details.player ? (
-							<p>{playerDetails.details.player[0].strDescriptionEN}</p>
+							<p>{renderDescription(playerDetails.details.player[0].strDescriptionEN)}</p>
 						) : (
 							<h3>No Player Details Available</h3>
 						)}
