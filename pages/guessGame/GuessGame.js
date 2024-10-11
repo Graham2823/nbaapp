@@ -112,12 +112,13 @@ const GuessGameWithStart = () => {
 						<h2>Game Rules</h2>
 						<p>
 							When the game starts, you will be given a{' '}
-							<strong>graph of a random player's stats</strong>. All players
-							have been in the league for at least 3 seasons. Your goal is to
-							use the stats and <strong>guess the player's identity</strong>.
+							<strong>graph of a random player&apos;s stats</strong>. All
+							players have been in the league for at least 3 seasons. Your goal
+							is to use the stats and{' '}
+							<strong>guess the player&apos;s identity</strong>.
 						</p>
 
-						<h3>Here's how it works:</h3>
+						<h3>Here&apos;s how it works:</h3>
 						<ul>
 							<li>
 								<strong>Each player comes with 3 hints:</strong>
@@ -130,7 +131,8 @@ const GuessGameWithStart = () => {
 										for.
 									</li>
 									<li>
-										<strong>Position</strong>: The player's position in the NBA.
+										<strong>Position</strong>: The player&apos;s position in the
+										NBA.
 									</li>
 								</ul>
 							</li>
@@ -168,7 +170,7 @@ const GuessGameWithStart = () => {
 						</ul>
 
 						<p>
-							<strong>Objective:</strong> Try to guess the player's name
+							<strong>Objective:</strong> Try to guess the player&apos;s name
 							correctly while using as few hints as possible to{' '}
 							<strong>maximize your score</strong>.
 						</p>
@@ -177,6 +179,7 @@ const GuessGameWithStart = () => {
 							Good luck and <strong>score as many points as you can</strong>!
 						</p>
 					</div>
+
 					<div style={{ marginTop: '20px' }}>
 						<button className='btn btn-primary' onClick={handleStartGame}>
 							Start Game
