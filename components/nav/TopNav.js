@@ -18,6 +18,7 @@ const TopNav = () => {
             <Nav.Link href="/team/TeamSearch">Team</Nav.Link>
             <Nav.Link href="/standings/StandingsPage">Standings</Nav.Link>
             <Nav.Link href="/stats/Stats">League Leaders</Nav.Link>
+            <Nav.Link href="/guessGame/GuessGame">Guess Game</Nav.Link>
           </Nav>
           <Nav className='ms-auto'>
             {!username ?(
