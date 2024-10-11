@@ -20,7 +20,7 @@ async function connectToDatabase() {
 	return cachedDb;
 }
 
-async function fetchRandomPlayer(res, retryCount = 0) {
+async function fetchRandomPlayer(res, excludedNames, retryCount = 0) {
 	try {
 		// Ensure database connection is established
 		await connectToDatabase();
@@ -33,15 +33,21 @@ async function fetchRandomPlayer(res, retryCount = 0) {
 		}
 
 		// Split the name into first and last name
-		const nameParts = randomPlayer[0].name.split(' ');
+		const playerName = randomPlayer[0].name;
+		const nameParts = playerName.split(' ');
 		const firstName = nameParts[0];
 		const lastName = nameParts.slice(1).join(' ');
+		// Check if the player is in the excludedNames array
+		if (excludedNames.includes(playerName) && retryCount < 100) {
+			console.log(`Player ${playerName} is excluded, fetching a new player...`);
+			return fetchRandomPlayer(res, excludedNames, retryCount + 1); // Recursively fetch a new player
+		}
 
 		// Fetch player data from the external API
 		const { data: { data: playerData } } = await axios.get(
 			`http://api.balldontlie.io/v1/players?first_name=${firstName}&last_name=${lastName}`,
 			{
-				timeout: 20000,
+				timeout: 120000,
 				headers: {
 					Authorization: process.env.API_KEY,
 					'Content-Type': 'application/json',
@@ -52,15 +58,15 @@ async function fetchRandomPlayer(res, retryCount = 0) {
 		if (playerData.length === 0) {
 			return res.status(404).json({ message: 'No matching player found in API' });
 		}
+
 		const playerID = playerData[0].id;
 		const draftYear = playerData[0].draft_year;
-        console.log("playerID", playerID)
-		// If the player was drafted after 2020 and retries are under limit, fetch another player
-		if (draftYear === null || draftYear > 2020 && retryCount < 100) {
-            console.log(`Player drafted in ${draftYear}, fetching a new player...`);
-			return fetchRandomPlayer(res, retryCount + 1); // Recursively fetch a new player
+
+		// If the player was drafted after 2021 or draftYear is null, fetch another player
+		if (draftYear === null || draftYear > 2021 && retryCount < 100) {
+			console.log(`Player drafted in ${draftYear}, fetching a new player...`);
+			return fetchRandomPlayer(res, excludedNames, retryCount + 1); // Recursively fetch a new player
 		}
-        console.log("first check")
 
 		// Fetch player averages for past seasons
 		const playerAverages = [];
@@ -69,9 +75,9 @@ async function fetchRandomPlayer(res, retryCount = 0) {
 		for (let i = 0; i <= 21; i++) {
 			requests.push(
 				axios.get(
-					`http://api.balldontlie.io/v1/season_averages?season=${2024 - i}&player_id=${playerID}`,
+					`http://api.balldontlie.io/v1/season_averages?season=${2023 - i}&player_id=${playerID}`,
 					{
-						timeout: 60000,
+						timeout: 120000,
 						headers: {
 							Authorization: process.env.API_KEY,
 							'Content-Type': 'application/json',
@@ -83,7 +89,7 @@ async function fetchRandomPlayer(res, retryCount = 0) {
 
 		// Wait for all season average requests to finish
 		const results = await Promise.all(requests);
-        console.log('second check')
+
 		// Process the results
 		let counter = 0;
 		for (const result of results) {
@@ -99,19 +105,20 @@ async function fetchRandomPlayer(res, retryCount = 0) {
 				break;
 			}
 		}
-        let averaged20 = false
-        for(const year of playerAverages){
-            if(year[0].pts > 20){
-                averaged20 = true
-            }
-        }
-        if(!averaged20){
-            console.log("player did not average over 20... finding new player")
-            return fetchRandomPlayer(res);
-        }
+
+		let averaged20 = false;
+		for (const year of playerAverages) {
+			if (year[0].pts > 20) {
+				averaged20 = true;
+			}
+		}
+		if (!averaged20) {
+			console.log("Player did not average over 20... finding new player");
+			return fetchRandomPlayer(res, excludedNames, retryCount + 1);
+		}
 
 		// Return the player data and averages
-		res.json({playerData, playerAverages});
+		res.json({ playerData, playerAverages });
 
 	} catch (error) {
 		console.error('Error fetching random player:', error);
@@ -120,7 +127,13 @@ async function fetchRandomPlayer(res, retryCount = 0) {
 }
 
 randomPlayerRouter.get(async (req, res) => {
-	await fetchRandomPlayer(res); // Start the recursive player fetch process
+	// Get the excluded names from the query or body
+	const { excludedNames } = req.query || req.body;
+
+	// Convert excludedNames to an array if it's a string (comma-separated list)
+	const excludedNamesArray = Array.isArray(excludedNames) ? excludedNames : excludedNames.split(',');
+
+	await fetchRandomPlayer(res, excludedNamesArray); // Start the recursive player fetch process
 });
 
 export default async (req, res) => {
