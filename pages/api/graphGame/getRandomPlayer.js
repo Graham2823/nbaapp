@@ -24,6 +24,7 @@ async function fetchRandomPlayer(res, excludedNames, retryCount = 0) {
 	try {
 		// Ensure database connection is established
 		await connectToDatabase();
+        console.log("excluded", excludedNames)
 
 		// Fetch random player using aggregation
 		const randomPlayer = await Player.aggregate([{ $sample: { size: 1 } }]);
@@ -31,7 +32,7 @@ async function fetchRandomPlayer(res, excludedNames, retryCount = 0) {
 		if (randomPlayer.length === 0) {
 			return res.status(404).json({ message: 'No players found' });
 		}
-
+        console.log("retry", retryCount)
 		// Split the name into first and last name
 		const playerName = randomPlayer[0].name;
 		const nameParts = playerName.split(' ');
@@ -126,9 +127,9 @@ async function fetchRandomPlayer(res, excludedNames, retryCount = 0) {
 	}
 }
 
-randomPlayerRouter.get(async (req, res) => {
+randomPlayerRouter.post(async (req, res) => {
 	// Get the excluded names from the query or body
-	const { excludedNames } = req.query || req.body;
+	const { excludedNames } = req.body;
 
 	// Convert excludedNames to an array if it's a string (comma-separated list)
 	const excludedNamesArray = Array.isArray(excludedNames) ? excludedNames : excludedNames.split(',');

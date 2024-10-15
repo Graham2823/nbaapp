@@ -27,8 +27,11 @@ const GuessGameWithStart = () => {
 	const fetchPlayer = () => {
 		setLoading(true); // Set loading to true before fetching
 		axios
-			.get(
-				`https://nbaapp.vercel.app/api/graphGame/getRandomPlayer?excludedNames=${excludedNames}`
+			.post(
+				`https://nbaapp.vercel.app/api/graphGame/getRandomPlayer`,
+                {
+                    excludedNames: excludedNames
+                }
 			)
 			.then((response) => {
 				setPlayer(response.data);
@@ -67,7 +70,7 @@ const GuessGameWithStart = () => {
 		) {
 			toast.success('Correct Guess');
 			setScore(score + potentialPoints);
-			setExcludedNames([...excludedNames, player.playerData[0].name]);
+			setExcludedNames([...excludedNames, player.playerData[0].first_name + ' ' + player.playerData[0].last_name]);
 			setShowHintOne(false);
 			setShowHintTwo(false);
 			setShowHintThree(false);
@@ -96,7 +99,7 @@ const GuessGameWithStart = () => {
 		setShowHintTwo(false);
 		setShowHintThree(false);
 		setGetNewPlayer(false); // Reset the new player flag
-		fetchPlayer(); // Fetch the first player for the new game
+		// fetchPlayer(); // Fetch the first player for the new game
 	};
 
 	const handleStartGame = () => {
