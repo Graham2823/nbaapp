@@ -41,13 +41,14 @@ const GuessGameWithStart = () => {
 				setLoading(false); // Reset loading state after fetching
 			})
 			.catch((error) => {
-				setLoading(false); // Reset loading on error
-				if (error.response && error.response.status === 500) {
-					console.error('Server error. Retrying fetch...');
-					fetchPlayer(); // Retry the request on 500 error
-				} else {
-					console.error('Error fetching data:', error);
-				}
+				setLoading(true); 
+                fetchPlayer()
+				// if (error.response && error.response.status === 500) {
+				// 	console.error('Server error. Retrying fetch...');
+				// 	fetchPlayer(); // Retry the request on 500 error
+				// } else {
+				// 	console.error('Error fetching data:', error);
+				// }
 			});
 	};
 
