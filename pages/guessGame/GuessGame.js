@@ -24,37 +24,53 @@ const GuessGameWithStart = () => {
 	const [rules, setRules] = useState(''); // State for storing the rules
 
 	// Function to fetch player
-	const fetchPlayer = () => {
-        setLoading(true); // Set loading to true before fetching
-        axios
-            .post(
+	const fetchPlayer = async (retryCount = 0) => {
+        setLoading(true);
+        try {
+            const response = await axios.post(
                 `https://nbaapp.vercel.app/api/graphGame/getRandomPlayer`,
                 {
                     excludedNames: excludedNames
                 }
-            )
-            .then((response) => {
-                const newPlayer = response.data;
-                // Check if the new player is in the excluded list
-                const playerName = `${newPlayer.playerData[0].first_name} ${newPlayer.playerData[0].last_name}`;
-                if (excludedNames.includes(playerName)) {
-                    console.warn(`Player ${playerName} is already excluded. Fetching again...`);
-                    fetchPlayer(); // Fetch again if it's the same player
-                } else {
-                    setPlayer(newPlayer);
-                    setLoading(false); // Reset loading state after fetching
-                }
-            })
-            .catch((error) => {
-                setLoading(false); // Reset loading on error
-                if (error.response && error.response.status === 500) {
+            );
+            
+            const newPlayer = response.data;
+            const playerName = `${newPlayer.playerData[0].first_name} ${newPlayer.playerData[0].last_name}`;
+            
+            // Check if the new player is in the excluded list
+            if (excludedNames.includes(playerName)) {
+                console.warn(`Player ${playerName} is already excluded. Fetching again...`);
+                fetchPlayer(retryCount); // Fetch again if it's the same player
+            } else {
+                setPlayer(newPlayer);
+                setLoading(false); // Reset loading state after fetching
+            }
+        } catch (error) {
+            setLoading(false); // Reset loading state on error
+            if (error.response) {
+                if (error.response.status === 500) {
                     console.error('Server error. Retrying fetch...');
-                    fetchPlayer(); // Retry the request on 500 error
+                    if (retryCount < 5) {
+                        setTimeout(() => fetchPlayer(retryCount + 1), 1000); // Retry after 1 second
+                    } else {
+                        console.error('Max retry limit reached.');
+                    }
+                } else if (error.response.status === 504) {
+                    console.error('Gateway Timeout. Retrying fetch...');
+                    if (retryCount < 5) {
+                        setTimeout(() => fetchPlayer(retryCount + 1), 2000); // Longer delay for 504 errors
+                    } else {
+                        console.error('Max retry limit reached for Gateway Timeout.');
+                    }
                 } else {
                     console.error('Error fetching data:', error);
                 }
-            });
+            } else {
+                console.error('Network error or request timed out:', error);
+            }
+        }
     };
+    
     
 
 	// Initial fetch on mount
