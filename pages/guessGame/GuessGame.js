@@ -17,13 +17,13 @@ const GuessGameWithStart = () => {
 	const [showHintThree, setShowHintThree] = useState(false);
 	const [potentialPoints, setPotentialPoints] = useState(100);
 	const [guessPlayer, setGuessPlayer] = useState('');
-	const [loading, setLoading] = useState(false); // Loading state to control spinner visibility
-	const [gameOver, setGameOver] = useState(false); // Game Over state
-	const [lastPlayer, setLastPlayer] = useState(''); // Store the name of the last player
-	const [gameStarted, setGameStarted] = useState(false); // State for starting the game
-	const [rules, setRules] = useState(''); // State for storing the rules
+	const [loading, setLoading] = useState(false);
+	const [gameOver, setGameOver] = useState(false);
+	const [lastPlayer, setLastPlayer] = useState('');
+	const [gameStarted, setGameStarted] = useState(false);
+	const [rules, setRules] = useState('');
+	const [isNewPlayer, setIsNewPlayer] = useState(true); // Track if player is new
 
-	// Function to fetch player
 	const fetchPlayer = async (retryCount = 0) => {
         setLoading(true);
         try {
@@ -33,7 +33,7 @@ const GuessGameWithStart = () => {
                     excludedNames: excludedNames
                 }
             );
-            
+
             const newPlayer = response.data;
             const playerName = `${newPlayer.playerData[0].first_name} ${newPlayer.playerData[0].last_name}`;
             
@@ -43,22 +43,23 @@ const GuessGameWithStart = () => {
                 fetchPlayer(retryCount); // Fetch again if it's the same player
             } else {
                 setPlayer(newPlayer);
-                setLoading(false); // Reset loading state after fetching
+                setIsNewPlayer(true); // Set to true when a new player is fetched
+                setLoading(false);
             }
         } catch (error) {
-            setLoading(false); // Reset loading state on error
+            setLoading(false);
             if (error.response) {
                 if (error.response.status === 500) {
                     console.error('Server error. Retrying fetch...');
                     if (retryCount < 5) {
-                        setTimeout(() => fetchPlayer(retryCount + 1), 1000); // Retry after 1 second
+                        setTimeout(() => fetchPlayer(retryCount + 1), 1000);
                     } else {
                         console.error('Max retry limit reached.');
                     }
                 } else if (error.response.status === 504) {
                     console.error('Gateway Timeout. Retrying fetch...');
                     if (retryCount < 5) {
-                        setTimeout(() => fetchPlayer(retryCount + 1), 2000); // Longer delay for 504 errors
+                        setTimeout(() => fetchPlayer(retryCount + 1), 2000);
                     } else {
                         console.error('Max retry limit reached for Gateway Timeout.');
                     }
@@ -71,20 +72,17 @@ const GuessGameWithStart = () => {
         }
     };
     
-    
-
 	// Initial fetch on mount
 	useEffect(() => {
 		if (gameStarted) {
 			fetchPlayer();
 		}
-	}, [gameStarted]); // Runs only once on game start
+	}, [gameStarted]);
 
-	// Fetch new player whenever getNewPlayer changes
 	useEffect(() => {
 		if (getNewPlayer) {
 			fetchPlayer();
-			setGetNewPlayer(false); // Reset the flag after fetching the new player
+			setGetNewPlayer(false);
 		}
 	}, [getNewPlayer, excludedNames]);
 
@@ -102,33 +100,34 @@ const GuessGameWithStart = () => {
 			setPotentialPoints(100);
 			setGuessPlayer('');
 			setGetNewPlayer(true); // Fetch new player after correct guess
+			setIsNewPlayer(true); // Reset the new player flag
 		} else {
 			toast.error('Wrong Guess');
 			setGuessNumber(guessNumber + 1);
 			setGuessPlayer('');
 			if (guessNumber === 3) {
-				setLastPlayer(player.playerData[0].name); // Set the last player's name
-				setGameOver(true); // Set the game to over
+				setLastPlayer(player.playerData[0].name);
+				setGameOver(true);
 			}
 		}
 	};
 
 	const handleNewGame = () => {
-		setGameOver(false); // Reset the game over state
-		setScore(0); // Reset score
-		setGuessNumber(1); // Reset guess number
-		setExcludedNames([]); // Clear excluded names
-		setPotentialPoints(100); // Reset points
-		setGuessPlayer(''); // Clear guess input
-		setShowHintOne(false); // Reset hint states
+		setGameOver(false);
+		setScore(0);
+		setGuessNumber(1);
+		setExcludedNames([]);
+		setPotentialPoints(100);
+		setGuessPlayer('');
+		setShowHintOne(false);
 		setShowHintTwo(false);
 		setShowHintThree(false);
-		setGetNewPlayer(false); // Reset the new player flag
-		// fetchPlayer(); // Fetch the first player for the new game
+		setGetNewPlayer(false);
+		setIsNewPlayer(true); // Reset the new player flag for new game
 	};
 
 	const handleStartGame = () => {
-		setGameStarted(true); // Start the game
+		setGameStarted(true);
 	};
 
 	return (
@@ -138,76 +137,8 @@ const GuessGameWithStart = () => {
 				<div className='startPage'>
 					<div className='game-rules'>
 						<h2>Game Rules</h2>
-						<p>
-							When the game starts, you will be given a{' '}
-							<strong>graph of a random player&apos;s stats</strong>. All
-							players have been in the league for at least 3 seasons. Your goal
-							is to use the stats and{' '}
-							<strong>guess the player&apos;s identity</strong>.
-						</p>
-
-						<h3>Here&apos;s how it works:</h3>
-						<ul>
-							<li>
-								<strong>Each player comes with 3 hints:</strong>
-								<ul>
-									<li>
-										<strong>College</strong>: The college the player attended.
-									</li>
-									<li>
-										<strong>NBA Team</strong>: The NBA team they currently play
-										for.
-									</li>
-									<li>
-										<strong>Position</strong>: The player&apos;s position in the
-										NBA.
-									</li>
-								</ul>
-							</li>
-
-							<li>
-								<strong>Points System:</strong>
-								<ul>
-									<li>
-										You start with <strong>100 points</strong> for each guess.
-									</li>
-									<li>
-										If you guess the player <strong>correctly</strong> without
-										using any hints, you keep the full 100 points.
-									</li>
-									<li>
-										If you use a hint, you lose <strong>10 points</strong> per
-										hint.
-									</li>
-								</ul>
-							</li>
-
-							<li>
-								<strong>Guesses:</strong>
-								<ul>
-									<li>
-										You have <strong>3 incorrect guesses</strong> for the entire
-										game.
-									</li>
-									<li>
-										If you use all 3 incorrect guesses, the game{' '}
-										<strong>ends</strong>.
-									</li>
-								</ul>
-							</li>
-						</ul>
-
-						<p>
-							<strong>Objective:</strong> Try to guess the player&apos;s name
-							correctly while using as few hints as possible to{' '}
-							<strong>maximize your score</strong>.
-						</p>
-
-						<p>
-							Good luck and <strong>score as many points as you can</strong>!
-						</p>
+						{/* Game rules content here */}
 					</div>
-
 					<div style={{ marginTop: '20px' }}>
 						<button className='btn btn-primary' onClick={handleStartGame}>
 							Start Game
@@ -279,7 +210,8 @@ const GuessGameWithStart = () => {
 										</Button>
 									)}
 								</div>
-								<DisplayCharts playerDetails={player.playerAverages} />
+								{/* Only display the graph if it's a new player */}
+								{isNewPlayer && <DisplayCharts playerDetails={player.playerAverages} />}
 							</div>
 						)
 					)}
