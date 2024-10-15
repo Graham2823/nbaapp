@@ -25,28 +25,37 @@ const GuessGameWithStart = () => {
 
 	// Function to fetch player
 	const fetchPlayer = () => {
-		setLoading(true); // Set loading to true before fetching
-		axios
-			.post(
-				`https://nbaapp.vercel.app/api/graphGame/getRandomPlayer`,
+        setLoading(true); // Set loading to true before fetching
+        axios
+            .post(
+                `https://nbaapp.vercel.app/api/graphGame/getRandomPlayer`,
                 {
                     excludedNames: excludedNames
                 }
-			)
-			.then((response) => {
-				setPlayer(response.data);
-				setLoading(false); // Reset loading state after fetching
-			})
-			.catch((error) => {
-				setLoading(false); // Reset loading on error
-				if (error.response && error.response.status === 500) {
-					console.error('Server error. Retrying fetch...');
-					fetchPlayer(); // Retry the request on 500 error
-				} else {
-					console.error('Error fetching data:', error);
-				}
-			});
-	};
+            )
+            .then((response) => {
+                const newPlayer = response.data;
+                // Check if the new player is in the excluded list
+                const playerName = `${newPlayer.playerData[0].first_name} ${newPlayer.playerData[0].last_name}`;
+                if (excludedNames.includes(playerName)) {
+                    console.warn(`Player ${playerName} is already excluded. Fetching again...`);
+                    fetchPlayer(); // Fetch again if it's the same player
+                } else {
+                    setPlayer(newPlayer);
+                    setLoading(false); // Reset loading state after fetching
+                }
+            })
+            .catch((error) => {
+                setLoading(false); // Reset loading on error
+                if (error.response && error.response.status === 500) {
+                    console.error('Server error. Retrying fetch...');
+                    fetchPlayer(); // Retry the request on 500 error
+                } else {
+                    console.error('Error fetching data:', error);
+                }
+            });
+    };
+    
 
 	// Initial fetch on mount
 	useEffect(() => {
