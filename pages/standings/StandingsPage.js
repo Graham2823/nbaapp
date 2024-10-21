@@ -9,6 +9,7 @@ const StandingsPage = () => {
   const [wc, setWC] = useState()
   const [ec, setEC] = useState()
   const [showEasternConference, setShowEasternconference] = useState(true)
+  const [standingsToDisplay, setStandingsToDisplay] = useState('Overall')
 
   useEffect(()=>{
             axios.get('https://nbaapp.vercel.app/api/standings/getStandings')
@@ -21,20 +22,31 @@ const StandingsPage = () => {
                 console.error('Error fetching data:', error);
                 });
         },[])
+
+        console.log(standingsToDisplay)
         return (
               <div className='standingsPage'>
                   <Button className='Button button' onClick={()=>setShowEasternconference(true)}>Eastern Conference</Button>
                   <Button className='Button button' onClick={()=>setShowEasternconference(false)}>Western Conference</Button>
+                  <div>
+                  <select onChange={((e)=>setStandingsToDisplay(e.target.value))}>
+                    <option value={'Overall'}>Overall</option>
+                    <option value={'Streaks'}>Streaks</option>
+                    <option value={'Margins'}>Margins</option>
+                    <option value={'Conference/Divisions'}>vs Conference/Division</option>
+                    <option value={'Calendar'}>Calendar</option>
+                  </select>
+                  </div>
                   {ec && showEasternConference ?
                   (
                   <div>
                     <h2>Eastern Conference</h2>
-                      <StandingsCard conference={ec}/>
+                      <StandingsCard conference={ec} standingsToDisplay={standingsToDisplay}/>
                   </div>
               ):(
                 <div>
                   <h2>Western Conference</h2>
-                  <StandingsCard conference={wc}/>
+                  <StandingsCard conference={wc} standingsToDisplay={standingsToDisplay}/>
                 </div>
               )}</div>
             )
