@@ -77,22 +77,24 @@ playerData.get(async (req, res) => {
 const processPlayer = async (player, delay) => {
 	try {
 		const { id, first_name, last_name, team } = player;
-		let playerTeam = team.full_name || '';
-		let games_played;
-		let min;
-		let points;
-		let assists;
-		let rebounds;
-		let blocks;
-		let steals;
-		let turnovers;
-		let fg_pct;
-		let fg3_pct;
-		let ft_pct;
-		let playerObject;
+		let playerTeam = team?.full_name || ''; // Fallback in case team info is missing
+		
+		// Set default values to 0 for all stats
+		let games_played = 0;
+		let min = 0;
+		let points = 0;
+		let assists = 0;
+		let rebounds = 0;
+		let blocks = 0;
+		let steals = 0;
+		let turnovers = 0;
+		let fg_pct = 0;
+		let fg3_pct = 0;
+		let ft_pct = 0;
 
+		// Fetch season averages for the player
 		const seasonAveragesResponse = await axios.get(
-			`http://api.balldontlie.io/v1/season_averages?season=2023&player_ids[]=${id}`,
+			`http://api.balldontlie.io/v1/season_averages?season=2024&player_id=${id}`,
 			{
 				headers: {
 					Authorization: '34db4f41-8c29-4fef-940d-db01294f67cc',
@@ -103,21 +105,23 @@ const processPlayer = async (player, delay) => {
 
 		if (seasonAveragesResponse.data.data.length > 0) {
 			const seasonData = seasonAveragesResponse.data.data[0];
-			min = seasonData.min;
-			points = seasonData.pts;
-			rebounds = seasonData.reb;
-			assists = seasonData.ast;
-			steals = seasonData.stl;
-			blocks = seasonData.blk;
-			games_played = seasonData.games_played;
-			turnovers = seasonData.turnover;
-			fg_pct = seasonData.fg_pct;
-			fg3_pct = seasonData.fg3_pct;
-			ft_pct = seasonData.ft_pct;
+			
+			// Assign values from the API response, with fallback to 0 if undefined
+			games_played = seasonData?.games_played ?? 0;
+			min = seasonData?.min ?? 0;
+			points = seasonData?.pts ?? 0;
+			assists = seasonData?.ast ?? 0;
+			rebounds = seasonData?.reb ?? 0;
+			steals = seasonData?.stl ?? 0;
+			blocks = seasonData?.blk ?? 0;
+			turnovers = seasonData?.turnover ?? 0;
+			fg_pct = seasonData?.fg_pct ?? 0;
+			fg3_pct = seasonData?.fg3_pct ?? 0;
+			ft_pct = seasonData?.ft_pct ?? 0;
 		}
 
-		// Create playerObject
-		playerObject = {
+		// Create playerObject with either valid or default (0) values
+		const playerObject = {
 			name: `${first_name} ${last_name}`,
 			team: playerTeam,
 			stats: {
@@ -135,29 +139,30 @@ const processPlayer = async (player, delay) => {
 			},
 		};
 
-		// Push to playerResults and save to database
+		// Save the player object to the database
 		const playerDoc = new Player(playerObject);
 		await playerDoc.save();
 
-		// Successful API call, reset backoff delay
+		// Log and return the player object
 		console.log(playerObject);
 		return playerObject;
 	} catch (error) {
-		console.error(`Error processing player ${player.name}:`, error);
+		console.error(`Error processing player ${player.first_name} ${player.last_name}:`, error);
 
+		// Handle rate-limiting with backoff delay
 		if (error.response && error.response.status === 429) {
-			// Implement exponential backoff with a maximum delay
 			delay *= 2;
 			if (delay > maxBackoffDelay) {
 				delay = maxBackoffDelay;
 			}
-			// Delay before the next iteration
 			await new Promise((resolve) => setTimeout(resolve, delay));
 		}
 
-		return null; // Signal failure to process player
+		return null; // Indicate failure
 	}
 };
+
+
 
 export default async (req, res) => {
 	await playerData.run(req, res);
