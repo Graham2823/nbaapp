@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const todaysGamesRouter = createRouter();
 
-const apiKey = '34db4f41-8c29-4fef-940d-db01294f67cc';
+
 
 function getCurrentDateInET() {
     const now = new Date();
@@ -29,7 +29,7 @@ todaysGamesRouter.get(async (req, res) => {
     
     try {
        
-    axios.get(`http://api.balldontlie.io/v1/games?seasons[]=2023&dates[]=${todaysDate}`, {
+    axios.get(`http://api.balldontlie.io/v1/games?seasons[]=2024&dates[]=${todaysDate}`, {
         headers:{
           'Authorization': '34db4f41-8c29-4fef-940d-db01294f67cc',
           'Content-Type': 'application/json'
