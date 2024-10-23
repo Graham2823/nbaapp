@@ -17,19 +17,25 @@ const ComparePlayerCharts = ({ player1Data, player1Stats, player2Data, player2St
     }, []);
 
     const combinedStats = [
-        { name: 'Points', player1: player1Stats[0].pts, player2: player2Stats[0].pts },
-        { name: 'Rebounds', player1: player1Stats[0].reb, player2: player2Stats[0].reb },
-        { name: 'Assists', player1: player1Stats[0].ast, player2: player2Stats[0].ast },
-        { name: 'Steals', player1: player1Stats[0].stl, player2: player2Stats[0].stl },
-        { name: 'Blocks', player1: player1Stats[0].blk, player2: player2Stats[0].blk },
-        { name: 'Turnovers', player1: player1Stats[0].turnover, player2: player2Stats[0].turnover },
+        { name: 'Points', player1: player1Stats.pts, player2: player2Stats.pts },
+        { name: 'Rebounds', player1: player1Stats.reb, player2: player2Stats.reb },
+        { name: 'Assists', player1: player1Stats.ast, player2: player2Stats.ast },
+        { name: 'Steals', player1: player1Stats.stl, player2: player2Stats.stl },
+        { name: 'Blocks', player1: player1Stats.blk, player2: player2Stats.blk },
+        { name: 'Turnovers', player1: player1Stats.turnover, player2: player2Stats.turnover },
     ];
 
     const combinedPercentages = [
-        { name: 'FG%', player1: (player1Stats[0].fg_pct * 100).toFixed(2), player2: (player2Stats[0].fg_pct * 100).toFixed(2) },
-        { name: '3PT%', player1: (player1Stats[0].fg3_pct * 100).toFixed(2), player2: (player2Stats[0].fg3_pct * 100).toFixed(2) },
-        { name: 'FT%', player1: (player1Stats[0].ft_pct * 100).toFixed(2), player2: (player2Stats[0].ft_pct * 100).toFixed(2) },
+        { name: 'FG%', player1: (player1Stats.fg_pct * 100).toFixed(2), player2: (player2Stats.fg_pct * 100).toFixed(2) },
+        { name: '3PT%', player1: (player1Stats.fg3_pct * 100).toFixed(2), player2: (player2Stats.fg3_pct * 100).toFixed(2) },
+        { name: 'FT%', player1: (player1Stats.ft_pct * 100).toFixed(2), player2: (player2Stats.ft_pct * 100).toFixed(2) },
     ];
+
+    // Calculate the maximum value for setting Y-axis ticks
+    const maxPoints = Math.max(player1Stats.pts, player2Stats.pts, 40); // Adjust as needed
+
+    // Generate an array of tick values from 0 to the maximum points value in increments of 5
+    const yAxisTicks = Array.from({ length: Math.ceil(maxPoints / 6) + 1 }, (_, i) => i * 5);
 
     return (
         <div>
@@ -43,7 +49,7 @@ const ComparePlayerCharts = ({ player1Data, player1Stats, player2Data, player2St
                         textAnchor={isSmallScreen ? "end" : "middle"}
                         margin={{bottom: 100}}
                     />
-                    <YAxis />
+                    <YAxis domain={[0,35]}  ticks={yAxisTicks} />
                     <Tooltip />
                     <Legend verticalAlign='top' align='center'/>
                     <Bar dataKey="player1" fill="#8884d8" name={`${player1Data[0].first_name} ${player1Data[0].last_name}`} />

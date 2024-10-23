@@ -36,7 +36,7 @@ const PlayerDetails = () => {
 		if (p1Name && p2Name) {
 			axios
 				.get(
-					`https://nbaapp.vercel.app/api/compare/comparePlayers?p1Name=${p1Name}&p2Name=${p2Name}`
+					`http://localhost:3000/api/compare/comparePlayers?p1Name=${p1Name}&p2Name=${p2Name}`
 				)
 				.then((response) => {
 					if (response.data === 'Could not find one of the players') {
