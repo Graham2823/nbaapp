@@ -10,63 +10,72 @@ const boxScoreRouter = createRouter();
 //   methods: ['GET'], // Allow only the HTTP methods you need
 // });
 
-
 // boxScoreRouter.use(corsMiddleware);
 
-
-boxScoreRouter.get(async (req, res)=>{
-        const {homeTeam, awayTeam, date} = req.query
-        console.log(homeTeam)
-        console.log(awayTeam)
-        console.log(date)
-        try {
-       if(date){
-           console.log("check 1")
-           axios.get(`https://api.balldontlie.io/v1/box_scores?date=${date}`, {
-               headers:{
-                 'Authorization': '34db4f41-8c29-4fef-940d-db01294f67cc',
-                 'Content-Type': 'application/json'
-               }
-             }).then((res)=> res.data)
-               .then((data)=>{
-                console.log("check 2")
-                const game = data.data.filter((game)=> game.home_team.full_name === homeTeam && game.visitor_team.full_name === awayTeam)
-                console.log("game", game)
-                if(game){
-                    res.json(game)
-                }else{
-                    res.json("No Games Found")
-                }
-            })
-        }else{
-           console.log("check 3")
-           axios.get(`https://api.balldontlie.io/v1/box_scores/live`, {
-               headers:{
-                 'Authorization': '34db4f41-8c29-4fef-940d-db01294f67cc',
-                 'Content-Type': 'application/json'
-               }
-             }).then((res)=> res.data)
-               .then((data)=>{
-                 const game = data.data.filter((game)=> game.home_team.full_name === homeTeam && game.visitor_team.full_name === awayTeam)
-                 console.log("game", game)
-                 if(game){
-                   res.json(game)
-                 }else{
-                   res.json("No Games Found")
-                 }
-               })
-           
-    }
-            
-            } catch (err) {
-                console.log(err);
-                res.status(500).json({ message: "Internal server error" });
-            }
-})
+boxScoreRouter.get(async, (req, res) => {
+	const { homeTeam, awayTeam, gameId } = req.query;
+	console.log(homeTeam);
+	//console.log(awayTeam)
+	//console.log(date)
+});
 
 export default async (req, res) => {
-    await boxScoreRouter.run(req, res);
+	await boxScoreRouter.run(req, res);
 };
+
+// boxScoreRouter.get(async (req, res)=>{
+//         const {homeTeam, awayTeam, date} = req.query
+//         console.log(homeTeam)
+//         console.log(awayTeam)
+//         console.log(date)
+//         try {
+//        if(date){
+//            console.log("check 1")
+//            axios.get(`https://api.balldontlie.io/v1/box_scores?date=${date}`, {
+//                headers:{
+//                  'Authorization': '34db4f41-8c29-4fef-940d-db01294f67cc',
+//                  'Content-Type': 'application/json'
+//                }
+//              }).then((res)=> res.data)
+//                .then((data)=>{
+//                 console.log("check 2")
+//                 const game = data.data.filter((game)=> game.home_team.full_name === homeTeam && game.visitor_team.full_name === awayTeam)
+//                 console.log("game", game)
+//                 if(game){
+//                     res.json(game)
+//                 }else{
+//                     res.json("No Games Found")
+//                 }
+//             })
+//         }else{
+//            console.log("check 3")
+//            axios.get(`https://api.balldontlie.io/v1/box_scores/live`, {
+//                headers:{
+//                  'Authorization': '34db4f41-8c29-4fef-940d-db01294f67cc',
+//                  'Content-Type': 'application/json'
+//                }
+//              }).then((res)=> res.data)
+//                .then((data)=>{
+//                  const game = data.data.filter((game)=> game.home_team.full_name === homeTeam && game.visitor_team.full_name === awayTeam)
+//                  console.log("game", game)
+//                  if(game){
+//                    res.json(game)
+//                  }else{
+//                    res.json("No Games Found")
+//                  }
+//                })
+
+//     }
+
+//             } catch (err) {
+//                 console.log(err);
+//                 res.status(500).json({ message: "Internal server error" });
+//             }
+// })
+
+// export default async (req, res) => {
+//     await boxScoreRouter.run(req, res);
+// };
 
 // boxScoreRouter.get(async (req, res)=>{
 //         const {gameID, homeTeam, awayTeam, date} = req.query
@@ -108,4 +117,3 @@ export default async (req, res) => {
 // export default async (req, res) => {
 //     await boxScoreRouter.run(req, res);
 // };
-
