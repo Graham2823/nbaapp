@@ -21,7 +21,7 @@ const PlayerDetails = () => {
 		if (first && last) {
 			axios
 				.get(
-					`https://nbaapp.vercel.app/api/players/getPlayer?firstName=${first}&lastName=${last}`
+					`http://localhost:3000/api/players/getPlayer?firstName=${first}&lastName=${last}`
 				)
 				.then((response) => {
 					setPlayerDetails(response.data);
