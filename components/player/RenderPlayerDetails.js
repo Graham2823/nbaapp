@@ -14,7 +14,7 @@ import DisplayCharts from '../charts/DisplayCharts';
 
 const RenderPlayerDetails = ({ playerDetails, first, last }) => {
 	const { favoritePlayers, setFavoritePlayers, user } = useContext(UserContext);
-	const [selectedSeason, setSelectedSeason] = useState(2023);
+	const [selectedSeason, setSelectedSeason] = useState(2024);
 	const [showGamelog, setShowGamelog] = useState(false);
 	const [showGraphs, setShowGraphs] = useState(false);
 	const [showFullDescription, setShowFullDescription] = useState(false)
@@ -72,6 +72,8 @@ const RenderPlayerDetails = ({ playerDetails, first, last }) => {
 		)
 
 	}
+
+
 
 	return (
 		<div>

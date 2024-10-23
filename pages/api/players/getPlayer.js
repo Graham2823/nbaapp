@@ -32,7 +32,7 @@ playerRouter.get(async (req, res) => {
 
 for (let i = 0; i <= 21; i++) {
   requests.push(
-    axios.get(`http://api.balldontlie.io/v1/season_averages?season=${2024 - i}&player_id=${playerID}`, {
+    axios.get(`http://api.balldontlie.io/v1/season_averages?season=${2025 - i}&player_id=${playerID}`, {
       timeout: 60000,
       headers: {
         Authorization: apiKey,
