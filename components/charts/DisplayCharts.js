@@ -23,9 +23,9 @@ const DisplayCharts = ({ playerDetails }) => {
         stats.rebounds.push({ season: seasonData[0].season, value: seasonData[0].reb });
         stats.steals.push({ season: seasonData[0].season, value: seasonData[0].stl });
         stats.blocks.push({ season: seasonData[0].season, value: seasonData[0].blk });
-        stats.fgPercentage.push({ season: seasonData[0].season, value: seasonData[0].fg_pct });
-        stats.threePtPercentage.push({ season: seasonData[0].season, value: seasonData[0].fg3_pct });
-        stats.ftPercentage.push({ season: seasonData[0].season, value: seasonData[0].ft_pct });
+        stats.fgPercentage.push({ season: seasonData[0].season, value: seasonData[0].fg_pct *100 });
+        stats.threePtPercentage.push({ season: seasonData[0].season, value: seasonData[0].fg3_pct *100 });
+        stats.ftPercentage.push({ season: seasonData[0].season, value: seasonData[0].ft_pct * 100 });
     });
 
     const [selectedStat, setSelectedStat] = useState('points');
