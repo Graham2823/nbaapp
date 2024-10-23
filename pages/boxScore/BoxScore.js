@@ -13,14 +13,13 @@ import RenderBoxScore from '@/components/boxScore/RenderBoxScore';
 const BoxScore = () => {
     const [boxScore, setBoxScore] = useState([]);
     const router = useRouter();
-    const { gameID, homeTeam, homeScore, awayTeam, awayScore, date } = router.query;
+    const { gameID, homeTeam, homeTeamID, homeScore, awayTeam, awayTeamID, awayScore } = router.query;
     const [teamLogosandColors, setTeamLogosAndColors] = useState([]);
-    const { favoritePlayers } = useContext(UserContext);
+
 
     useEffect(() => {
-        if (date) {
             axios.get(
-                `https://nbaapp.vercel.app/api/boxScore/getBoxScore?homeTeam=${homeTeam}&awayTeam=${awayTeam}&date=${date}`,
+                `https://nbaapp.vercel.app/api/boxScore/getBoxScore?homeTeamID=${homeTeamID}&awayTeamID=${awayTeamID}&gameID=${gameID}`,
                 { timeout: 10000 }
             )
                 .then((response) => {
@@ -29,33 +28,21 @@ const BoxScore = () => {
                 .catch((error) => {
                     console.error('Error fetching data:', error);
                 });
-        } else {
-            axios.get(
-                `https://nbaapp.vercel.app/api/boxScore/getBoxScore?homeTeam=${homeTeam}&awayTeam=${awayTeam}`,
-                { timeout: 10000 }
-            )
-                .then((response) => {
-                    setBoxScore(response.data);
-                })
-                .catch((error) => {
-                    console.error('Error fetching data:', error);
-                });
-        }
+    
 
         const teamsLogos = teams.filter(
             (team) => team.teamName === homeTeam || team.teamName === awayTeam
         );
         setTeamLogosAndColors(teamsLogos);
-    }, [date, gameID, homeTeam, awayTeam]);
+    }, [ gameID, homeTeamID, awayTeamID]);
 
-	console.log("boxScore", boxScore)
 
     return (
         <div className='boxScore'>
-            {boxScore.length > 0 ? (
+            {boxScore.homeTeamBoxScore && boxScore.awayTeamBoxScore ? (
                 <>
-				<RenderBoxScore boxScore={boxScore[0].home_team.players} team={boxScore[0].home_team} score={homeScore}/>
-				<RenderBoxScore boxScore={boxScore[0].visitor_team.players} team={boxScore[0].visitor_team} score={awayScore}/>
+				<RenderBoxScore boxScore={boxScore.homeTeamBoxScore} team={homeTeam} score={homeScore}/>
+				<RenderBoxScore boxScore={boxScore.awayTeamBoxScore} team={awayTeam} score={awayScore}/>
                 </>
             ) : (
 				<>

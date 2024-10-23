@@ -112,7 +112,7 @@ const RenderTeamDetails = ({ teamDetails, teamLogoAndColors }) => {
 				<div
 					className='teamSchedule'
 					style={{ backgroundColor: teamLogoAndColors[0].secondaryColor }}>
-					<RenderGames games={teamDetails.schedule} today={false} />
+					<RenderGames games={teamDetails.schedule}/>
 				</div>
 			</div>
 		</div>
