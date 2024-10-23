@@ -517,6 +517,15 @@ color: #0A2540;
 	margin: auto;
 }
 
+.playerComparisonButtonContainer{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 20%;
+	margin: auto;
+}
+
 @media (max-width: 820px){
     .playerStats th{
         font-size: .8em;

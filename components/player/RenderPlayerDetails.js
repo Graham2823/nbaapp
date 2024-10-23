@@ -11,6 +11,7 @@ import { UserContext } from '@/context/userContext';
 import { Button } from 'react-bootstrap';
 import RenderPlayerPointsChart from '../charts/RenderPlayerStatsChart';
 import DisplayCharts from '../charts/DisplayCharts';
+import calculateCareerAverages from '@/utils/calculateCareersAverages';
 
 const RenderPlayerDetails = ({ playerDetails, first, last }) => {
 	const { favoritePlayers, setFavoritePlayers, user } = useContext(UserContext);
@@ -18,6 +19,7 @@ const RenderPlayerDetails = ({ playerDetails, first, last }) => {
 	const [showGamelog, setShowGamelog] = useState(false);
 	const [showGraphs, setShowGraphs] = useState(false);
 	const [showFullDescription, setShowFullDescription] = useState(false)
+	const [showCareerAverages, setShowCareerAverages] = useState(false)
 
 	const shotPercentage = (made, attempted) => {
 		let percentage = (made / attempted) * 100;
@@ -55,6 +57,8 @@ const RenderPlayerDetails = ({ playerDetails, first, last }) => {
 		}
 	};
 
+	console.log("pd", playerDetails)
+
 	const renderDescription = (description)=>{
 		const splitDesc = description.split(".")
 		const preview = splitDesc.slice(0, 2).join(".")
@@ -73,7 +77,8 @@ const RenderPlayerDetails = ({ playerDetails, first, last }) => {
 
 	}
 
-
+	const careerAverages = calculateCareerAverages(playerDetails.playerAverages);
+	console.log("season", selectedSeason)
 
 	return (
 		<div>
@@ -86,7 +91,7 @@ const RenderPlayerDetails = ({ playerDetails, first, last }) => {
 							<Image
 								src={playerDetails.details.player[0].strThumb}
 								className='playerPic'
-								alt='player Picture'
+								alt='Player Picture'
 							/>
 							<div>
 								<h3>
@@ -94,7 +99,9 @@ const RenderPlayerDetails = ({ playerDetails, first, last }) => {
 									{user !== null &&
 									favoritePlayers &&
 									favoritePlayers.some(
-										(player) => player.playerName === first + ' ' + last
+										(player) =>
+											player.playerName ===
+											`${playerDetails.playerData[0].first_name} ${playerDetails.playerData[0].last_name}`
 									) ? (
 										<FontAwesomeIcon
 											icon={faStar}
@@ -136,10 +143,11 @@ const RenderPlayerDetails = ({ playerDetails, first, last }) => {
 						</>
 					)}
 				</div>
+	
 				<div className='playerStats'>
 					<div>
 						<h6>Select Season</h6>
-						<select onChange={(e) => setSelectedSeason(Number(e.target.value))}>
+						<select onChange={(e) => setSelectedSeason(e.target.value)}>
 							{playerDetails.playerAverages &&
 								playerDetails.playerAverages.length > 0 &&
 								playerDetails.playerAverages.map((season, index) => (
@@ -150,105 +158,97 @@ const RenderPlayerDetails = ({ playerDetails, first, last }) => {
 										{season[0].season}
 									</option>
 								))}
+							<option value='career'>Career Stats</option>
 						</select>
 					</div>
+	
 					<Table striped='columns' responsive='xl'>
 						<thead>
-							<th>Season</th>
-							<th>Games Played</th>
-							<th>Minutes Per Game</th>
-							<th>FG%</th>
-							<th>3PT%</th>
-							<th>FT%</th>
-							<th>Points Per Game</th>
-							<th>Rebounds Per Game</th>
-							<th>Assists Per Game</th>
-							<th>Steals Per Game</th>
-							<th>Blocks Per Game</th>
-							<th>Turnovers Per Game</th>
+							<tr>
+								<th>Season</th>
+								<th>Games Played</th>
+								<th>Minutes Per Game</th>
+								<th>FG%</th>
+								<th>3PT%</th>
+								<th>FT%</th>
+								<th>Points Per Game</th>
+								<th>Rebounds Per Game</th>
+								<th>Assists Per Game</th>
+								<th>Steals Per Game</th>
+								<th>Blocks Per Game</th>
+								<th>Turnovers Per Game</th>
+							</tr>
 						</thead>
 						<tbody>
-							{playerDetails.playerAverages.length > 0 &&
-							playerDetails.playerAverages[0].length === 0 ? (
-								<tr>
-									<td>0</td>
-									<td>0</td>
-									<td>0</td>
-									<td>0</td>
-									<td>0</td>
-									<td>0</td>
-									<td>0</td>
-									<td>0</td>
-									<td>0</td>
-									<td>0</td>
-									<td>0</td>
-									<td>0</td>
+							{selectedSeason === 'career' ? (
+								<tr key='career'>
+									<td>Career</td>
+									<td>{careerAverages.games_played}</td>
+									<td>{careerAverages.min}</td>
+									<td>{(careerAverages.fg_pct * 100).toFixed(1)}</td>
+									<td>{(careerAverages.fg3_pct * 100).toFixed(1)}</td>
+									<td>{(careerAverages.ft_pct * 100).toFixed(1)}</td>
+									<td>{careerAverages.pts}</td>
+									<td>{careerAverages.reb}</td>
+									<td>{careerAverages.ast}</td>
+									<td>{careerAverages.stl}</td>
+									<td>{careerAverages.blk}</td>
+									<td>{careerAverages.turnover}</td>
 								</tr>
 							) : (
 								playerDetails.playerAverages &&
-								playerDetails.playerAverages.map(
-									(season) =>
-										season[0].season === selectedSeason && (
-											<tr key={season[0].season}>
-												<td className='season'>{season[0].season}</td>
-												<td className='gamesPlayed'>
-													{season[0].games_played}
-												</td>
-												<td>{season[0].min}</td>
-												<td>
-													{season[0].fgm === 0
-														? `0%`
-														: shotPercentage(season[0].fgm, season[0].fga)}
-												</td>
-												<td>
-													{season[0].fg3m === 0
-														? `0%`
-														: shotPercentage(season[0].fg3m, season[0].fg3a)}
-												</td>
-												<td>
-													{season[0].ftm === 0
-														? `0%`
-														: shotPercentage(season[0].ftm, season[0].fta)}
-												</td>
-												<td>{season[0].pts}</td>
-												<td>{season[0].reb}</td>
-												<td>{season[0].ast}</td>
-												<td>{season[0].stl}</td>
-												<td>{season[0].blk}</td>
-												<td>{season[0].turnover}</td>
-											</tr>
-										)
+								playerDetails.playerAverages.map((season) =>
+									season[0].season == selectedSeason ? (
+										<tr key={season[0].season}>
+											<td className='season'>{season[0].season}</td>
+											<td className='gamesPlayed'>{season[0].games_played}</td>
+											<td>{season[0].min}</td>
+											<td>{(season[0].fg_pct * 100).toFixed(1)}</td>
+											<td>{(season[0].fg3_pct * 100).toFixed(1)}</td>
+											<td>{(season[0].ft_pct * 100).toFixed(1)}</td>
+											<td>{season[0].pts}</td>
+											<td>{season[0].reb}</td>
+											<td>{season[0].ast}</td>
+											<td>{season[0].stl}</td>
+											<td>{season[0].blk}</td>
+											<td>{season[0].turnover}</td>
+										</tr>
+									) : null
 								)
 							)}
 						</tbody>
 					</Table>
 				</div>
+	
 				<div className='sortButtons'>
 					<Button
 						onClick={() => {
-							setShowGamelog(false), setShowGraphs(false);
+							setShowGamelog(false);
+							setShowGraphs(false);
 						}}
 						className='button'>
 						Player Details
 					</Button>
 					<Button
 						onClick={() => {
-							setShowGamelog(true), setShowGraphs(false);
+							setShowGamelog(true);
+							setShowGraphs(false);
 						}}
 						className='button'>
 						2024 Gamelog
 					</Button>
 					<Button
 						onClick={() => {
-							setShowGraphs(true), setShowGamelog(false);
+							setShowGraphs(true);
+							setShowGamelog(false);
 						}}
 						className='button'>
 						Show Graphs
 					</Button>
 				</div>
+	
 				{showGamelog ? (
-					playerDetails.playerGamelog &&
-					playerDetails.playerGamelog.length > 0 ? (
+					playerDetails.playerGamelog && playerDetails.playerGamelog.length > 0 ? (
 						<div className='gamelog'>
 							<Table className='gamelogTable' striped>
 								<thead>
@@ -302,6 +302,7 @@ const RenderPlayerDetails = ({ playerDetails, first, last }) => {
 			</div>
 		</div>
 	);
+	
 };
 
 export default RenderPlayerDetails;

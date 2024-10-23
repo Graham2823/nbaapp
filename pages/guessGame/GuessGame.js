@@ -232,7 +232,7 @@ const GuessGameWithStart = () => {
 												setShowHintOne(true);
 												setPotentialPoints(potentialPoints - 10);
 											}}>
-											Hint 1
+											College
 										</Button>
 									)}
 									{showHintTwo ? (
@@ -243,7 +243,7 @@ const GuessGameWithStart = () => {
 												setShowHintTwo(true);
 												setPotentialPoints(potentialPoints - 10);
 											}}>
-											Hint 2
+											Current Team
 										</Button>
 									)}
 									{showHintThree ? (
@@ -254,7 +254,7 @@ const GuessGameWithStart = () => {
 												setShowHintThree(true);
 												setPotentialPoints(potentialPoints - 10);
 											}}>
-											Hint 3
+											Position
 										</Button>
 									)}
 								</div>
