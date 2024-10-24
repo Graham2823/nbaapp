@@ -27,7 +27,7 @@ favoritePlayerRouter.get(async (req, res) => {
     playerData = data.data
     playerID = data.data[0].id
   });
-      await axios.get(`http://api.balldontlie.io/v1/season_averages?season=2023&player_ids[]=${playerID}`, {
+      await axios.get(`http://api.balldontlie.io/v1/season_averages?season=2024&player_id=${playerID}`, {
         timeout: 5000,
       headers: {
         Authorization: apiKey,
@@ -40,7 +40,7 @@ favoritePlayerRouter.get(async (req, res) => {
     
   
   // for (let i = 0; i < 3; i++) {
-    await axios.get(`http://api.balldontlie.io/v1/stats?seasons[]=2023&player_ids[]=${playerID}&postseason=false&per_page=100`, {
+    await axios.get(`http://api.balldontlie.io/v1/stats?seasons[]=2024&player_ids[]=${playerID}&postseason=false&per_page=100`, {
         timeout: 5000,
       headers: {
         Authorization: apiKey,
@@ -66,7 +66,10 @@ favoritePlayerRouter.get(async (req, res) => {
   res.json({playerData, playerGamelog})
 }else if(playerAverages.length > 0 && playerGamelog.length > 0){
   res.json({playerAverages, playerGamelog})
-}else{
+}else if (playerData && details){
+  res.json({playerData, details})
+}
+else{
   res.json("Player Not Found")
 }
    }
